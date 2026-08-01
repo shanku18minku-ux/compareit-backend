@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
+"scripts": {
   "dev": "node server.js"
 }
+"keywords": [],
   "keywords": [],
   "author": "",
   "license": "ISC",
