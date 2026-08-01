@@ -160,18 +160,6 @@ const Settings = () => {
           <h2>{t('About', 'About')}</h2>
           <div className="settings-card">
 
-            <div className="settings-item clickable" onClick={() => useAppStore.getState().setIsAppTourOpen(true)}>
-              <div className="item-left">
-                <div className="icon-wrapper bg-blue"><PlayCircle size={20} color="#ffffff" /></div>
-                <span>{t('App Tour', 'App Tour (Replay Tutorial)')}</span>
-              </div>
-              <div className="item-right">
-                <ChevronRight size={20} color="#94a3b8" />
-              </div>
-            </div>
-            
-            <div className="settings-divider" />
-            
             <div className="settings-item clickable" onClick={() => setIsPrivacyOpen(true)}>
               <div className="item-left">
                 <div className="icon-wrapper bg-gray"><Shield size={20} /></div>
