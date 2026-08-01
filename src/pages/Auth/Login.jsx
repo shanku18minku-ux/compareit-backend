@@ -149,19 +149,7 @@ const Login = ({ onNavigate, onLoginSuccess }) => {
               )}
             </button>
             
-            <button
-              type="button"
-              onClick={handleGuest}
-              className="guest-btn"
-              disabled={guestLoading}
-            >
-              {guestLoading ? <Loader2 className="spinner" size={20} /> : (
-                <>
-                  <UserX size={20} />
-                  {t('auth.continueGuest', 'Continue as Guest')}
-                </>
-              )}
-            </button>
+
           </div>
         </div>
 
