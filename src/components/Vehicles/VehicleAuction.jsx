@@ -75,6 +75,7 @@ const VehicleAuctionCard = ({ vehicle }) => {
 };
 
 const VehicleAuction = () => {
+  const { t } = useTranslation();
   // Fallback data in case auctionVehicles is not populated in mock data yet
   const vehicles = auctionVehicles && auctionVehicles.length > 0 ? auctionVehicles : [
     {
