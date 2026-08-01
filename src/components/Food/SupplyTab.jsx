@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ExternalLink, Briefcase, ShoppingCart, Users, Truck } from 'lucide-react';
 import useAppStore from '../../store/appStore';
+import EmptyState from '../Global/EmptyState';
 import './SupplyTab.css';
 
 const CATEGORIES = [
@@ -69,7 +70,11 @@ const SupplyTab = ({ globalSearchQuery = '' }) => {
       )}
 
       {filteredPlatforms.length === 0 ? (
-        <div className="no-results">No platforms found.</div>
+        <EmptyState 
+          icon="Package"
+          title="No Suppliers Found"
+          message="We couldn't find any suppliers matching your criteria."
+        />
       ) : (
         <div className="supply-list">
           {filteredPlatforms.map(plat => (

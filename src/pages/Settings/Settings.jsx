@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   User, Globe, Bell, Lock, LogOut, Trash2, 
-  Info, Shield, Star, ChevronRight, Edit3, X
+  Info, Shield, Star, ChevronRight, Edit3, X, Database
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { logOut } from '../../services/authService';
@@ -154,8 +154,24 @@ const Settings = () => {
         </section>
 
         {/* About Section */}
-        <section className="settings-section">
-          <h3>{t('About', 'About')}</h3>
+        <div className="settings-section">
+          <h2>Developer</h2>
+          <div className="settings-list">
+            <button className="settings-item" onClick={() => {
+              useAppStore.getState().goToAdmin();
+              useAppStore.getState().setSettingsOpen(false);
+            }}>
+              <div className="settings-item-left">
+                <div className="settings-icon"><Database size={20} color="#8b5cf6" /></div>
+                <span>Provider Management Dashboard</span>
+              </div>
+              <ChevronRight size={20} color="#9ca3af" />
+            </button>
+          </div>
+        </div>
+
+        <div className="settings-section">
+          <h2>{t('About', 'About')}</h2>
           <div className="settings-card">
             
             <div className="settings-item clickable" onClick={() => setIsPrivacyOpen(true)}>
@@ -197,7 +213,7 @@ const Settings = () => {
           <div className="app-version">
             CompareIt v1.0.0
           </div>
-        </section>
+        </div>
       </div>
 
       <LanguagePicker 

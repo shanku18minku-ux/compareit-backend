@@ -7,10 +7,13 @@ import JobsTab from '../../components/Education/JobsTab';
 import GovtExamsTab from '../../components/Education/GovtExamsTab';
 import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
 import { Search, BookOpen, GraduationCap, Building2, Briefcase, Landmark } from 'lucide-react';
+import useAppStore from '../../store/appStore';
 
 const Education = () => {
-  const [activeTab, setActiveTab] = useState('courses');
-  const [searchQuery, setSearchQuery] = useState('');
+  const activeTab = useAppStore(state => state.activeEducationTab);
+  const setActiveTab = useAppStore(state => state.setActiveEducationTab);
+  const searchQuery = useAppStore(state => state.educationSearchQuery);
+  const setSearchQuery = useAppStore(state => state.setEducationSearchQuery);
 
   // Simple AI routing mock based on keywords
   const handleSearch = (e) => {

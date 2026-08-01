@@ -1,4 +1,5 @@
 import React from 'react';
+import EmptyState from '../Global/EmptyState';
 import './SwipeDeck.css';
 
 /**
@@ -9,8 +10,12 @@ import './SwipeDeck.css';
 const SwipeDeck = ({ items, renderCard }) => {
   if (!items || items.length === 0) {
     return (
-      <div className="swipe-deck-empty" style={{ textAlign: 'center', padding: '40px 20px', color: '#64748b' }}>
-        <h2>No items available</h2>
+      <div style={{ width: '100%' }}>
+        <EmptyState 
+          icon="Search"
+          title="No Results Found"
+          message="We couldn't find any items matching your criteria. Try adjusting your filters or search term."
+        />
       </div>
     );
   }

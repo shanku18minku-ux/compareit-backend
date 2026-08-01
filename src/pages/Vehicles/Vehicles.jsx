@@ -21,8 +21,10 @@ import useAppStore from '../../store/appStore';
 
 export default function Vehicles() {
   const { goToDashboard } = useAppStore();
-  const [activeTab, setActiveTab] = useState('marketplace');
-  const [searchQuery, setSearchQuery] = useState('');
+  const activeTab = useAppStore(state => state.activeVehicleTab);
+  const setActiveTab = useAppStore(state => state.setActiveVehicleTab);
+  const searchQuery = useAppStore(state => state.vehicleSearchQuery);
+  const setSearchQuery = useAppStore(state => state.setVehicleSearchQuery);
 
   const tabs = [
     { id: 'marketplace', label: 'Marketplace', icon: Car },
@@ -35,17 +37,17 @@ export default function Vehicles() {
   const renderContent = () => {
     switch (activeTab) {
       case 'marketplace':
-        return <VehicleMarketplace />;
+        return <VehicleMarketplace searchQuery={searchQuery} />;
       case 'auctions':
-        return <VehicleAuction />;
+        return <VehicleAuction searchQuery={searchQuery} />;
       case 'services':
-        return <VehicleServices />;
+        return <VehicleServices searchQuery={searchQuery} />;
       case 'rentals':
-        return <VehicleRentals />;
+        return <VehicleRentals searchQuery={searchQuery} />;
       case 'finance':
-        return <VehicleFinance />;
+        return <VehicleFinance searchQuery={searchQuery} />;
       default:
-        return <VehicleMarketplace />;
+        return <VehicleMarketplace searchQuery={searchQuery} />;
     }
   };
 

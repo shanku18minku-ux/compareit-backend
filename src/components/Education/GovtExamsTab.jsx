@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, MapPin, Building, GraduationCap, Calendar, Briefcase, Bell, BellRing, Link2, Sparkles, SlidersHorizontal, CheckCircle2, Download, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import EmptyState from '../Global/EmptyState';
 import { govtExams } from '../../services/mockData';
 import useAppStore from '../../store/appStore';
 import './GovtExamsTab.css';
@@ -113,10 +114,11 @@ const GovtExamsTab = ({ searchQuery }) => {
         </div>
 
         {filteredExams.length === 0 ? (
-          <div className="no-exams">
-            <Briefcase size={40} className="empty-icon" />
-            <p>No exams found matching your criteria.</p>
-          </div>
+          <EmptyState 
+            icon="Search"
+            title="No Exams Found"
+            message="No exams found matching your criteria."
+          />
         ) : (
           filteredExams.map(exam => (
             <div key={exam.id} className="exam-card">

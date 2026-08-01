@@ -8,8 +8,10 @@ import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
 import './Food.css';
 
 const Food = () => {
-  const [activeTab, setActiveTab] = useState('delivery');
-  const [searchQuery, setSearchQuery] = useState('');
+  const activeTab = useAppStore(state => state.activeFoodTab);
+  const setActiveTab = useAppStore(state => state.setActiveFoodTab);
+  const searchQuery = useAppStore(state => state.foodSearchQuery);
+  const setSearchQuery = useAppStore(state => state.setFoodSearchQuery);
   
   // Try to use appStore if available, otherwise fallback
   let userLocation = 'Mumbai, India';

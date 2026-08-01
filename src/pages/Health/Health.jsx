@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-import { Search, MapPin, Stethoscope, Pill, Activity } from 'lucide-react';
+import { Search, MapPin, Stethoscope, Pill, Activity, Leaf, ShieldPlus, Home } from 'lucide-react';
 import DoctorTab from '../../components/Health/DoctorTab';
 import MedicineTab from '../../components/Health/MedicineTab';
 import ServicesTab from '../../components/Health/ServicesTab';
+import SupplementsTab from '../../components/Health/SupplementsTab';
+import DevicesTab from '../../components/Health/DevicesTab';
+import HomeCareTab from '../../components/Health/HomeCareTab';
 import useAppStore from '../../store/appStore';
 import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
 import './Health.css';
 
 const Health = () => {
-  const [activeTab, setActiveTab] = useState('doctor');
-  const [searchQuery, setSearchQuery] = useState('');
+  const activeTab = useAppStore(state => state.activeHealthTab);
+  const setActiveTab = useAppStore(state => state.setActiveHealthTab);
+  const searchQuery = useAppStore(state => state.healthSearchQuery);
+  const setSearchQuery = useAppStore(state => state.setHealthSearchQuery);
+  
   const userLocationObj = useAppStore(state => state.userLocation);
   const userLocation = typeof userLocationObj === 'string' ? userLocationObj : (userLocationObj?.city || userLocationObj?.address || 'New Delhi, Delhi');
 
@@ -54,6 +60,27 @@ const Health = () => {
             <Activity size={18} />
             <span>Services</span>
           </button>
+          <button 
+            className={`tab-btn ${activeTab === 'supplements' ? 'active' : ''}`}
+            onClick={() => setActiveTab('supplements')}
+          >
+            <Leaf size={18} />
+            <span>Supplements</span>
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'devices' ? 'active' : ''}`}
+            onClick={() => setActiveTab('devices')}
+          >
+            <ShieldPlus size={18} />
+            <span>Devices</span>
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'homecare' ? 'active' : ''}`}
+            onClick={() => setActiveTab('homecare')}
+          >
+            <Home size={18} />
+            <span>HomeCare</span>
+          </button>
         </div>
       </div>
 
@@ -61,6 +88,9 @@ const Health = () => {
         {activeTab === 'doctor' && <DoctorTab searchQuery={searchQuery} />}
         {activeTab === 'medicine' && <MedicineTab searchQuery={searchQuery} />}
         {activeTab === 'services' && <ServicesTab searchQuery={searchQuery} />}
+        {activeTab === 'supplements' && <SupplementsTab searchQuery={searchQuery} />}
+        {activeTab === 'devices' && <DevicesTab searchQuery={searchQuery} />}
+        {activeTab === 'homecare' && <HomeCareTab searchQuery={searchQuery} />}
       </div>
     </div>
   );

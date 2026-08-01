@@ -29,12 +29,14 @@ import FloatingWidget from './components/FloatingWidget/FloatingWidget';
 import LanguagePicker from './components/LanguagePicker/LanguagePicker';
 import LocationPrompt from './components/LocationPrompt/LocationPrompt';
 import ModuleLoadingSkeleton from './components/Global/ModuleLoadingSkeleton';
+import OfflineOverlay from './components/Global/OfflineOverlay';
 
 const ProductList = lazy(() => import('./pages/Ecommerce/ProductList'));
 const ProductDetail = lazy(() => import('./pages/Ecommerce/ProductDetail'));
 const Coupons = lazy(() => import('./pages/Coupons/Coupons'));
 const Logistics = lazy(() => import('./pages/Logistics/Logistics'));
 const Vehicles = lazy(() => import('./pages/Vehicles/Vehicles'));
+const ProviderDashboard = lazy(() => import('./pages/Admin/ProviderDashboard'));
 
 const SplashScreen = () => (
   <div style={{
@@ -227,6 +229,7 @@ const App = () => {
                 {viewMode === 'coupons' && <Coupons />}
                 {viewMode === 'logistics' && <Logistics />}
                 {viewMode === 'vehicles' && <Vehicles />}
+                {viewMode === 'admin' && <ProviderDashboard />}
                 {viewMode === 'dashboard' && (
                   <>
                     {activeTab === 'home' && <Home />}
@@ -267,8 +270,12 @@ const App = () => {
   return (
     <div className="app-container">
       {renderScreen()}
-      {/* Global Affiliate Redirect Modal */}
+
+      {/* Global Overlays */}
       <GlobalAffiliateRedirectModal />
+      <OfflineOverlay />
+      
+      {/* Search Input Widget */}
     </div>
   );
 };

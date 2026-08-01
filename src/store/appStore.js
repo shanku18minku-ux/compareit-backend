@@ -18,10 +18,11 @@ const useAppStore = create(
       // === APP FLOW STATE ===
       currentScreen: 'loading',
       authPage: 'login',
-      viewMode: 'dashboard', // 'dashboard' | 'plp' | 'pdp' | 'coupons' | 'logistics' | 'vehicles'
+      viewMode: 'dashboard', // 'dashboard' | 'plp' | 'pdp' | 'coupons' | 'logistics' | 'vehicles' | 'admin'
       setCurrentScreen: (screen) => set({ currentScreen: screen }),
       setAuthPage: (page) => set({ authPage: page }),
       setViewMode: (mode) => set({ viewMode: mode }),
+      goToAdmin: () => set({ viewMode: 'admin' }),
       
       // === GLOBAL REDIRECT (AFFILIATE) ===
       globalRedirectData: null, // { providerName: 'Zoomcar', targetUrl: 'https...' }

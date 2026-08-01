@@ -1,5 +1,6 @@
 // AIOrchestrator.js
 // Central Nervous System for CompareIt
+import { ProviderManager } from './providers/ProviderManager';
 
 class AIOrchestrator {
   constructor() {
@@ -12,7 +13,11 @@ class AIOrchestrator {
     const q = query.toLowerCase();
     
     // Health Intent
-    if (q.match(/(fever|doctor|medicine|hospital|clinic|cough|cold|pain|surgery|consult)/)) {
+    if (q.match(/(fever|doctor|medicine|hospital|clinic|cough|cold|pain|surgery|consult|protein|whey|vitamin|fish oil|supplement|calcium|creatine|device|monitor|machine|meter|glucometer|wheelchair|nurse|physio|home care|attendant|elder care|panadol|crocin|dolo|augmentin|shelcal|paracetamol|mg|ml|tablet|capsule|syrup)/)) {
+      if (q.match(/(protein|whey|vitamin|fish oil|supplement|calcium|creatine)/)) return { module: 'health', tab: 'supplements', confidence: 0.9 };
+      if (q.match(/(device|monitor|machine|meter|glucometer|wheelchair)/)) return { module: 'health', tab: 'devices', confidence: 0.9 };
+      if (q.match(/(nurse|physio|home care|attendant|elder care)/)) return { module: 'health', tab: 'homecare', confidence: 0.9 };
+      if (q.match(/(medicine|pill|tablet|capsule|syrup|panadol|crocin|dolo|augmentin|shelcal|paracetamol|mg|ml)/)) return { module: 'health', tab: 'medicine', confidence: 0.9 };
       return { module: 'health', tab: 'consult', confidence: 0.9 };
     }
     
@@ -52,6 +57,25 @@ class AIOrchestrator {
     }
 
     return { module: 'unknown', confidence: 0 };
+  }
+
+  // Universal Provider Fetch via Adapter System
+  async executeSmartQuery(moduleType, query) {
+    if (!query) return [];
+    
+    // Check if ProviderManager has adapters for this module
+    const adapters = ProviderManager.getAdaptersForModule(moduleType);
+    
+    // If we have modern adapters, use them!
+    if (adapters.length > 0) {
+      return this.fetchWithCache(`provider_v2_${moduleType}_${query}`, () => {
+        return ProviderManager.fetchAndAggregate(moduleType, query);
+      });
+    }
+
+    // Fallback: If no adapters exist yet for this module, return empty array
+    // The individual tabs can handle the fallback to legacy local mock data
+    return [];
   }
 
   // 2. Smart Cache & API Coordinator

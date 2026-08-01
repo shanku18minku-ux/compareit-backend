@@ -10,7 +10,9 @@ import './Travel.css';
 const Travel = () => {
   const { userLocation: userLocationObj } = useAppStore();
   const userLocation = typeof userLocationObj === 'string' ? userLocationObj : (userLocationObj?.city || userLocationObj?.address || 'Detecting...');
-  const [activeTab, setActiveTab] = useState('commute');
+  const activeTab = useAppStore(state => state.activeTravelTab);
+  const setActiveTab = useAppStore(state => state.setActiveTravelTab);
+  const searchQuery = useAppStore(state => state.travelSearchQuery);
 
   const tabs = [
     { id: 'commute', label: 'Commute', icon: Car },
@@ -21,13 +23,13 @@ const Travel = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'commute':
-        return <CommuteTab />;
+        return <CommuteTab searchQuery={searchQuery} />;
       case 'outstation':
-        return <OutstationTab />;
+        return <OutstationTab searchQuery={searchQuery} />;
       case 'stay':
-        return <StayTab />;
+        return <StayTab searchQuery={searchQuery} />;
       default:
-        return <CommuteTab />;
+        return <CommuteTab searchQuery={searchQuery} />;
     }
   };
 

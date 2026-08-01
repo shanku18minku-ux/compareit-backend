@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { ShoppingCart, Pill, Activity, Heart, ShieldAlert, Sparkles, TrendingDown } from 'lucide-react';
 import useAppStore from '../../store/appStore';
 import CouponManager from '../CouponManager/CouponManager';
+import GenericAlternatives from './GenericAlternatives';
+import { getGenericAlternatives } from '../../services/medicineAiService';
 import './MedicineTab.css';
 
 const mockMedicines = [
@@ -47,20 +49,22 @@ const mockMedicines = [
   }
 ];
 
-const categories = [
-  { name: 'OTC Medicines', icon: <Pill size={20} />, color: '#3b82f6' },
-  { name: 'Supplements', icon: <Sparkles size={20} />, color: '#8b5cf6' },
-  { name: 'Medical Devices', icon: <Activity size={20} />, color: '#ef4444' },
-  { name: 'Home Healthcare', icon: <Heart size={20} />, color: '#10b981' }
-];
 
 const MedicineTab = ({ searchQuery }) => {
   const { couponMode, appliedManualCoupons, setGlobalRedirectData } = useAppStore();
 
-  const filteredMedicines = mockMedicines.filter(med => 
-    med.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    med.composition.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredMedicines = mockMedicines.filter(med => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    
+    // Generic terms show all
+    if (q.includes('medicine') || q.includes('health')) return true;
+    
+    // Symptom-based simple routing
+    if (q.includes('fever') || q.includes('pain') || q.includes('cold')) return true;
+
+    return med.name.toLowerCase().includes(q) || med.composition.toLowerCase().includes(q);
+  });
 
   const [expandedMeds, setExpandedMeds] = useState({});
 
@@ -89,18 +93,7 @@ const MedicineTab = ({ searchQuery }) => {
   return (
     <div className="medicine-tab">
       
-      {!searchQuery && (
-        <div className="medicine-categories">
-          {categories.map(cat => (
-            <div key={cat.name} className="med-cat-card">
-              <div className="med-cat-icon" style={{ backgroundColor: `${cat.color}15`, color: cat.color }}>
-                {cat.icon}
-              </div>
-              <span className="med-cat-name">{cat.name}</span>
-            </div>
-          ))}
-        </div>
-      )}
+
 
       <div className="medicines-list">
         <h3 className="section-title">
@@ -110,7 +103,12 @@ const MedicineTab = ({ searchQuery }) => {
         {filteredMedicines.length === 0 ? (
           <div className="no-results">No medicines found for this query.</div>
         ) : (
-          filteredMedicines.map(med => (
+          filteredMedicines.map(med => {
+            const genericData = getGenericAlternatives(med);
+            const genericCount = (genericData && genericData.alternatives) ? genericData.alternatives.length : 0;
+            const totalPlatformsCount = med.platforms.length + genericCount;
+
+            return (
             <div key={med.id} className="medicine-card">
               <div className="medicine-header">
                 <div className="medicine-info">
@@ -118,19 +116,10 @@ const MedicineTab = ({ searchQuery }) => {
                     <h4 className="medicine-name">{med.name}</h4>
                     <span className="medicine-type">{med.type}</span>
                   </div>
-                  <p className="medicine-composition">{med.composition}</p>
-                  <p className="medicine-manufacturer">By {med.manufacturer}</p>
+                  <span className="medicine-composition">{med.composition}</span>
+                  <span className="medicine-manufacturer">By {med.manufacturer}</span>
                 </div>
               </div>
-              
-              {med.genericSuggestion && (
-                <div className="generic-alert">
-                  <TrendingDown size={16} className="generic-icon" />
-                  <div className="generic-text">
-                    <strong>Generic Alternative:</strong> {med.genericSuggestion.name} ({med.genericSuggestion.diff})
-                  </div>
-                </div>
-              )}
 
                 <div style={{ marginTop: '12px' }}>
                   <button 
@@ -142,7 +131,7 @@ const MedicineTab = ({ searchQuery }) => {
                       cursor: 'pointer', fontWeight: '600', color: '#334155'
                     }}
                   >
-                    <span>Check Deals across {med.platforms.length} Platforms</span>
+                    <span>Check Deals across {totalPlatformsCount} Platforms</span>
                     <span>{expandedMeds[med.id] ? '▲' : '▼'}</span>
                   </button>
                 </div>
@@ -198,10 +187,16 @@ const MedicineTab = ({ searchQuery }) => {
                         </div>
                       );
                     })}
+
+                    <GenericAlternatives 
+                      medicine={med} 
+                      originalCheapestPrice={Math.min(...med.platforms.map(p => getPlatformFinalPrice(med.id, p)))} 
+                    />
                   </div>
                 )}
               </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>

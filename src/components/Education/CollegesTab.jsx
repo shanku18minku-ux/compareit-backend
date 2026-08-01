@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CollegesTab.css';
 import { Building, MapPin, Trophy, DollarSign, ExternalLink, Activity, Gift, Search, TrendingUp, CheckCircle2 } from 'lucide-react';
 import useAppStore from '../../store/appStore';
+import EmptyState from '../Global/EmptyState';
 
 const mockColleges = [
   {
@@ -344,8 +345,14 @@ const CollegesTab = ({ searchQuery }) => {
       )}
 
       <div className="colleges-list">
-        {filtered.map(item => (
-          <div key={item.id} className="college-card">
+        {filtered.length === 0 ? (
+          <EmptyState 
+            title="No Colleges Found" 
+            message={`We couldn't find any colleges matching "${searchQuery}".`}
+          />
+        ) : (
+          filtered.map(item => (
+            <div key={item.id} className="college-card">
             <div className="college-top">
               <div className="college-info">
                 <h3>{item.name}</h3>
@@ -424,7 +431,8 @@ const CollegesTab = ({ searchQuery }) => {
               </button>
             </div>
           </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

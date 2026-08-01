@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Star, MapPin, Check, ExternalLink, Percent } from 'lucide-react';
 import useAppStore from '../../store/appStore';
+import EmptyState from '../Global/EmptyState';
 import './DineInTab.css';
 
 const MOCK_RESTAURANTS = [
@@ -109,7 +110,11 @@ const DineInTab = ({ globalSearchQuery = '' }) => {
   return (
     <div className="dinein-tab-container fade-in">
       {restaurants.length === 0 ? (
-        <div className="no-results">No restaurants found.</div>
+        <EmptyState 
+          icon="Search"
+          title="No Restaurants Found"
+          message="Try a different location or cuisine."
+        />
       ) : (
         <div className="dinein-list">
           {restaurants.map(rest => {

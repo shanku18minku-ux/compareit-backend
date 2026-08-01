@@ -3,6 +3,7 @@ import { useApi } from '../../services/api';
 import useAppStore from '../../store/appStore';
 import SwipeDeck from '../SwipeDeck/SwipeDeck';
 import UniversalCard from '../UniversalCard/UniversalCard';
+import EmptyState from '../Global/EmptyState';
 import styles from './ConsultTab.module.css';
 
 export default function ConsultTab() {
@@ -82,9 +83,11 @@ export default function ConsultTab() {
         })}
       </div>
       {filteredDoctors.length === 0 && (
-        <div className={styles.noResults}>
-          <p>No doctors found matching "{healthSearchQuery}"</p>
-        </div>
+        <EmptyState 
+          icon="Search"
+          title="No Doctors Found"
+          message={`No doctors found matching "${healthSearchQuery}"`}
+        />
       )}
     </div>
   );

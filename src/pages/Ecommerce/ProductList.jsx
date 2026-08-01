@@ -3,6 +3,7 @@ import './ProductList.css';
 import FilterSidebar from '../../components/Ecommerce/FilterSidebar';
 import useAppStore from '../../store/appStore';
 import { useApi } from '../../services/api';
+import { aiOrchestrator } from '../../core/AIOrchestrator';
 import { Browser } from '@capacitor/browser';
 import { SlidersHorizontal, ArrowLeft, Star, Truck, Tag, ChevronDown, ChevronUp, Zap, ShieldCheck } from 'lucide-react';
 import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
@@ -22,49 +23,91 @@ const ProductList = () => {
   const setGlobalRedirectData = useAppStore(state => state.setGlobalRedirectData);
 
   useEffect(() => {
-    getTrendingDeals().then(res => {
-      // Inject Second Hand / Refurbished listings for electronics
-      const enhancedDeals = res.map(deal => {
-        if (deal.category === 'Electronics') {
-          const basePrice = deal.bestPrice || deal.originalPrice || 20000;
-          const olxPrice = Math.floor(basePrice * 0.45); // 55% off
-          const cashifyPrice = Math.floor(basePrice * 0.55); // 45% off
-          
-          return {
-            ...deal,
-            platforms: [
-              ...deal.platforms,
-              { 
-                name: 'Cashify', 
-                price: cashifyPrice, 
-                logo: 'https://placehold.co/50x50/FFF/000?text=C', 
-                url: '#', 
-                deliveryDays: 2, 
-                inStock: true, 
-                shippingCost: 0, 
-                bankOffer: 'Refurbished (Superb)', 
-                isSecondHand: true 
-              },
-              { 
-                name: 'OLX', 
-                price: olxPrice, 
-                logo: 'https://placehold.co/50x50/FFF/000?text=O', 
-                url: '#', 
-                deliveryDays: 0, 
-                inStock: true, 
-                shippingCost: 0, 
-                bankOffer: 'Used (Local Pickup)', 
-                isSecondHand: true 
-              }
-            ]
-          };
+    setLoading(true);
+    
+    // If there is a search query, try to use the Universal Provider Adapter System
+    if (searchQuery) {
+      aiOrchestrator.executeSmartQuery('shopping', searchQuery).then(providerResults => {
+        if (providerResults && providerResults.length > 0) {
+          // Adapt the normalized Provider format to the format expected by ProductList
+          const adaptedDeals = providerResults.map(pr => ({
+            id: pr.id,
+            title: pr.title,
+            brand: pr.subtitle,
+            category: 'Electronics',
+            image: pr.coverImage,
+            rating: pr.rating,
+            bestPrice: pr.price,
+            originalPrice: pr.mrp,
+            discount: pr.badge2 ? parseInt(pr.badge2) : 0,
+            dealScore: pr.aiScore * 10, // scaling 9.9 to 99
+            platforms: pr.compareData.map(c => ({
+              name: c.platform,
+              price: c.price,
+              url: c.url,
+              logo: `https://placehold.co/50x50/FFF/000?text=${c.platform[0]}`,
+              deliveryDays: c.platform === 'Amazon' ? 1 : 2,
+              inStock: true,
+              shippingCost: 0,
+              bankOffer: c.isCheapest ? 'Lowest Price' : 'Standard'
+            }))
+          }));
+          setDeals(adaptedDeals);
+          setLoading(false);
+          return;
+        } else {
+          fetchFallbackDeals();
         }
-        return deal;
       });
-      setDeals(enhancedDeals);
-      setLoading(false);
-    });
-  }, []);
+    } else {
+      fetchFallbackDeals();
+    }
+
+    function fetchFallbackDeals() {
+      getTrendingDeals().then(res => {
+        // Inject Second Hand / Refurbished listings for electronics
+        const enhancedDeals = res.map(deal => {
+          if (deal.category === 'Electronics') {
+            const basePrice = deal.bestPrice || deal.originalPrice || 20000;
+            const olxPrice = Math.floor(basePrice * 0.45); // 55% off
+            const cashifyPrice = Math.floor(basePrice * 0.55); // 45% off
+            
+            return {
+              ...deal,
+              platforms: [
+                ...deal.platforms,
+                { 
+                  name: 'Cashify', 
+                  price: cashifyPrice, 
+                  logo: 'https://placehold.co/50x50/FFF/000?text=C', 
+                  url: '#', 
+                  deliveryDays: 2, 
+                  inStock: true, 
+                  shippingCost: 0, 
+                  bankOffer: 'Refurbished (Superb)', 
+                  isSecondHand: true 
+                },
+                { 
+                  name: 'OLX', 
+                  price: olxPrice, 
+                  logo: 'https://placehold.co/50x50/FFF/000?text=O', 
+                  url: '#', 
+                  deliveryDays: 0, 
+                  inStock: true, 
+                  shippingCost: 0, 
+                  bankOffer: 'Used (Local Pickup)', 
+                  isSecondHand: true 
+                }
+              ]
+            };
+          }
+          return deal;
+        });
+        setDeals(enhancedDeals);
+        setLoading(false);
+      });
+    }
+  }, [searchQuery]);
 
   const toggleProduct = (id) =>
     setExpandedProducts(prev => ({ ...prev, [id]: !prev[id] }));

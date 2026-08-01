@@ -3,18 +3,76 @@ import { DollarSign, CheckCircle2, ChevronDown, ChevronUp, ExternalLink, Zap } f
 import styles from './VehicleEcosystem.module.css';
 import { vehicleFinance } from '../../services/vehicleEcosystemData';
 import AffiliateRedirectModal from './AffiliateRedirectModal';
+import EmptyState from '../Global/EmptyState';
 
 const VehicleFinance = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   
   const categories = ['All', 'Car Loan', 'Used Vehicle Loan', 'Insurance'];
   
+  const [loanAmount, setLoanAmount] = useState(500000);
+  const [interestRate, setInterestRate] = useState(8.5);
+  const [loanTenure, setLoanTenure] = useState(5); // in years
+  
   const filteredFinance = activeFilter === 'All' 
     ? vehicleFinance 
     : vehicleFinance.filter(f => f.category === activeFilter);
 
+  // EMI Calculation: E = P * r * (1 + r)^n / ((1 + r)^n - 1)
+  const calculateEMI = () => {
+    const p = parseFloat(loanAmount);
+    const r = parseFloat(interestRate) / 12 / 100;
+    const n = parseFloat(loanTenure) * 12;
+    if (!p || !r || !n) return 0;
+    const emi = p * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+    return Math.round(emi);
+  };
+
+  const totalEMI = calculateEMI();
+
   return (
     <div className={styles.container}>
+      
+      {/* EMI Calculator Section */}
+      <div className="glass-card" style={{ padding: '20px', marginBottom: '20px', borderRadius: '16px' }}>
+        <h3 style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Zap size={18} color="#2563EB" /> 
+          Quick EMI Calculator
+        </h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div>
+            <label style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
+              <span>Loan Amount</span>
+              <span style={{ fontWeight: 'bold' }}>₹{loanAmount.toLocaleString()}</span>
+            </label>
+            <input 
+              type="range" min="50000" max="5000000" step="10000" 
+              value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} 
+              style={{ width: '100%', accentColor: '#2563EB' }}
+            />
+          </div>
+          <div style={{ display: 'flex', gap: '16px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ fontSize: '12px', color: '#6b7280', display: 'block', marginBottom: '4px' }}>Interest Rate (%)</label>
+              <input 
+                type="number" value={interestRate} onChange={(e) => setInterestRate(e.target.value)}
+                style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #e5e7eb' }}
+              />
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={{ fontSize: '12px', color: '#6b7280', display: 'block', marginBottom: '4px' }}>Tenure (Years)</label>
+              <input 
+                type="number" value={loanTenure} onChange={(e) => setLoanTenure(e.target.value)}
+                style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #e5e7eb' }}
+              />
+            </div>
+          </div>
+          <div style={{ background: '#f3f4f6', padding: '12px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '14px', color: '#4b5563' }}>Estimated EMI:</span>
+            <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#2563EB' }}>₹{totalEMI.toLocaleString()}/mo</span>
+          </div>
+        </div>
+      </div>
       <div className={styles.filtersSection}>
         <div className={styles.filters}>
           {categories.map(cat => (
@@ -30,9 +88,17 @@ const VehicleFinance = () => {
       </div>
 
       <div className={styles.grid}>
-        {filteredFinance.map((finance) => (
-          <FinanceCard key={finance.id} finance={finance} />
-        ))}
+        {filteredFinance.length === 0 ? (
+          <EmptyState 
+            icon="DollarSign"
+            title="No Finance Options Found"
+            message="We couldn't find any options matching this category."
+          />
+        ) : (
+          filteredFinance.map((finance) => (
+            <FinanceCard key={finance.id} finance={finance} />
+          ))
+        )}
       </div>
     </div>
   );

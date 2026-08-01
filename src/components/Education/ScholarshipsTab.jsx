@@ -4,6 +4,7 @@ import { useApi } from '../../services/api';
 import { Award, Search } from 'lucide-react';
 import SwipeDeck from '../SwipeDeck/SwipeDeck';
 import UniversalCard from '../UniversalCard/UniversalCard';
+import EmptyState from '../Global/EmptyState';
 
 const ScholarshipsTab = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,10 +43,11 @@ const ScholarshipsTab = () => {
 
   if (!data || data.length === 0) {
     return (
-      <div className={styles.emptyState}>
-        <Award className={styles.emptyIcon} size={48} />
-        <p>No scholarships available at the moment.</p>
-      </div>
+      <EmptyState 
+        icon="Award"
+        title="No Scholarships"
+        message="No scholarships available at the moment."
+      />
     );
   }
 
@@ -105,11 +107,7 @@ const ScholarshipsTab = () => {
         />
       </div>
       
-      {filteredScholarships.length === 0 && (
-        <div className={styles.noResults}>
-          <p>No scholarships match your search.</p>
-        </div>
-      )}
+
     </div>
   );
 };
