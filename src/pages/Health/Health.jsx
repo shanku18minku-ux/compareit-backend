@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, MapPin, Stethoscope, Pill, Activity, Leaf, ShieldPlus, Home } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import DoctorTab from '../../components/Health/DoctorTab';
 import MedicineTab from '../../components/Health/MedicineTab';
 import ServicesTab from '../../components/Health/ServicesTab';
@@ -11,6 +12,7 @@ import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
 import './Health.css';
 
 const Health = () => {
+  const { t } = useTranslation();
   const activeTab = useAppStore(state => state.activeHealthTab);
   const setActiveTab = useAppStore(state => state.setActiveHealthTab);
   const searchQuery = useAppStore(state => state.healthSearchQuery);
@@ -32,7 +34,7 @@ const Health = () => {
           <Search size={20} className="search-icon" />
           <input 
             type="text" 
-            placeholder="Search doctors, medicines, or services..." 
+            placeholder={t('health_search_placeholder', 'Search doctors, medicines, or services...')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -44,42 +46,42 @@ const Health = () => {
             onClick={() => setActiveTab('doctor')}
           >
             <Stethoscope size={18} />
-            <span>Doctor</span>
+            <span>{t('health_tab_doctor', 'Doctor')}</span>
           </button>
           <button 
             className={`tab-btn ${activeTab === 'medicine' ? 'active' : ''}`}
             onClick={() => setActiveTab('medicine')}
           >
             <Pill size={18} />
-            <span>Medicine</span>
+            <span>{t('health_tab_medicine', 'Medicine')}</span>
           </button>
           <button 
             className={`tab-btn ${activeTab === 'services' ? 'active' : ''}`}
             onClick={() => setActiveTab('services')}
           >
             <Activity size={18} />
-            <span>Services</span>
+            <span>{t('health_tab_services', 'Services')}</span>
           </button>
           <button 
             className={`tab-btn ${activeTab === 'supplements' ? 'active' : ''}`}
             onClick={() => setActiveTab('supplements')}
           >
             <Leaf size={18} />
-            <span>Supplements</span>
+            <span>{t('health_tab_supplements', 'Supplements')}</span>
           </button>
           <button 
             className={`tab-btn ${activeTab === 'devices' ? 'active' : ''}`}
             onClick={() => setActiveTab('devices')}
           >
             <ShieldPlus size={18} />
-            <span>Devices</span>
+            <span>{t('health_tab_devices', 'Devices')}</span>
           </button>
           <button 
             className={`tab-btn ${activeTab === 'homecare' ? 'active' : ''}`}
             onClick={() => setActiveTab('homecare')}
           >
             <Home size={18} />
-            <span>HomeCare</span>
+            <span>{t('health_tab_homecare', 'Home Care')}</span>
           </button>
         </div>
       </div>

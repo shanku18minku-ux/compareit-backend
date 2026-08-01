@@ -1,14 +1,17 @@
 import React from 'react';
 import { Home, UtensilsCrossed, Plane, HeartPulse, GraduationCap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import styles from './BottomNav.module.css';
 
 const BottomNav = ({ activeTab, onTabChange }) => {
+  const { t } = useTranslation();
+
   const tabs = [
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'food', label: 'Food', icon: UtensilsCrossed },
-    { id: 'travel', label: 'Travel', icon: Plane },
-    { id: 'health', label: 'Health', icon: HeartPulse },
-    { id: 'education', label: 'Learn', icon: GraduationCap },
+    { id: 'home', label: t('nav_home', 'Home'), icon: Home },
+    { id: 'food', label: t('nav_food', 'Food'), icon: UtensilsCrossed },
+    { id: 'travel', label: t('nav_travel', 'Travel'), icon: Plane },
+    { id: 'health', label: t('nav_health', 'Health'), icon: HeartPulse },
+    { id: 'education', label: t('nav_learn', 'Learn'), icon: GraduationCap },
   ];
   // Note: Search tab and AI Copilot tab removed per user request.
   // AI Copilot remains as floating button only.

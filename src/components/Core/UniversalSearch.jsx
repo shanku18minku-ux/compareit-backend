@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Search, Mic, Camera, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { aiOrchestrator } from '../../core/AIOrchestrator';
 import useAppStore from '../../store/appStore';
 import usePersonalizationStore from '../../store/personalizationStore';
 import './UniversalSearch.css';
 
-const UniversalSearch = ({ placeholder = "Search anything... (e.g. 'cheap flight to delhi')" }) => {
+const UniversalSearch = () => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   
@@ -106,7 +108,7 @@ const UniversalSearch = ({ placeholder = "Search anything... (e.g. 'cheap flight
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
-          placeholder={placeholder}
+          placeholder={t('search_placeholder', "Search anything... (e.g. 'cheap flights to Goa')")}
           className="univ-search-input"
         />
         {query ? (

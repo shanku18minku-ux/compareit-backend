@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Search, Bell, User, MapPin, Mic, Camera, TrendingUp, Zap, Tag, ChevronRight, Star, Clock, ShieldCheck, ArrowDown, ArrowUp, Flame, Ticket, Sparkles, Package, HelpCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import useAppStore from '../../store/appStore';
 import { useApi } from '../../services/api';
 import { Browser } from '@capacitor/browser';
@@ -37,6 +38,7 @@ const secondHandPlatforms = [
 ];
 
 const Home = () => {
+  const { t } = useTranslation();
   const { user, totalSaved, cashbackEarned, couponsUsed, notifications, userLocation, setActiveTab, goToPLP, setSearchQuery, addRecentSearch, goToCoupons, goToLogistics } = useAppStore();
   const [mounted, setMounted] = useState(false);
   const [query, setQuery] = useState('');
@@ -82,7 +84,7 @@ const Home = () => {
               <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '1.05rem', letterSpacing: '-0.3px' }}>{userLocation?.city || 'Delhi'}</span>
               <ChevronRight size={16} color="#64748b" />
             </div>
-            <span style={{ color: '#64748b', fontSize: '0.75rem', marginLeft: '22px' }}>Deliver to your location</span>
+            <span style={{ color: '#64748b', fontSize: '0.75rem', marginLeft: '22px' }}>{t('deliver_to_location', 'Deliver to your location')}</span>
           </div>
           <div className="header-actions">
             <button className="icon-btn support-btn" onClick={() => useAppStore.getState().setIsSupportOpen(true)}>
@@ -108,13 +110,17 @@ const Home = () => {
         </div>
       </header>
 
-
-
+      {/* Categories */}
+      <section className="section">
+        <div className="section-header">
+          <h2 className="section-title">{t('home_categories', 'Categories')}</h2>
+        </div>
+      </section>
 
       {/* Upcoming Sales Countdown */}
       <section className="section">
         <div className="section-header">
-          <h2 className="section-title"><Flame size={18} color="#ef4444" /> Upcoming Sales</h2>
+          <h2 className="section-title"><Flame size={18} color="#ef4444" /> {t('home_upcoming_sales', 'Upcoming Sales')}</h2>
         </div>
         <div className="sales-scroll">
           {upcomingSalesData.map((sale, i) => (

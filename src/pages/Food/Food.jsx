@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, MapPin, Navigation, Bike, Utensils, Package } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import useAppStore from '../../store/appStore';
 import DeliveryTab from '../../components/Food/DeliveryTab';
 import DineInTab from '../../components/Food/DineInTab';
@@ -8,6 +9,7 @@ import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
 import './Food.css';
 
 const Food = () => {
+  const { t } = useTranslation();
   const activeTab = useAppStore(state => state.activeFoodTab);
   const setActiveTab = useAppStore(state => state.setActiveFoodTab);
   const searchQuery = useAppStore(state => state.foodSearchQuery);
@@ -35,16 +37,16 @@ const Food = () => {
           <Navigation size={14} className="location-icon" />
         </div>
         
-        <h1 className="food-title">Compare & Crave</h1>
+        <h1 className="food-title">{t('food_compare_crave', 'Compare & Crave')}</h1>
         
         <div className="food-search-bar">
           <Search size={20} className="food-search-icon" />
           <input
             type="text"
             placeholder={
-              activeTab === 'delivery' ? "Search for dishes (e.g. Biryani, Pizza)..." :
-              activeTab === 'dinein' ? "Search restaurants or cuisines..." :
-              "Search B2B supply & catering..."
+              activeTab === 'delivery' ? t('food_search_delivery', "Search for dishes (e.g. Biryani, Pizza)...") :
+              activeTab === 'dinein' ? t('food_search_dinein', "Search restaurants or cuisines...") :
+              t('food_search_supply', "Search B2B supply & catering...")
             }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -57,19 +59,19 @@ const Food = () => {
             className={`food-tab ${activeTab === 'delivery' ? 'active' : ''}`}
             onClick={() => setActiveTab('delivery')}
           >
-            <Bike size={16} /> Delivery
+            <Bike size={16} /> {t('food_tab_delivery', 'Delivery')}
           </button>
           <button 
             className={`food-tab ${activeTab === 'dinein' ? 'active' : ''}`}
             onClick={() => setActiveTab('dinein')}
           >
-            <Utensils size={16} /> Dine-In
+            <Utensils size={16} /> {t('food_tab_dinein', 'Dine-in')}
           </button>
           <button 
             className={`food-tab ${activeTab === 'supply' ? 'active' : ''}`}
             onClick={() => setActiveTab('supply')}
           >
-            <Package size={16} /> Supply
+            <Package size={16} /> {t('food_tab_supply', 'Supply & Catering')}
           </button>
         </div>
       </div>

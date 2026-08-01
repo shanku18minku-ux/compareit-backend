@@ -7,9 +7,11 @@ import JobsTab from '../../components/Education/JobsTab';
 import GovtExamsTab from '../../components/Education/GovtExamsTab';
 import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
 import { Search, BookOpen, GraduationCap, Building2, Briefcase, Landmark } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import useAppStore from '../../store/appStore';
 
 const Education = () => {
+  const { t } = useTranslation();
   const activeTab = useAppStore(state => state.activeEducationTab);
   const setActiveTab = useAppStore(state => state.setActiveEducationTab);
   const searchQuery = useAppStore(state => state.educationSearchQuery);
@@ -39,14 +41,14 @@ const Education = () => {
     <div className="education-container">
       <GlobalDisclaimer />
       <div className="education-header">
-        <h1>Learn & Grow</h1>
-        <p>Discover courses, colleges, coaching, and jobs</p>
+        <h1>{t('education_title', 'Learn & Grow')}</h1>
+        <p>{t('education_subtitle', 'Discover courses, colleges, coaching, and jobs')}</p>
         
         <div className="search-container">
           <Search className="search-icon" size={20} />
           <input 
             type="text" 
-            placeholder="Search for Class 12, UPSC, Python, MBA..."
+            placeholder={t('education_search_placeholder', 'Search for Class 12, UPSC, Python, MBA...')}
             value={searchQuery}
             onChange={handleSearch}
             className="global-search"
@@ -59,31 +61,36 @@ const Education = () => {
           className={`tab-btn ${activeTab === 'courses' ? 'active' : ''}`}
           onClick={() => setActiveTab('courses')}
         >
-          <BookOpen size={18} /> Courses
+          <BookOpen size={16} />
+          {t('education_tab_courses', 'Courses')}
         </button>
         <button 
           className={`tab-btn ${activeTab === 'coaching' ? 'active' : ''}`}
           onClick={() => setActiveTab('coaching')}
         >
-          <Building2 size={18} /> Coaching
+          <GraduationCap size={16} />
+          {t('education_tab_coaching', 'Coaching')}
         </button>
         <button 
           className={`tab-btn ${activeTab === 'colleges' ? 'active' : ''}`}
           onClick={() => setActiveTab('colleges')}
         >
-          <GraduationCap size={18} /> Colleges
+          <Building2 size={16} />
+          {t('education_tab_colleges', 'Colleges')}
         </button>
         <button 
           className={`tab-btn ${activeTab === 'jobs' ? 'active' : ''}`}
           onClick={() => setActiveTab('jobs')}
         >
-          <Briefcase size={18} /> Jobs
+          <Briefcase size={16} />
+          {t('education_tab_jobs', 'Jobs')}
         </button>
         <button 
           className={`tab-btn ${activeTab === 'govtexams' ? 'active' : ''}`}
           onClick={() => setActiveTab('govtexams')}
         >
-          <Landmark size={18} /> Govt Exams
+          <Landmark size={16} />
+          {t('education_tab_govtexams', 'Govt Exams')}
         </button>
       </div>
 
