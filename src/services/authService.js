@@ -95,7 +95,7 @@ export const signInWithGoogle = async () => {
         provider: 'google',
         options: {
           skipBrowserRedirect: false,
-          redirectTo: window.location.origin,
+          redirectTo: window.location.origin + import.meta.env.BASE_URL,
         }
       });
       if (error) throw error;
