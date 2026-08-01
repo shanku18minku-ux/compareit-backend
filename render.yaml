@@ -12,10 +12,10 @@ services:
         value: production
       # Allow the mobile app and localhost for local dev testing against production server
       - key: CORS_ORIGINS
-        value: capacitor://localhost,http://localhost,http://localhost:5173,https://compareit-frontend.onrender.com
+        value: capacitor://localhost,http://localhost,http://localhost:5173,https://compareit-app-frontend.onrender.com
 
   - type: web
-    name: compareit-frontend
+    name: compareit-app-frontend
     env: static
     buildCommand: npm install && npm run build
     staticPublishPath: dist
