@@ -33,28 +33,36 @@ const UniversalSearch = () => {
     if (intent.module !== 'unknown') {
       console.log(`[AI Routing] Detected intent: ${intent.module} -> ${intent.tab}`);
       
-      setViewMode('dashboard');
-      setActiveTab(intent.module);
       
+
       // Route to sub-tab and set local module search query if applicable
       switch(intent.module) {
         case 'health':
+          setViewMode('dashboard');
+          setActiveTab(intent.module);
           setActiveHealthTab(intent.tab);
           setHealthSearchQuery(queryText);
           break;
         case 'travel':
+          setViewMode('dashboard');
+          setActiveTab(intent.module);
           setActiveTravelTab(intent.tab);
           setTravelSearchQuery(queryText);
           break;
         case 'food':
+          setViewMode('dashboard');
+          setActiveTab(intent.module);
           setActiveFoodTab(intent.tab);
           setFoodSearchQuery(queryText);
           break;
         case 'education':
+          setViewMode('dashboard');
+          setActiveTab(intent.module);
           setActiveEducationTab(intent.tab);
           setEducationSearchQuery(queryText);
           break;
         case 'vehicles':
+          setViewMode('vehicles');
           setActiveVehicleTab(intent.tab);
           setVehicleSearchQuery(queryText);
           break;
