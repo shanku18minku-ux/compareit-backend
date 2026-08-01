@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bot, Play, X, CheckCircle2 } from 'lucide-react';
 import useAppStore from '../../store/appStore';
+import AppTourPlayer from './AppTourPlayer';
 import './AIOnboarding.css';
 
 const AIOnboarding = () => {
@@ -20,23 +21,7 @@ const AIOnboarding = () => {
     }
   }, [hasSeenAppTour, isAppTourOpen]);
 
-  // Simulate video progress
-  useEffect(() => {
-    let interval;
-    if (step === 'playing') {
-      interval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setStep('finished');
-            return 100;
-          }
-          return prev + 5; // Fake progress
-        });
-      }, 1500); // 30 second simulation (20 steps * 1.5s)
-    }
-    return () => clearInterval(interval);
-  }, [step]);
+  // Fake progress effect removed in favor of AppTourPlayer
 
   if (!isAppTourOpen) return null;
 
@@ -84,21 +69,12 @@ const AIOnboarding = () => {
         )}
 
         {step === 'playing' && (
-          <>
-            <h2 style={{ marginBottom: 20 }}>App Tour</h2>
-            <div className="ai-video-container">
-              <div style={{ color: 'white', textAlign: 'center' }}>
-                <Bot size={48} color="#3b82f6" style={{ margin: '0 auto 12px' }} />
-                <div style={{ fontSize: '1.2rem', fontWeight: 600 }}>Playing Tutorial...</div>
-                <div style={{ fontSize: '0.9rem', color: '#94a3b8', marginTop: 8 }}>Please watch and listen</div>
-              </div>
-              <div className="video-progress-bar" style={{ width: `${progress}%` }} />
-            </div>
-            <p style={{ margin: 0 }}>You can skip anytime.</p>
-            <button className="ai-btn-secondary" style={{ marginTop: 16, width: '100%' }} onClick={handleClose}>
-              Skip Tour
-            </button>
-          </>
+          <div style={{ width: '100%', height: '500px', borderRadius: '16px', overflow: 'hidden' }}>
+            <AppTourPlayer 
+              onComplete={() => setStep('finished')} 
+              onClose={handleClose} 
+            />
+          </div>
         )}
 
         {step === 'finished' && (
