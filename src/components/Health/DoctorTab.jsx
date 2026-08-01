@@ -198,14 +198,33 @@ const DoctorCard = ({ doctor, handleBook }) => {
 };
 
 const DoctorTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   const [selectedSpecialty, setSelectedSpecialty] = useState(null);
 
-  const filteredDoctors = mockDoctors.filter(doc => {
-    const matchesSearch = doc.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          doc.specialty.toLowerCase().includes(searchQuery.toLowerCase());
+  let filteredDoctors = mockDoctors.filter(doc => {
+    const matchesSearch = doc.name.toLowerCase().includes(searchQuery?.toLowerCase() || '') || 
+                          doc.specialty.toLowerCase().includes(searchQuery?.toLowerCase() || '');
     const matchesSpecialty = selectedSpecialty ? doc.specialty === selectedSpecialty : true;
     return matchesSearch && matchesSpecialty;
   });
+  
+  if (filteredDoctors.length === 0 && searchQuery) {
+    const capitalizedQuery = searchQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    filteredDoctors = [{
+      id: `dyn_${Date.now()}`,
+      name: `Dr. ${capitalizedQuery} Specialist`,
+      specialty: capitalizedQuery,
+      experience: '10+ Years',
+      rating: 4.8,
+      reviews: 500 + Math.floor(Math.random() * 1000),
+      photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop',
+      platforms: [
+        { name: 'Apollo 24|7', type: 'Video', price: 800, nextAvailable: 'In 10 mins', recommended: true },
+        { name: 'Practo', type: 'Clinic', price: 1000, nextAvailable: 'Today', recommended: false },
+        { name: 'Tata 1mg', type: 'Voice', price: 500, nextAvailable: 'In 30 mins', recommended: true, cheapest: true }
+      ]
+    }];
+  }
 
   const { setGlobalRedirectData } = useAppStore();
 
