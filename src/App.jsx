@@ -46,32 +46,45 @@ const SplashScreen = () => (
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '100vh',
-    background: 'linear-gradient(135deg, #f0f4ff, #e0e7ff)'
+    background: 'linear-gradient(135deg, #ffffff, #f0f4ff)',
+    animation: 'splashFadeIn 0.5s ease-out'
   }}>
     <img 
       src={appLogo}
       alt="CompareIt" 
       style={{
-        width: '200px', // Adjust size as needed
+        width: '180px',
         height: 'auto',
         marginBottom: '2rem',
-        animation: 'pulse 2s infinite'
+        animation: 'logoEntry 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, pulse 2s infinite 1s'
       }} 
     />
-    <div style={{ display: 'flex', gap: '0.5rem' }}>
-      <div style={{ width: '12px', height: '12px', backgroundColor: '#2563EB', borderRadius: '50%', animation: 'bounce 1.4s infinite ease-in-out both' }}></div>
-      <div style={{ width: '12px', height: '12px', backgroundColor: '#2563EB', borderRadius: '50%', animation: 'bounce 1.4s infinite ease-in-out both', animationDelay: '0.2s' }}></div>
-      <div style={{ width: '12px', height: '12px', backgroundColor: '#2563EB', borderRadius: '50%', animation: 'bounce 1.4s infinite ease-in-out both', animationDelay: '0.4s' }}></div>
+    <div style={{ display: 'flex', gap: '0.5rem', animation: 'fadeInUp 1s ease-out 0.5s both' }}>
+      <div style={{ width: '10px', height: '10px', backgroundColor: '#2563EB', borderRadius: '50%', animation: 'bounce 1.4s infinite ease-in-out both' }}></div>
+      <div style={{ width: '10px', height: '10px', backgroundColor: '#2563EB', borderRadius: '50%', animation: 'bounce 1.4s infinite ease-in-out both', animationDelay: '0.2s' }}></div>
+      <div style={{ width: '10px', height: '10px', backgroundColor: '#2563EB', borderRadius: '50%', animation: 'bounce 1.4s infinite ease-in-out both', animationDelay: '0.4s' }}></div>
     </div>
     <style>
       {`
+        @keyframes splashFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes logoEntry {
+          0% { transform: scale(0.5) translateY(50px); opacity: 0; }
+          100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
         @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.7; }
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
         }
         @keyframes bounce {
-          0%, 80%, 100% { transform: scale(0); }
-          40% { transform: scale(1); }
+          0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+          40% { transform: scale(1); opacity: 1; }
         }
       `}
     </style>
@@ -79,6 +92,8 @@ const SplashScreen = () => (
 );
 
 const App = () => {
+  const [showSplash, setShowSplash] = React.useState(true);
+  
   const {
     user,
     setUser,
@@ -95,6 +110,11 @@ const App = () => {
   } = useAppStore();
 
   useEffect(() => {
+    // Hide splash after 2.5 seconds
+    const splashTimer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2500);
+
     // Initialize GoogleAuth plugin
     GoogleSignIn.initialize({
       clientId: '502172302950-nej2aod4j8ugr99ks29fen5btqsaa07a.apps.googleusercontent.com',
@@ -168,7 +188,10 @@ const App = () => {
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(splashTimer);
+      unsubscribe();
+    };
   }, [setUser, setCurrentScreen]);
 
   const handleOnboardingComplete = () => {
@@ -193,6 +216,8 @@ const App = () => {
   };
 
   const renderScreen = () => {
+    if (showSplash) return <SplashScreen />;
+
     switch (currentScreen) {
       case 'loading':
         return <SplashScreen />;
