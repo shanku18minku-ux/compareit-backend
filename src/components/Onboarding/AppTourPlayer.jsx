@@ -3,7 +3,7 @@ import {
   Play, Pause, Volume2, VolumeX, SkipForward, RotateCcw, 
   Home, Search, Tag, Grip, Bot, User
 } from 'lucide-react';
-import useAppStore from '../../store/appStore';
+import { useTranslation } from 'react-i18next';
 import './AppTourPlayer.css';
 
 // The Data-Driven Tour Configuration
@@ -11,8 +11,8 @@ const TOUR_SCENES = [
   {
     id: 1,
     duration: 4000,
-    title: "Welcome to CompareIt",
-    caption: "The Ultimate Super App for everything.",
+    title: { en: "Welcome to CompareIt", hi: "कम्पेयर इट में आपका स्वागत है" },
+    caption: { en: "The Ultimate Super App for everything.", hi: "हर चीज़ के लिए आपका अल्टीमेट सुपर ऐप।" },
     icon: <Bot size={64} color="#38bdf8" />,
     spoken: {
       en: "Welcome to Compare it. The ultimate super app where you can find the best deals on everything.",
@@ -22,8 +22,8 @@ const TOUR_SCENES = [
   {
     id: 2,
     duration: 4000,
-    title: "Home Screen",
-    caption: "Your personalized dashboard for trending deals.",
+    title: { en: "Home Screen", hi: "होम स्क्रीन" },
+    caption: { en: "Your personalized dashboard for trending deals.", hi: "ट्रेंडिंग डील्स के लिए आपका पर्सनलाइज्ड डैशबोर्ड।" },
     icon: <Home size={64} color="#22c55e" />,
     spoken: {
       en: "This is your home screen, your personalized dashboard for today's trending deals.",
@@ -33,8 +33,8 @@ const TOUR_SCENES = [
   {
     id: 3,
     duration: 4500,
-    title: "Universal Search",
-    caption: "Search across products, services, and categories.",
+    title: { en: "Universal Search", hi: "यूनिवर्सल सर्च" },
+    caption: { en: "Search across products, services, and categories.", hi: "प्रोडक्ट्स, सर्विसेज और कैटेगरीज में सर्च करें।" },
     icon: <Search size={64} color="#f59e0b" />,
     spoken: {
       en: "Use the universal search to find any product, service, or brand across multiple platforms.",
@@ -44,8 +44,8 @@ const TOUR_SCENES = [
   {
     id: 4,
     duration: 4500,
-    title: "Compare Prices",
-    caption: "Instantly compare prices from top platforms.",
+    title: { en: "Compare Prices", hi: "कीमतों की तुलना करें" },
+    caption: { en: "Instantly compare prices from top platforms.", hi: "टॉप प्लेटफॉर्म्स से कीमतों की तुरंत तुलना करें।" },
     icon: <Tag size={64} color="#ef4444" />,
     spoken: {
       en: "Instantly compare prices from top platforms and always get the lowest price.",
@@ -55,8 +55,8 @@ const TOUR_SCENES = [
   {
     id: 5,
     duration: 5000,
-    title: "Categories",
-    caption: "Food, Travel, Education, Healthcare, and more.",
+    title: { en: "Categories", hi: "कैटेगरीज" },
+    caption: { en: "Food, Travel, Education, Healthcare, and more.", hi: "फूड, ट्रैवल, एजुकेशन, हेल्थकेयर और भी बहुत कुछ।" },
     icon: <Grip size={64} color="#8b5cf6" />,
     spoken: {
       en: "Explore categories like Food delivery, Travel bookings, Education, Healthcare, and Local Services.",
@@ -66,8 +66,8 @@ const TOUR_SCENES = [
   {
     id: 6,
     duration: 4000,
-    title: "Profile & Help",
-    caption: "Access Wishlist, Settings, and AI Assistant anytime.",
+    title: { en: "Profile & Help", hi: "प्रोफाइल और मदद" },
+    caption: { en: "Access Wishlist, Settings, and AI Assistant anytime.", hi: "विशलिस्ट, सेटिंग्स और AI असिस्टेंट को कभी भी एक्सेस करें।" },
     icon: <User size={64} color="#ec4899" />,
     spoken: {
       en: "Access your profile, wishlist, and settings here. Tap the AI assistant icon anytime for help.",
@@ -77,8 +77,8 @@ const TOUR_SCENES = [
   {
     id: 7,
     duration: 3500,
-    title: "You're All Set!",
-    caption: "Enjoy your seamless experience.",
+    title: { en: "You're All Set!", hi: "आप तैयार हैं!" },
+    caption: { en: "Enjoy your seamless experience.", hi: "अपने अनुभव का आनंद लें।" },
     icon: <Bot size={64} color="#22c55e" />,
     spoken: {
       en: "You're all set. Enjoy using Compare it!",
@@ -88,7 +88,9 @@ const TOUR_SCENES = [
 ];
 
 const AppTourPlayer = ({ onComplete, onClose }) => {
-  const language = useAppStore(state => state.language) || 'en';
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language && i18n.language.startsWith('hi') ? 'hi' : 'en';
+
   
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -118,11 +120,11 @@ const AppTourPlayer = ({ onComplete, onClose }) => {
     if (isMuted || !isPlaying) return;
     if (synthRef.current) synthRef.current.cancel();
 
-    const text = scene.spoken[language] || scene.spoken['en'];
+    const text = scene.spoken[currentLang];
     utteranceRef.current = new SpeechSynthesisUtterance(text);
     
     // Set appropriate language voice
-    if (language === 'hi') {
+    if (currentLang === 'hi') {
       utteranceRef.current.lang = 'hi-IN';
     } else {
       utteranceRef.current.lang = 'en-US';
@@ -168,7 +170,7 @@ const AppTourPlayer = ({ onComplete, onClose }) => {
       // If paused, pause the speech
       if (synthRef.current) synthRef.current.cancel();
     }
-  }, [currentSceneIndex, isPlaying, isMuted, language]);
+  }, [currentSceneIndex, isPlaying, isMuted, currentLang]);
 
   const togglePlay = () => setIsPlaying(!isPlaying);
   const toggleMute = () => {
@@ -202,8 +204,8 @@ const AppTourPlayer = ({ onComplete, onClose }) => {
         </div>
         
         <div className="tour-caption-box">
-          <h3>{scene.title}</h3>
-          <p>{scene.caption}</p>
+          <h3>{scene.title[currentLang]}</h3>
+          <p>{scene.caption[currentLang]}</p>
         </div>
       </div>
 
@@ -227,7 +229,7 @@ const AppTourPlayer = ({ onComplete, onClose }) => {
           </div>
           
           <button className="tour-btn tour-skip" onClick={handleComplete}>
-            Skip <SkipForward size={16} style={{ marginLeft: 4 }} />
+            {t('tour.skip', 'Skip')} <SkipForward size={16} style={{ marginLeft: 4 }} />
           </button>
         </div>
       </div>
