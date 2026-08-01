@@ -1,55 +1,80 @@
 import { useTranslation } from 'react-i18next';
-import React from 'react';
+import React, { useState } from 'react';
 import useAppStore from '../../store/appStore';
-import './HealthTabsShared.css';
+import './MedicineTab.css';
 
 const mockDevices = [
   {
-    id: 'd1',
-    name: 'Automatic Blood Pressure Monitor',
+    id: 'dv1',
+    name: 'Omron HEM 7120 BP Monitor',
     brand: 'Omron',
-    specs: 'HEM-7120, 5 Yrs Warranty',
-    type: 'BP Monitor',
+    type: 'Medical Device',
+    composition: 'Automatic Blood Pressure Monitor',
     platforms: [
-      { name: 'Amazon', price: 1549, mrp: 2160, tag: 'Lowest Price', tagClass: 'tag-lowest' },
-      { name: 'Apollo Pharmacy', price: 1620, mrp: 2160, tag: 'Fastest', tagClass: 'tag-fast' },
-      { name: 'Tata 1mg', price: 1599, mrp: 2160, tag: 'Best Rated', tagClass: 'tag-rated' }
+      { name: 'Amazon', originalPrice: 2280, discount: '20%', coupon: 'AMZ20', finalPrice: 1824, cheapest: false },
+      { name: 'Flipkart', originalPrice: 2280, discount: '22%', coupon: 'FLIP22', finalPrice: 1778, cheapest: true },
+      { name: 'Tata 1mg', originalPrice: 2280, discount: '10%', coupon: 'TATA10', finalPrice: 2052, cheapest: false }
     ]
   },
   {
-    id: 'd2',
-    name: 'Accu-Chek Active Glucometer Kit',
+    id: 'dv2',
+    name: 'Accu-Chek Active Blood Glucose',
     brand: 'Accu-Chek',
-    specs: 'With 10 Test Strips',
     type: 'Glucometer',
+    composition: 'With 10 Free Strips',
     platforms: [
-      { name: 'PharmEasy', price: 849, mrp: 1099, tag: 'Lowest Price', tagClass: 'tag-lowest' },
-      { name: 'Flipkart Health+', price: 899, mrp: 1099, tag: '', tagClass: '' },
-      { name: 'Netmeds', price: 875, mrp: 1099, tag: 'Best Rated', tagClass: 'tag-rated' }
+      { name: 'Netmeds', originalPrice: 1049, discount: '15%', coupon: 'NET15', finalPrice: 891, cheapest: true },
+      { name: 'PharmEasy', originalPrice: 1049, discount: '10%', coupon: 'EASY10', finalPrice: 944, cheapest: false },
+      { name: 'Apollo', originalPrice: 1049, discount: '5%', coupon: 'NONE', finalPrice: 996, cheapest: false }
     ]
   },
   {
-    id: 'd3',
-    name: 'Premium Folding Wheelchair',
-    brand: 'Karma',
-    specs: 'Steel Frame, 100kg Capacity',
-    type: 'Wheelchair',
+    id: 'dv3',
+    name: 'Dr Trust Pulse Oximeter',
+    brand: 'Dr Trust',
+    type: 'Oximeter',
+    composition: 'Professional Series',
     platforms: [
-      { name: 'Amazon', price: 4500, mrp: 6500, tag: 'Lowest Price', tagClass: 'tag-lowest' },
-      { name: 'Tata 1mg', price: 4800, mrp: 6500, tag: '', tagClass: '' }
+      { name: 'Amazon', originalPrice: 2999, discount: '65%', coupon: 'AMZ65', finalPrice: 1049, cheapest: true },
+      { name: 'Dr Trust', originalPrice: 2999, discount: '50%', coupon: 'TRUST50', finalPrice: 1499, cheapest: false },
+      { name: 'Flipkart', originalPrice: 2999, discount: '60%', coupon: 'FLIP60', finalPrice: 1199, cheapest: false }
     ]
   }
 ];
 
 const DevicesTab = ({ searchQuery }) => {
   const { t } = useTranslation();
-  const setGlobalRedirectData = useAppStore(state => state.setGlobalRedirectData);
+  const { setGlobalRedirectData } = useAppStore();
+  const [expandedItems, setExpandedItems] = useState({});
 
-  const filtered = mockDevices.filter(d => 
-    d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    d.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    d.brand.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  let filtered = mockDevices.filter(s => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    if (q.includes('device') || q.includes('health') || q.includes('equipment')) return true;
+    return s.name.toLowerCase().includes(q) || s.brand.toLowerCase().includes(q);
+  });
+  
+  if (filtered.length === 0 && searchQuery) {
+    const capitalizedQuery = searchQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    const basePrice = (searchQuery.length * 25) % 3000 + 1000;
+    
+    filtered = [{
+      id: `dyn_${Date.now()}`,
+      name: capitalizedQuery,
+      brand: 'Top Brand',
+      type: 'Medical Device',
+      composition: 'Standard Model',
+      platforms: [
+        { name: 'Amazon', originalPrice: Math.floor(basePrice * 1.3), discount: '15%', coupon: 'MED15', finalPrice: basePrice, cheapest: true },
+        { name: 'Flipkart', originalPrice: Math.floor(basePrice * 1.3), discount: '10%', coupon: 'FL10', finalPrice: Math.floor(basePrice * 1.1), cheapest: false },
+        { name: 'Tata 1mg', originalPrice: Math.floor(basePrice * 1.3), discount: '5%', coupon: 'NONE', finalPrice: Math.floor(basePrice * 1.2), cheapest: false }
+      ]
+    }];
+  }
+
+  const toggleItem = (id) => {
+    setExpandedItems(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const handleBuy = (platformName) => {
     const domain = platformName.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -58,47 +83,99 @@ const DevicesTab = ({ searchQuery }) => {
   };
 
   return (
-    <div className="shared-tab-container">
-      <div className="shared-tab-intro">
-        <h3>{t('auto_medical_devices_equi_8d7d', 'Medical Devices & Equipments')}</h3>
-        <p>Compare BP monitors, glucometers, and rehabilitation aids.</p>
-      </div>
+    <div className="medicine-tab">
+      <div className="medicines-list">
+        <h3 className="section-title">
+          {searchQuery ? 'Search Results' : 'Trending Health Devices'}
+        </h3>
+        
+        {filtered.length === 0 ? (
+          <div className="no-results">No devices found.</div>
+        ) : (
+          filtered.map(item => {
+            const totalPlatformsCount = item.platforms.length;
 
-      {filtered.length === 0 ? (
-        <div className="no-results">{t('auto_no_medical_devices_f_d9bf', 'No medical devices found.')}</div>
-      ) : (
-        filtered.map(item => (
-          <div key={item.id} className="shared-card">
-            <div className="shared-card-header">
-              <div className="shared-title-group">
-                <h4>{item.name}</h4>
-                <span className="shared-brand">By {item.brand}</span>
-              </div>
-            </div>
-            
-            <div className="shared-specs">
-              <span className="spec-badge">{item.type}</span>
-              <span className="spec-badge">{item.specs}</span>
-            </div>
-
-            <div className="shared-platforms-list">
-              {item.platforms.sort((a, b) => a.price - b.price).map((plat, idx) => (
-                <div key={idx} className={`platform-row ${idx === 0 ? 'recommended' : ''}`}>
-                  <div className="plat-info">
-                    <span className="plat-name">{plat.name}</span>
-                    {plat.tag && <span className={`plat-tag ${plat.tagClass}`}>{plat.tag}</span>}
+            return (
+            <div key={item.id} className="medicine-card">
+              <div className="medicine-header">
+                <div className="medicine-info">
+                  <div className="medicine-title-row">
+                    <h4 className="medicine-name">{item.name}</h4>
+                    <span className="medicine-type">{item.type}</span>
                   </div>
-                  <div className="plat-price-group">
-                    <span className="plat-price">₹{plat.price}</span>
-                    <span className="plat-mrp">₹{plat.mrp}</span>
-                    <button className="shared-buy-btn" onClick={() => handleBuy(plat.name)}>{t('auto_buy_831a', 'Buy')}</button>
-                  </div>
+                  <span className="medicine-composition">{item.composition}</span>
+                  <span className="medicine-manufacturer">By {item.brand}</span>
                 </div>
-              ))}
-            </div>
-          </div>
-        ))
-      )}
+              </div>
+
+                <div style={{ marginTop: '12px' }}>
+                  <button 
+                    onClick={() => toggleItem(item.id)}
+                    style={{ 
+                      width: '100%', padding: '12px', background: '#f8fafc', 
+                      border: '1px solid #e2e8f0', borderRadius: '8px', 
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      cursor: 'pointer', fontWeight: '600', color: '#334155'
+                    }}
+                  >
+                    <span>Check Deals across {totalPlatformsCount} Platforms</span>
+                    <span>{expandedItems[item.id] ? '▲' : '▼'}</span>
+                  </button>
+                </div>
+
+                {expandedItems[item.id] && (
+                  <div className="platforms-comparison" style={{ marginTop: '12px' }}>
+                    
+                    <div className="comparison-header-row">
+                      <div className="col-platform">{t('auto_platform_419f', 'Platform')}</div>
+                      <div className="col-price">{t('auto_original_0a52', 'Original')}</div>
+                      <div className="col-discount">{t('auto_discount_104d', 'Discount')}</div>
+                      <div className="col-final">{t('auto_final_price_2ba8', 'Final Price')}</div>
+                    </div>
+
+                    {item.platforms.map((platform, idx) => {
+                      const calculatedPrice = platform.finalPrice;
+                      const isDiscountApplied = calculatedPrice < platform.originalPrice;
+                      const isCheapest = platform.cheapest;
+
+                      return (
+                        <div key={idx} className={`med-platform-row ${isCheapest ? 'cheapest-row' : ''}`} style={{ paddingBottom: '12px' }}>
+                          <div className="col-platform" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px' }}>
+                            <span className="platform-name">{platform.name}</span>
+                            {isCheapest && <span style={{ fontSize: '10px', background: '#10b981', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>✨ Recommended</span>}
+                          </div>
+                          <div className="col-price">
+                            <span className={isDiscountApplied ? "strikethrough" : ""}>₹{platform.originalPrice}</span>
+                          </div>
+                          <div className="col-discount">
+                            {isDiscountApplied ? (
+                              <>
+                                <span className="discount-tag" style={{ color: '#10b981' }}>{platform.discount}</span>
+                              </>
+                            ) : (
+                              <span className="no-discount">-</span>
+                            )}
+                          </div>
+                          <div className="col-final" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+                            <div className="final-price-value">₹{calculatedPrice}</div>
+                            <button className="goto-app-btn" onClick={() => handleBuy(platform.name)} style={{ 
+                                display: 'inline-block', background: '#10b981', color: '#fff', padding: '6px 12px', 
+                                borderRadius: '6px', fontSize: '13px', fontWeight: '600', textDecoration: 'none', 
+                                border: 'none', cursor: 'pointer', textAlign: 'center' 
+                            }}>
+                              Open
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 };
