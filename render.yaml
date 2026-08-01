@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: compareit-backend
+    env: node
+    # The root directory for Render to run commands inside
+    rootDir: backend
+    # Commands for building and starting
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Allow the mobile app and localhost for local dev testing against production server
+      - key: CORS_ORIGINS
+        value: capacitor://localhost,http://localhost,http://localhost:5173
