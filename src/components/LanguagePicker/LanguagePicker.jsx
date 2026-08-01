@@ -48,6 +48,18 @@ const LanguagePicker = ({ isOpen, onClose, onSelectLanguage }) => {
   const handleSelect = (langCode) => {
     i18n.changeLanguage(langCode);
     localStorage.setItem('i18nextLng', langCode);
+    
+    // Trigger Google Translate for 100% DOM deep translation (mock data & dynamic strings)
+    try {
+      const select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = langCode;
+        select.dispatchEvent(new Event('change'));
+      }
+    } catch (e) {
+      console.warn("Google translate widget not initialized yet");
+    }
+    
     if (onSelectLanguage) onSelectLanguage(langCode);
   };
 
