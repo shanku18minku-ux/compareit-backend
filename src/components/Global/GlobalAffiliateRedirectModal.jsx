@@ -1,21 +1,40 @@
 import React, { useEffect } from 'react';
 import { ExternalLink, ShieldCheck } from 'lucide-react';
 import { Browser } from '@capacitor/browser';
+import { useTranslation } from 'react-i18next';
 import styles from './GlobalAffiliateRedirectModal.module.css';
 import useAppStore from '../../store/appStore';
 
 const GlobalAffiliateRedirectModal = () => {
   const { globalRedirectData, setGlobalRedirectData } = useAppStore();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     if (globalRedirectData && globalRedirectData.targetUrl) {
       // Simulate API/Affiliate connection delay
       const timer = setTimeout(async () => {
+        let finalUrl = globalRedirectData.targetUrl;
+        const currentLang = i18n.language || 'en';
+
+        // If language is not English and it's a web URL, wrap in Google Translate
+        if (currentLang !== 'en' && (finalUrl.startsWith('http://') || finalUrl.startsWith('https://'))) {
+          // Some platforms accept hl=lang parameter natively, but Google Translate is more universal for web
+          // To avoid breaking deep links, only wrap standard web links
+          if (finalUrl.includes('amazon.in') || finalUrl.includes('flipkart.com')) {
+            // Append native language parameter if possible
+            const separator = finalUrl.includes('?') ? '&' : '?';
+            finalUrl = `${finalUrl}${separator}hl=${currentLang}&lang=${currentLang}`;
+          } else {
+            // Use Google Translate Proxy
+            finalUrl = `https://translate.google.com/translate?sl=auto&tl=${currentLang}&u=${encodeURIComponent(finalUrl)}`;
+          }
+        }
+
         try {
-          await Browser.open({ url: globalRedirectData.targetUrl });
+          await Browser.open({ url: finalUrl });
         } catch (e) {
           // Fallback if browser fails
-          window.open(globalRedirectData.targetUrl, '_system');
+          window.open(finalUrl, '_system');
         }
         setGlobalRedirectData(null);
       }, 2500);

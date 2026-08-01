@@ -1,15 +1,30 @@
 import React, { useEffect } from 'react';
 import { ExternalLink, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import styles from './AffiliateRedirectModal.module.css';
 
 const AffiliateRedirectModal = ({ isOpen, providerName, targetUrl, onClose }) => {
+  const { i18n } = useTranslation();
+
   if (!isOpen) return null;
 
   useEffect(() => {
     if (isOpen && targetUrl) {
       // Simulate API/Affiliate connection delay
       const timer = setTimeout(() => {
-        window.open(targetUrl, '_system');
+        let finalUrl = targetUrl;
+        const currentLang = i18n.language || 'en';
+
+        if (currentLang !== 'en' && (finalUrl.startsWith('http://') || finalUrl.startsWith('https://'))) {
+          if (finalUrl.includes('amazon.in') || finalUrl.includes('flipkart.com')) {
+            const separator = finalUrl.includes('?') ? '&' : '?';
+            finalUrl = `${finalUrl}${separator}hl=${currentLang}&lang=${currentLang}`;
+          } else {
+            finalUrl = `https://translate.google.com/translate?sl=auto&tl=${currentLang}&u=${encodeURIComponent(finalUrl)}`;
+          }
+        }
+
+        window.open(finalUrl, '_system');
         onClose();
       }, 2500);
       return () => clearTimeout(timer);
