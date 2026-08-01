@@ -21,6 +21,7 @@ import VehicleFinance from '../../components/Vehicles/VehicleFinance';
 import useAppStore from '../../store/appStore';
 
 export default function Vehicles() {
+  const { t } = useTranslation();
   const { goToDashboard } = useAppStore();
   const activeTab = useAppStore(state => state.activeVehicleTab);
   const setActiveTab = useAppStore(state => state.setActiveVehicleTab);
