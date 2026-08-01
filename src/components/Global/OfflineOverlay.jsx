@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { WifiOff } from 'lucide-react';
 import { Network } from '@capacitor/network';
 import './OfflineOverlay.css';
 
 const OfflineOverlay = () => {
+  const { t } = useTranslation();
   const [isOnline, setIsOnline] = useState(true);
 
   useEffect(() => {
@@ -39,10 +41,10 @@ const OfflineOverlay = () => {
   return (
     <div className="offline-overlay">
       <div className="offline-content">
-        <div className="offline-icon-container">
+        <div className="offline-icon-wrapper">
           <WifiOff size={48} className="offline-icon" />
         </div>
-        <h2>You're Offline</h2>
+        <h2>{t('auto_you_re_offline_425b', "You're Offline")}</h2>
         <p>Please check your internet connection to continue comparing deals and finding the best prices.</p>
         <button className="offline-retry-btn" onClick={() => window.location.reload()}>
           Try Again

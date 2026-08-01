@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, X, Send, Bot } from 'lucide-react';
 import styles from './AICopilot.module.css';
 
 const AICopilot = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -49,7 +51,7 @@ const AICopilot = () => {
             <div className={styles.header}>
               <div className={styles.headerTitle}>
                 <Bot size={20} color="#2563EB" />
-                <span>AI Assistant</span>
+                <span>{t('auto_ai_assistant_3542', 'AI Assistant')}</span>
               </div>
               <button className={styles.closeBtn} onClick={() => setIsOpen(false)}>
                 <X size={20} />
@@ -77,7 +79,7 @@ const AICopilot = () => {
             <form className={styles.inputArea} onSubmit={handleSend}>
               <input
                 type="text"
-                placeholder="Ask me anything..."
+                placeholder={t('auto_ask_me_anything_3249', 'Ask me anything...')}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 className={styles.input}

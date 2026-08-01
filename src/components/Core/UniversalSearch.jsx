@@ -126,7 +126,7 @@ const UniversalSearch = () => {
       {isFocused && recentSearches.length > 0 && (
         <div className="search-dropdown">
           <div className="dropdown-header">
-            <span>Recent Searches</span>
+            <span>{t('auto_recent_searches_5c79', 'Recent Searches')}</span>
           </div>
           <div className="recent-list">
             {recentSearches.map((term, i) => (

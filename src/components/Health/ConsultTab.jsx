@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { useApi } from '../../services/api';
 import useAppStore from '../../store/appStore';
@@ -31,7 +32,7 @@ export default function ConsultTab() {
 
   return (
     <div className={styles.consultContainer}>
-      <h2 className={styles.sectionTitle}>Find & Compare Doctors</h2>
+      <h2 className={styles.sectionTitle}>{t('auto_find_compare_doctors_e391', 'Find & Compare Doctors')}</h2>
       <div className={styles.horizontalScroll}>
         {filteredDoctors.map(doctor => {
           let cheapestPlatform = null;
@@ -61,7 +62,7 @@ export default function ConsultTab() {
               </div>
               
               <div className={styles.platformsSection}>
-                <h4 className={styles.platformsTitle}>Compare Platforms</h4>
+                <h4 className={styles.platformsTitle}>{t('auto_compare_platforms_ef9e', 'Compare Platforms')}</h4>
                 <div className={styles.platformList}>
                   {doctor.platforms.map((p, idx) => (
                     <div key={idx} className={`${styles.platformItem} ${p === cheapestPlatform ? styles.recommendedPlatform : ''}`}>
@@ -72,7 +73,7 @@ export default function ConsultTab() {
                       <div className={styles.platformPriceCol}>
                         {p === cheapestPlatform && <span className={styles.recommendTag}>⭐ RECOMMENDED</span>}
                         <span className={styles.platformPrice}>₹{p.fee}</span>
-                        <button className={styles.bookBtn}>Book</button>
+                        <button className={styles.bookBtn}>{t('auto_book_2b1f', 'Book')}</button>
                       </div>
                     </div>
                   ))}

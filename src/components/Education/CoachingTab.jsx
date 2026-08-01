@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import './CoachingTab.css';
 import { MapPin, Users, Award, Navigation2, CheckCircle2, Gift } from 'lucide-react';
@@ -81,6 +82,7 @@ const mockCoaching = [
 const filters = ['All', 'UPSC', 'JEE', 'NEET', 'CAT', 'Banking', 'School'];
 
 const CoachingTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState('All');
   const { setGlobalRedirectData } = useAppStore();
 
@@ -108,16 +110,16 @@ const CoachingTab = ({ searchQuery }) => {
       {/* <div className="scholarship-banner">
         <Award className="banner-icon" />
         <div className="banner-content">
-          <h4>CompareIt Scholarship</h4>
+          <h4>{t('auto_compareit_scholarshi_1a71', 'CompareIt Scholarship')}</h4>
           <p>Take our test and get up to 100% fee waiver across 500+ institutes!</p>
         </div>
-        <button className="apply-btn">Apply</button>
+        <button className="apply-btn">{t('auto_apply_9639', 'Apply')}</button>
       </div> */}
 
       <div className="coaching-list">
         {filtered.map(item => (
           <div key={item.id} className="coaching-card">
-            {item.demo && <div className="demo-badge">Free Demo Available</div>}
+            {item.demo && <div className="demo-badge">{t('auto_free_demo_available_c1d6', 'Free Demo Available')}</div>}
             
             <div className="coaching-header">
               <h3>{item.name}</h3>

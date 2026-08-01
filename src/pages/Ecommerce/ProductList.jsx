@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import './ProductList.css';
 import FilterSidebar from '../../components/Ecommerce/FilterSidebar';
@@ -9,6 +10,7 @@ import { SlidersHorizontal, ArrowLeft, Star, Truck, Tag, ChevronDown, ChevronUp,
 import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
 
 const ProductList = () => {
+  const { t } = useTranslation();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState('price');
   const [expandedProducts, setExpandedProducts] = useState({});
@@ -216,8 +218,8 @@ const ProductList = () => {
       {sorted.length === 0 ? (
         <div className="plp-empty">
           <div style={{ fontSize: '48px', marginBottom: '12px' }}>🔍</div>
-          <h3>No products found</h3>
-          <p>Try a different search term or clear filters</p>
+          <h3>{t('auto_no_products_found_b9af', 'No products found')}</h3>
+          <p>{t('auto_try_a_different_sear_55df', 'Try a different search term or clear filters')}</p>
         </div>
       ) : (
         <div className="plp-list">

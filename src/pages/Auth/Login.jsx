@@ -69,7 +69,7 @@ const Login = ({ onNavigate, onLoginSuccess }) => {
       
       <div className="auth-card-wrapper">
         <div className="header">
-          <h1 className="logo">Compare<span>It</span></h1>
+          <h1 className="logo">{t('auto_compare_7eec', 'Compare')}<span>It</span></h1>
           <p className="tagline">{t('auth.tagline', 'Compare Everything. Save Everywhere.')}</p>
         </div>
 

@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { X, ArrowDown, TrendingDown } from 'lucide-react';
 import { calculatePriceBreakdown } from '../../services/couponService';
 import styles from './PriceBreakdown.module.css';
 
 const PriceBreakdown = ({ coupon, onClose }) => {
+  const { t } = useTranslation();
   const [originalPrice, setOriginalPrice] = useState(1000);
   const [breakdown, setBreakdown] = useState(null);
   const [visibleSteps, setVisibleSteps] = useState(0);
@@ -44,7 +46,7 @@ const PriceBreakdown = ({ coupon, onClose }) => {
           <X size={20} />
         </button>
 
-        <h2 className={styles.title}>Calculate Savings</h2>
+        <h2 className={styles.title}>{t('auto_calculate_savings_f5b9', 'Calculate Savings')}</h2>
         <p className={styles.subtitle}>{coupon.title}</p>
 
         <div className={styles.inputGroup}>
@@ -64,7 +66,7 @@ const PriceBreakdown = ({ coupon, onClose }) => {
 
         <div className={styles.ladderContainer}>
           <div className={styles.stepRow}>
-            <span className={styles.stepLabel}>Original Price</span>
+            <span className={styles.stepLabel}>{t('auto_original_price_8bd1', 'Original Price')}</span>
             <span className={styles.stepAmount}>₹{originalPrice.toLocaleString()}</span>
           </div>
 
@@ -97,14 +99,14 @@ const PriceBreakdown = ({ coupon, onClose }) => {
             className={`${styles.finalSection} ${visibleSteps >= breakdown.steps.length ? styles.visible : ''}`}
           >
             <div className={styles.finalRow}>
-              <span className={styles.finalLabel}>Final Effective Price</span>
+              <span className={styles.finalLabel}>{t('auto_final_effective_pric_583a', 'Final Effective Price')}</span>
               <span className={styles.finalAmount}>₹{breakdown.finalPrice.toLocaleString()}</span>
             </div>
             
             <div className={styles.savingsCard}>
               <TrendingDown size={24} className={styles.savingsIcon} />
               <div className={styles.savingsInfo}>
-                <span className={styles.savingsLabel}>Total Savings</span>
+                <span className={styles.savingsLabel}>{t('auto_total_savings_e62d', 'Total Savings')}</span>
                 <div className={styles.savingsValueContainer}>
                   <span className={styles.savingsValue}>₹{breakdown.totalSavings.toLocaleString()}</span>
                   <span className={styles.savingsPercentage}>({breakdown.savingsPercentage}%)</span>

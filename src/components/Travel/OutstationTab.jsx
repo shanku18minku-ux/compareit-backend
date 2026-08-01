@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { Plane, Train, Bus, MapPin, ArrowRight, Clock, ChevronRight } from 'lucide-react';
 import useAppStore from '../../store/appStore';
@@ -74,6 +75,7 @@ const mockRoutes = {
 };
 
 const OutstationTab = () => {
+  const { t } = useTranslation();
   const [activeMode, setActiveMode] = useState('flights');
   const { setGlobalRedirectData } = useAppStore();
   
@@ -192,11 +194,11 @@ const OutstationTab = () => {
       <div className="search-inputs" style={{ display: 'flex', flexDirection: 'column', gap: '12px', background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
           <MapPin size={16} color="#2563EB" style={{ marginRight: '10px' }} />
-          <input type="text" placeholder="From (e.g. DEL)" defaultValue="DEL" style={{ background: 'transparent', border: 'none', color: 'white', outline: 'none', width: '100%' }} />
+          <input type="text" placeholder={t('auto_from_e_g_del_ed7f', 'From (e.g. DEL)')} defaultValue="DEL" style={{ background: 'transparent', border: 'none', color: 'white', outline: 'none', width: '100%' }} />
         </div>
         <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
           <MapPin size={16} color="#EF4444" style={{ marginRight: '10px' }} />
-          <input type="text" placeholder="To (e.g. BOM)" defaultValue="BOM" style={{ background: 'transparent', border: 'none', color: 'white', outline: 'none', width: '100%' }} />
+          <input type="text" placeholder={t('auto_to_e_g_bom_b26e', 'To (e.g. BOM)')} defaultValue="BOM" style={{ background: 'transparent', border: 'none', color: 'white', outline: 'none', width: '100%' }} />
         </div>
         <button style={{ background: '#2563EB', color: 'white', border: 'none', padding: '14px', borderRadius: '8px', fontWeight: 'bold', fontSize: '15px' }}>
           Search {modes.find(m => m.id === activeMode)?.label}
@@ -204,7 +206,7 @@ const OutstationTab = () => {
       </div>
 
       <div className="results-list">
-        <h3 style={{ fontSize: '16px', marginBottom: '16px' }}>Top Options</h3>
+        <h3 style={{ fontSize: '16px', marginBottom: '16px' }}>{t('auto_top_options_a95f', 'Top Options')}</h3>
         {mockRoutes[activeMode].map(route => renderRouteCard(route))}
       </div>
     </div>

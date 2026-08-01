@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { MapPin, Navigation, Sparkles, Clock, Zap, ChevronRight } from 'lucide-react';
 import useAppStore from '../../store/appStore';
@@ -47,6 +48,7 @@ const mockRides = [
 ];
 
 const CommuteTab = () => {
+  const { t } = useTranslation();
   const [vehicle, setVehicle] = useState('cab');
   const [from, setFrom] = useState('Current Location');
   const [to, setTo] = useState('');
@@ -75,7 +77,7 @@ const CommuteTab = () => {
               type="text" 
               value={from} 
               onChange={(e) => setFrom(e.target.value)} 
-              placeholder="Pickup Location"
+              placeholder={t('auto_pickup_location_c4a6', 'Pickup Location')}
             />
           </div>
         </div>
@@ -88,7 +90,7 @@ const CommuteTab = () => {
               type="text" 
               value={to} 
               onChange={(e) => setTo(e.target.value)} 
-              placeholder="Where to?"
+              placeholder={t('auto_where_to_b97b', 'Where to?')}
               autoFocus
             />
           </div>
@@ -133,8 +135,8 @@ const CommuteTab = () => {
                       <span className="eta"><Clock size={12} /> {ride.eta}</span>
                     </div>
                     <div className="badges">
-                      {isCheapest && <span className="badge green">Cheapest</span>}
-                      {isFastest && <span className="badge blue">Fastest</span>}
+                      {isCheapest && <span className="badge green">{t('auto_cheapest_f650', 'Cheapest')}</span>}
+                      {isFastest && <span className="badge blue">{t('auto_fastest_90fd', 'Fastest')}</span>}
                     </div>
                   </div>
                   

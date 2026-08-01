@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { ArrowLeft, Share2, Heart, Star, ShieldCheck, Truck } from 'lucide-react';
 import useAppStore from '../../store/appStore';
@@ -10,7 +11,7 @@ export default function ProductDetail() {
   const [activeImage, setActiveImage] = useState(0);
 
   if (!activeProduct) {
-    return <div className="product-detail-empty">No product selected.</div>;
+    return <div className="product-detail-empty">{t('auto_no_product_selected_663f', 'No product selected.')}</div>;
   }
 
   // Assuming activeProduct has images, title, brand, rating, reviews, dealScore, specs, platforms, priceHistory
@@ -93,7 +94,7 @@ export default function ProductDetail() {
               </div>
 
               <div className="pdp-key-specs">
-                <h3>Key Specifications</h3>
+                <h3>{t('auto_key_specifications_d23e', 'Key Specifications')}</h3>
                 <ul>
                   {activeProduct.specs?.map((spec, idx) => (
                     <li key={idx}><strong>{spec.name}:</strong> {spec.value}</li>
@@ -134,7 +135,7 @@ export default function ProductDetail() {
             <span className="sticky-label">Best Price on {bestPlatform.name}</span>
             <span className="sticky-price">₹{bestPlatform.price.toLocaleString()}</span>
           </div>
-          <button className="btn-buy-now" onClick={() => setGlobalRedirectData({ providerName: bestPlatform.name, targetUrl: bestPlatform.url || 'https://amazon.in' })}>Buy Now</button>
+          <button className="btn-buy-now" onClick={() => setGlobalRedirectData({ providerName: bestPlatform.name, targetUrl: bestPlatform.url || 'https://amazon.in' })}>{t('auto_buy_now_c1f5', 'Buy Now')}</button>
         </div>
       )}
     </div>

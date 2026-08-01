@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { Search, MapPin, Building, GraduationCap, Calendar, Briefcase, Bell, BellRing, Link2, Sparkles, SlidersHorizontal, CheckCircle2, Download, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 import EmptyState from '../Global/EmptyState';
@@ -6,6 +7,7 @@ import useAppStore from '../../store/appStore';
 import './GovtExamsTab.css';
 
 const GovtExamsTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('All Jobs');
   const [examType, setExamType] = useState('All'); 
   const [userQualification, setUserQualification] = useState('All'); 
@@ -68,9 +70,9 @@ const GovtExamsTab = ({ searchQuery }) => {
       {/* Action Bar (Filters & Central/State Toggle) */}
       <div className="action-bar-row">
         <div className="exam-type-toggle">
-          <button className={`type-btn ${examType === 'All' ? 'active' : ''}`} onClick={() => setExamType('All')}>All</button>
-          <button className={`type-btn ${examType === 'Central' ? 'active' : ''}`} onClick={() => setExamType('Central')}>Central</button>
-          <button className={`type-btn ${examType === 'State' ? 'active' : ''}`} onClick={() => setExamType('State')}>State</button>
+          <button className={`type-btn ${examType === 'All' ? 'active' : ''}`} onClick={() => setExamType('All')}>{t('auto_all_b1c9', 'All')}</button>
+          <button className={`type-btn ${examType === 'Central' ? 'active' : ''}`} onClick={() => setExamType('Central')}>{t('auto_central_4a8c', 'Central')}</button>
+          <button className={`type-btn ${examType === 'State' ? 'active' : ''}`} onClick={() => setExamType('State')}>{t('auto_state_46a2', 'State')}</button>
         </div>
         <button 
           className={`smart-filter-btn ${showFilters ? 'open' : ''}`}
@@ -166,7 +168,7 @@ const GovtExamsTab = ({ searchQuery }) => {
 
               <div className="exam-footer">
                 <div className="salary-box">
-                  <span className="salary-label">Last Date</span>
+                  <span className="salary-label">{t('auto_last_date_d550', 'Last Date')}</span>
                   <span className="salary-val">{exam.lastDate}</span>
                 </div>
                 

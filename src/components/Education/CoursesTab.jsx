@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import './CoursesTab.css';
 import { Star, Clock, Users, Globe, ExternalLink, ShieldCheck, Tag } from 'lucide-react';
@@ -73,6 +74,7 @@ const mockCourses = [
 const filters = ['All', 'K-12', 'Competitive', 'Higher Ed', 'Skills', 'Language'];
 
 const CoursesTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState('All');
   const { setGlobalRedirectData } = useAppStore();
 
@@ -152,7 +154,7 @@ const CoursesTab = ({ searchQuery }) => {
             </div>
             
             <div className="coupon-alert">
-              <Tag size={12} /> Apply code <strong>LEARN20</strong> for 20% off on selected platforms
+              <Tag size={12} /> Apply code <strong>{t('auto_learn20_ce89', 'LEARN20')}</strong> for 20% off on selected platforms
             </div>
           </div>
         )) : (

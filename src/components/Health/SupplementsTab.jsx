@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import useAppStore from '../../store/appStore';
 import './HealthTabsShared.css';
@@ -42,6 +43,7 @@ const mockSupplements = [
 ];
 
 const SupplementsTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   const setGlobalRedirectData = useAppStore(state => state.setGlobalRedirectData);
 
   const filtered = mockSupplements.filter(s => {
@@ -68,12 +70,12 @@ const SupplementsTab = ({ searchQuery }) => {
   return (
     <div className="shared-tab-container">
       <div className="shared-tab-intro">
-        <h3>Supplements & Nutrition</h3>
+        <h3>{t('auto_supplements_nutritio_19c9', 'Supplements & Nutrition')}</h3>
         <p>Compare whey protein, vitamins, and wellness products across top stores.</p>
       </div>
 
       {filtered.length === 0 ? (
-        <div className="no-results">No supplements found.</div>
+        <div className="no-results">{t('auto_no_supplements_found_c281', 'No supplements found.')}</div>
       ) : (
         filtered.map(item => (
           <div key={item.id} className="shared-card">
@@ -99,7 +101,7 @@ const SupplementsTab = ({ searchQuery }) => {
                   <div className="plat-price-group">
                     <span className="plat-price">₹{plat.price}</span>
                     <span className="plat-mrp">₹{plat.mrp}</span>
-                    <button className="shared-buy-btn" onClick={() => handleBuy(plat.name)}>Buy</button>
+                    <button className="shared-buy-btn" onClick={() => handleBuy(plat.name)}>{t('auto_buy_831a', 'Buy')}</button>
                   </div>
                 </div>
               ))}

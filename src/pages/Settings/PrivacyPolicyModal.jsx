@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { X, Shield } from 'lucide-react';
 import './Settings.css';
 
 const PrivacyPolicyModal = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   return (
@@ -11,7 +13,7 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
         <header className="settings-modal-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Shield size={24} color="#2563EB" />
-            <h2 style={{ margin: 0, fontSize: '1.25rem', color: '#1e293b' }}>Privacy Policy</h2>
+            <h2 style={{ margin: 0, fontSize: '1.25rem', color: '#1e293b' }}>{t('auto_privacy_policy_fa2e', 'Privacy Policy')}</h2>
           </div>
           <button onClick={onClose} className="settings-modal-close">
             <X size={24} color="#64748b" />
@@ -21,7 +23,7 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
         <div className="settings-modal-body" style={{ padding: '20px', overflowY: 'auto', maxHeight: '70vh', color: '#475569', lineHeight: '1.6' }}>
           <p><strong>Effective Date:</strong> August 1, 2026</p>
           
-          <p>Welcome to <strong>CompareIt</strong>. Your privacy is critically important to us. This Privacy Policy explains how we collect, use, and protect your information when you use our mobile application ("App").</p>
+          <p>{t('auto_welcome_to_9819', 'Welcome to')}<strong>{t('auto_compareit_9957', 'CompareIt')}</strong>. Your privacy is critically important to us. This Privacy Policy explains how we collect, use, and protect your information when you use our mobile application ("App").</p>
 
           <h3 style={{ color: '#0f172a', marginTop: '20px', marginBottom: '10px' }}>1. What CompareIt Does</h3>
           <p>CompareIt is an aggregator and recommendation platform. We compare prices, calculate estimated times of arrival (ETAs), and show deals across multiple third-party services (Food, Travel, Health, E-commerce, etc.). <strong>We do not process direct orders, bookings, or payments.</strong> When you click to "Open" a platform, you are redirected to the respective third-party provider's application or website.</p>
@@ -38,11 +40,11 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
           <ul style={{ paddingLeft: '20px' }}>
             <li>Calculate and recommend the cheapest and fastest options for your location.</li>
             <li>Apply personalized filters and coupons (both auto and manual).</li>
-            <li>Maintain your login session securely.</li>
+            <li>{t('auto_maintain_your_login__367e', 'Maintain your login session securely.')}</li>
           </ul>
 
           <h3 style={{ color: '#0f172a', marginTop: '20px', marginBottom: '10px' }}>4. Authorized APIs & Deep Links</h3>
-          <p>CompareIt operates through official APIs, authorized data sharing agreements, and secure deep-link integrations with our partners (e.g., Cars24, GoMechanic, HDFC). <strong>We do not engage in unauthorized data scraping.</strong> All data presented on CompareIt is sourced legally and transparently from these authorized integrations.</p>
+          <p>CompareIt operates through official APIs, authorized data sharing agreements, and secure deep-link integrations with our partners (e.g., Cars24, GoMechanic, HDFC). <strong>{t('auto_we_do_not_engage_in__8a6f', 'We do not engage in unauthorized data scraping.')}</strong> All data presented on CompareIt is sourced legally and transparently from these authorized integrations.</p>
 
           <h3 style={{ color: '#0f172a', marginTop: '20px', marginBottom: '10px' }}>5. Affiliate Partnerships</h3>
           <p>When you click on a "Buy," "Book," or "Apply" button to complete a transaction on a partner's platform, CompareIt may earn an affiliate commission at no extra cost to you. During this redirection, we may share basic necessary referral data (such as an affiliate ID) with the partner to track the source of the traffic. We do not share your personal identification information during this handoff unless explicitly authorized by you.</p>

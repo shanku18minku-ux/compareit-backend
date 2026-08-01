@@ -99,7 +99,7 @@ const Signup = ({ onNavigate, onLoginSuccess }) => {
       
       <div className="auth-card-wrapper">
         <div className="header">
-          <h1 className="logo">Compare<span>It</span></h1>
+          <h1 className="logo">{t('auto_compare_7eec', 'Compare')}<span>It</span></h1>
           <p className="tagline">{t('auth.createAccount', 'Create an account to get started')}</p>
         </div>
 
@@ -202,7 +202,7 @@ const Signup = ({ onNavigate, onLoginSuccess }) => {
                   onChange={(e) => setTermsAccepted(e.target.checked)}
                 />
                 <span className="terms-text">
-                  I agree to the <button type="button" className="text-link-small" onClick={() => setIsTermsOpen(true)}>Terms of Service</button> and <button type="button" className="text-link-small" onClick={() => setIsPrivacyOpen(true)}>Privacy Policy</button>
+                  I agree to the <button type="button" className="text-link-small" onClick={() => setIsTermsOpen(true)}>{t('auto_terms_of_service_3b6c', 'Terms of Service')}</button> and <button type="button" className="text-link-small" onClick={() => setIsPrivacyOpen(true)}>{t('auto_privacy_policy_fa2e', 'Privacy Policy')}</button>
                 </span>
               </label>
             </div>

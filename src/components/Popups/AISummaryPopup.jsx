@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Bot, X, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './AISummaryPopup.css';
 
 const AISummaryPopup = ({ isOpen, onClose, summaryPoints, aiScore }) => {
+  const { t } = useTranslation();
   return (
     <AnimatePresence>
       {isOpen && (
@@ -41,7 +43,7 @@ const AISummaryPopup = ({ isOpen, onClose, summaryPoints, aiScore }) => {
             </div>
 
             <div className="ai-confidence">
-              <span>AI Confidence</span>
+              <span>{t('auto_ai_confidence_00e5', 'AI Confidence')}</span>
               <span className="confidence-score">{aiScore || 95}%</span>
             </div>
           </motion.div>

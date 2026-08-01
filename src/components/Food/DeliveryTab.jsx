@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { Star, Clock, MapPin, Tag, ChevronRight, Filter } from 'lucide-react';
 import useAppStore from '../../store/appStore';
@@ -139,6 +140,7 @@ const MOCK_DISHES = [
 ];
 
 const DeliveryTab = ({ globalSearchQuery = '' }) => {
+  const { t } = useTranslation();
   const [dishes, setDishes] = useState(MOCK_DISHES);
   const [filterVeg, setFilterVeg] = useState(false);
   const [filterNonVeg, setFilterNonVeg] = useState(false);
@@ -247,7 +249,7 @@ const DeliveryTab = ({ globalSearchQuery = '' }) => {
       </div>
 
       {dishes.length === 0 ? (
-        <div className="no-results">No dishes found matching your criteria.</div>
+        <div className="no-results">{t('auto_no_dishes_found_matc_c7a5', 'No dishes found matching your criteria.')}</div>
       ) : (
         <div className="dishes-list">
           {dishes.map(dish => (

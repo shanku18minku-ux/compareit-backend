@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, Search, Mic, X, Sparkles, SlidersHorizontal, Zap } from 'lucide-react';
 import useAppStore from '../../store/appStore';
@@ -7,6 +8,7 @@ import PriceBreakdown from '../../components/Coupons/PriceBreakdown';
 import './Coupons.css';
 
 const Coupons = () => {
+  const { t } = useTranslation();
   const { goToDashboard, activeCouponCategory, setActiveCouponCategory } = useAppStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -67,8 +69,8 @@ const Coupons = () => {
             <ArrowLeft size={20} />
           </button>
           <div className="coupons-header-titles">
-            <h1 className="coupons-title">Deals & Coupons</h1>
-            <p className="coupons-subtitle">AI-powered savings engine</p>
+            <h1 className="coupons-title">{t('auto_deals_coupons_aef7', 'Deals & Coupons')}</h1>
+            <p className="coupons-subtitle">{t('auto_ai_powered_savings_e_bebf', 'AI-powered savings engine')}</p>
           </div>
           <div className="coupons-header-icon">
             <Sparkles size={22} color="#fbbf24" />
@@ -82,7 +84,7 @@ const Coupons = () => {
             ref={searchRef}
             type="text"
             className="coupons-search-input"
-            placeholder="Search Amazon, Swiggy, HDFC..."
+            placeholder={t('auto_search_amazon_swiggy_c8ed', 'Search Amazon, Swiggy, HDFC...')}
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />
@@ -125,7 +127,7 @@ const Coupons = () => {
         {displayList.length === 0 ? (
           <div className="coupons-empty">
             <div className="empty-icon">🎟️</div>
-            <h3>No deals found</h3>
+            <h3>{t('auto_no_deals_found_6c28', 'No deals found')}</h3>
             <p>Try searching for Amazon, Swiggy, Zomato, HDFC, or Netflix</p>
           </div>
         ) : (
@@ -149,7 +151,7 @@ const Coupons = () => {
             {otherDeals.length > 0 && (
               <div className="coupons-section">
                 <div className="coupons-section-header">
-                  <span className="section-tag">More Deals</span>
+                  <span className="section-tag">{t('auto_more_deals_e56f', 'More Deals')}</span>
                 </div>
                 <div className="coupons-deals-list">
                   {otherDeals.map(coupon => (

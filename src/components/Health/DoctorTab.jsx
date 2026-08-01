@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import useAppStore from '../../store/appStore';
 import { Star, Clock, Video, Phone, MessageCircle, Home, Building2, Zap, ArrowRight, ShieldCheck } from 'lucide-react';
@@ -89,6 +90,7 @@ const getTypeIcon = (type) => {
 };
 
 const DoctorCard = ({ doctor, handleBook }) => {
+  const { t } = useTranslation();
   const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [couponMode, setCouponMode] = useState('auto');
   const [couponCode, setCouponCode] = useState('');
@@ -126,7 +128,7 @@ const DoctorCard = ({ doctor, handleBook }) => {
       </div>
       
       <div className="platforms-comparison">
-        <div className="comparison-title">Compare Consultation Options</div>
+        <div className="comparison-title">{t('auto_compare_consultation_de43', 'Compare Consultation Options')}</div>
         
         <div className="platform-tabs">
           {doctor.platforms.map((platform, idx) => (
@@ -165,11 +167,11 @@ const DoctorCard = ({ doctor, handleBook }) => {
                <div className="manual-coupon-input">
                  <input 
                    type="text" 
-                   placeholder="Code: SAVE50" 
+                   placeholder={t('auto_code_save50_e6ae', 'Code: SAVE50')} 
                    value={couponCode} 
                    onChange={(e) => setCouponCode(e.target.value)}
                  />
-                 <button className="apply-btn">Apply</button>
+                 <button className="apply-btn">{t('auto_apply_9639', 'Apply')}</button>
                </div>
              )}
              
@@ -228,7 +230,7 @@ const DoctorTab = ({ searchQuery }) => {
       </div>
 
       <div className="hospitals-section">
-        <h3 className="section-title">Top Hospital Networks</h3>
+        <h3 className="section-title">{t('auto_top_hospital_network_b08c', 'Top Hospital Networks')}</h3>
         <div className="hospitals-grid">
           {hospitals.map(hospital => (
             <div key={hospital.name} className="hospital-card" onClick={() => handleBook(hospital.name)}>
@@ -240,11 +242,11 @@ const DoctorTab = ({ searchQuery }) => {
       </div>
 
       <div className="doctors-section-wrapper">
-        <h3 className="section-title">Recommended Doctors</h3>
+        <h3 className="section-title">{t('auto_recommended_doctors_c004', 'Recommended Doctors')}</h3>
         
         <div className="horizontal-doctors-scroll">
           {filteredDoctors.length === 0 ? (
-            <div className="no-results">No doctors found for this query.</div>
+            <div className="no-results">{t('auto_no_doctors_found_for_93a5', 'No doctors found for this query.')}</div>
           ) : (
             filteredDoctors.map(doctor => (
               <DoctorCard key={doctor.id} doctor={doctor} handleBook={handleBook} />

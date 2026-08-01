@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { 
   ArrowLeft, 
@@ -58,7 +59,7 @@ export default function Vehicles() {
         <button onClick={goToDashboard} className="back-button" aria-label="Go back">
           <ArrowLeft size={20} />
         </button>
-        <h1 className="header-title">Vehicle Super Module</h1>
+        <h1 className="header-title">{t('auto_vehicle_super_module_80d1', 'Vehicle Super Module')}</h1>
       </header>
 
       {/* Official API / Disclaimer Banner */}
@@ -76,7 +77,7 @@ export default function Vehicles() {
           <input
             type="text"
             className="ai-search-input"
-            placeholder="AI Search: e.g. 'Swift under 5 lakh'"
+            placeholder={t('auto_ai_search_e_g_swift__31c4', "AI Search: e.g. 'Swift under 5 lakh'")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

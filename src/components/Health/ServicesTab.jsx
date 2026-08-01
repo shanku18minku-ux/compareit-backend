@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import useAppStore from '../../store/appStore';
 import { Microscope, Shield, Dumbbell, Brain, Baby, UserPlus, Ambulance, Star, ExternalLink } from 'lucide-react';
@@ -57,6 +58,7 @@ const serviceCategories = [
 ];
 
 const ServicesTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   
   const { setGlobalRedirectData } = useAppStore();
 
@@ -79,13 +81,13 @@ const ServicesTab = ({ searchQuery }) => {
     <div className="services-tab">
       
       <div className="services-intro">
-        <h3>Explore Health Services</h3>
+        <h3>{t('auto_explore_health_servi_a417', 'Explore Health Services')}</h3>
         <p>Compare diagnostic labs, insurances, and wellness platforms in one place.</p>
       </div>
 
       <div className="services-container">
         {filteredCategories.length === 0 ? (
-          <div className="no-results">No services found for this query.</div>
+          <div className="no-results">{t('auto_no_services_found_fo_99ba', 'No services found for this query.')}</div>
         ) : (
           filteredCategories.map(category => (
             <div key={category.title} className="service-category-block">

@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { X, Info } from 'lucide-react';
 import './Settings.css';
 
 const TermsOfServiceModal = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   return (
@@ -11,7 +13,7 @@ const TermsOfServiceModal = ({ isOpen, onClose }) => {
         <header className="settings-modal-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Info size={24} color="#2563EB" />
-            <h2 style={{ margin: 0, fontSize: '1.25rem', color: '#1e293b' }}>Terms of Service</h2>
+            <h2 style={{ margin: 0, fontSize: '1.25rem', color: '#1e293b' }}>{t('auto_terms_of_service_3b6c', 'Terms of Service')}</h2>
           </div>
           <button onClick={onClose} className="settings-modal-close">
             <X size={24} color="#64748b" />
@@ -21,7 +23,7 @@ const TermsOfServiceModal = ({ isOpen, onClose }) => {
         <div className="settings-modal-body" style={{ padding: '20px', overflowY: 'auto', maxHeight: '70vh', color: '#475569', lineHeight: '1.6' }}>
           <p><strong>Effective Date:</strong> August 1, 2026</p>
           
-          <p>Welcome to <strong>CompareIt</strong>. By accessing or using our mobile application ("App"), you agree to be bound by these Terms of Service. Please read them carefully.</p>
+          <p>{t('auto_welcome_to_9819', 'Welcome to')}<strong>{t('auto_compareit_9957', 'CompareIt')}</strong>. By accessing or using our mobile application ("App"), you agree to be bound by these Terms of Service. Please read them carefully.</p>
 
           <h3 style={{ color: '#0f172a', marginTop: '20px', marginBottom: '10px' }}>1. Nature of Service (Aggregator)</h3>
           <p>CompareIt is a deal discovery and price aggregation platform. We compile information from various third-party services across categories like Food Delivery, E-commerce, Travel, and Health. <strong>We do not sell products, provide services, or process payments directly.</strong> Our sole purpose is to help you compare prices and ETAs.</p>

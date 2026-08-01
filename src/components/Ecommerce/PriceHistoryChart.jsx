@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useMemo } from 'react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import './PriceHistoryChart.css';
@@ -6,7 +7,7 @@ export default function PriceHistoryChart({ data }) {
   if (!data || data.length === 0) {
     return (
       <div className="price-history-container empty">
-        <p>No price history available.</p>
+        <p>{t('auto_no_price_history_ava_47be', 'No price history available.')}</p>
       </div>
     );
   }
@@ -17,6 +18,7 @@ export default function PriceHistoryChart({ data }) {
   }, [data]);
 
   const CustomTooltip = ({ active, payload, label }) => {
+  const { t } = useTranslation();
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip">

@@ -116,7 +116,7 @@ const ProfileSetup = ({ onComplete }) => {
             <label>{t('Full Name', 'Full Name')}</label>
             <input 
               type="text" 
-              placeholder="e.g., John Doe"
+              placeholder={t('auto_e_g_john_doe_2e3b', 'e.g., John Doe')}
               value={formData.fullName}
               onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
               className="setup-input"
@@ -174,11 +174,11 @@ const ProfileSetup = ({ onComplete }) => {
           </div>
 
           <div className="form-group mt-6">
-            <label className="flex-label">
-              <span>{t('Select Your Interests', 'Select Your Interests')}</span>
-              <Sparkles size={16} className="text-blue-500" />
-            </label>
-            <p className="subtitle-text">We'll personalize deals for you</p>
+              <label className="form-label">
+                What are you interested in?
+                <Sparkles size={16} className="text-blue-500" />
+              </label>
+              <p className="subtitle-text">{t('auto_we_ll_personalize_de_e12b', "We'll personalize deals for you")}</p>
             
             <div className="interests-grid">
               {INTERESTS.map(interest => {

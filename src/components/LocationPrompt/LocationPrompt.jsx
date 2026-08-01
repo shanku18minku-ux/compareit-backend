@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { MapPin, Shield } from 'lucide-react';
 import { Geolocation } from '@capacitor/geolocation';
@@ -5,6 +6,7 @@ import useAppStore from '../../store/appStore';
 import './LocationPrompt.css';
 
 const LocationPrompt = () => {
+  const { t } = useTranslation();
   const { userLocation, setUserLocation } = useAppStore();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -83,7 +85,7 @@ const LocationPrompt = () => {
           <div className="location-icon-wrapper">
             <MapPin size={28} color="#2563EB" />
           </div>
-          <h2>Enable Your Location</h2>
+          <h2>{t('auto_enable_your_location_a9bf', 'Enable Your Location')}</h2>
         </div>
 
         <div className="location-body">
@@ -94,9 +96,9 @@ const LocationPrompt = () => {
           <div className="location-list">
             <p>Your location will only be used to:</p>
             <ul>
-              <li>Show services available near you</li>
+              <li>{t('auto_show_services_availa_8c67', 'Show services available near you')}</li>
               <li>Display nearby stores, restaurants, jobs, healthcare, education, and other local options</li>
-              <li>Improve search results based on your area</li>
+              <li>{t('auto_improve_search_resul_5fff', 'Improve search results based on your area')}</li>
             </ul>
           </div>
 

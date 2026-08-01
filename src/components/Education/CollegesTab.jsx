@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import './CollegesTab.css';
 import { Building, MapPin, Trophy, DollarSign, ExternalLink, Activity, Gift, Search, TrendingUp, CheckCircle2 } from 'lucide-react';
@@ -206,6 +207,7 @@ const getMockPrediction = (exam, rank, category) => {
 };
 
 const CollegesTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState('Engineering (B.Tech/B.E.)');
   const [selectedForCompare, setSelectedForCompare] = useState([]);
   const { setGlobalRedirectData } = useAppStore();
@@ -270,8 +272,8 @@ const CollegesTab = ({ searchQuery }) => {
         <div className="predictor-header">
           <TrendingUp className="predictor-icon" />
           <div>
-            <h3>Smart College Predictor</h3>
-            <p>Know your chances based on previous year cutoffs</p>
+            <h3>{t('auto_smart_college_predic_2346', 'Smart College Predictor')}</h3>
+            <p>{t('auto_know_your_chances_ba_0d41', 'Know your chances based on previous year cutoffs')}</p>
           </div>
         </div>
 
@@ -291,15 +293,15 @@ const CollegesTab = ({ searchQuery }) => {
               onChange={(e) => setPredictorCategory(e.target.value)}
               className="predictor-select"
             >
-              <option value="General">General</option>
-              <option value="OBC-NCL">OBC-NCL</option>
+              <option value="General">{t('auto_general_0db3', 'General')}</option>
+              <option value="OBC-NCL">{t('auto_obc_ncl_3ce3', 'OBC-NCL')}</option>
               <option value="SC">SC</option>
               <option value="ST">ST</option>
-              <option value="EWS">EWS</option>
+              <option value="EWS">{t('auto_ews_59c8', 'EWS')}</option>
             </select>
             <input 
               type="number" 
-              placeholder="Enter Rank" 
+              placeholder={t('auto_enter_rank_a4b8', 'Enter Rank')} 
               value={predictorRank}
               onChange={(e) => setPredictorRank(e.target.value)}
               className="predictor-input"
@@ -367,21 +369,21 @@ const CollegesTab = ({ searchQuery }) => {
               <div className="stat-item">
                 <Trophy size={14} className="stat-icon" />
                 <div className="stat-text">
-                  <span className="label">Ranking</span>
+                  <span className="label">{t('auto_ranking_37ae', 'Ranking')}</span>
                   <span className="value">{item.ranking}</span>
                 </div>
               </div>
               <div className="stat-item">
                 <DollarSign size={14} className="stat-icon" />
                 <div className="stat-text">
-                  <span className="label">Avg Fees</span>
+                  <span className="label">{t('auto_avg_fees_00f3', 'Avg Fees')}</span>
                   <span className="value">{item.fees}</span>
                 </div>
               </div>
               <div className="stat-item">
                 <Activity size={14} className="stat-icon" />
                 <div className="stat-text">
-                  <span className="label">Avg Package</span>
+                  <span className="label">{t('auto_avg_package_bb2a', 'Avg Package')}</span>
                   <span className="value">{item.avgPackage}</span>
                 </div>
               </div>

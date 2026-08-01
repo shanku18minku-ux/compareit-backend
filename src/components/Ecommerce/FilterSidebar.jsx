@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { 
   ChevronDown, 
@@ -15,6 +16,7 @@ const BRANDS = ['Apple', 'Samsung', 'Sony', 'Dell', 'Bose', 'LG'];
 const RATINGS = [4, 3, 2, 1];
 
 const FilterSidebar = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   const [expandedSections, setExpandedSections] = useState({
     category: true,
     price: true,
@@ -62,9 +64,9 @@ const FilterSidebar = ({ isOpen, onClose }) => {
         <div className="filter-sidebar-header">
           <div className="header-title">
             <SlidersHorizontal size={20} />
-            <h2>Filters</h2>
+            <h2>{t('auto_filters_f3f4', 'Filters')}</h2>
           </div>
-          <button className="clear-btn" onClick={clearFilters}>Clear All</button>
+          <button className="clear-btn" onClick={clearFilters}>{t('auto_clear_all_e77f', 'Clear All')}</button>
           <button className="close-btn mobile-only" onClick={onClose}>
             <X size={24} />
           </button>
@@ -77,7 +79,7 @@ const FilterSidebar = ({ isOpen, onClose }) => {
               className="filter-section-header"
               onClick={() => toggleSection('category')}
             >
-              <h3>Category</h3>
+              <h3>{t('auto_category_3adb', 'Category')}</h3>
               {expandedSections.category ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             {expandedSections.category && (
@@ -104,7 +106,7 @@ const FilterSidebar = ({ isOpen, onClose }) => {
               className="filter-section-header"
               onClick={() => toggleSection('price')}
             >
-              <h3>Price Range</h3>
+              <h3>{t('auto_price_range_048a', 'Price Range')}</h3>
               {expandedSections.price ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             {expandedSections.price && (
@@ -148,14 +150,14 @@ const FilterSidebar = ({ isOpen, onClose }) => {
               className="filter-section-header"
               onClick={() => toggleSection('brand')}
             >
-              <h3>Brand</h3>
+              <h3>{t('auto_brand_1be6', 'Brand')}</h3>
               {expandedSections.brand ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             {expandedSections.brand && (
               <div className="filter-section-body">
                 <div className="search-box">
                   <Search size={16} />
-                  <input type="text" placeholder="Search brands..." />
+                  <input type="text" placeholder={t('auto_search_brands_ad2c', 'Search brands...')} />
                 </div>
                 <ul className="checkbox-list">
                   {BRANDS.map(brand => (
@@ -182,7 +184,7 @@ const FilterSidebar = ({ isOpen, onClose }) => {
               className="filter-section-header"
               onClick={() => toggleSection('rating')}
             >
-              <h3>Customer Rating</h3>
+              <h3>{t('auto_customer_rating_c006', 'Customer Rating')}</h3>
               {expandedSections.rating ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             {expandedSections.rating && (

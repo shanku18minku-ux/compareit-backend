@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { Search, Calendar, Users, Star, MapPin, Check, ChevronDown, ChevronUp, Sparkles, Wifi, Coffee, Car, Wind } from 'lucide-react';
 import useAppStore from '../../store/appStore';
@@ -78,6 +79,7 @@ const amenityIcons = {
 };
 
 const StayTab = () => {
+  const { t } = useTranslation();
   const [location, setLocation] = useState('');
   const [dates, setDates] = useState('12 Aug – 14 Aug');
   const [guests, setGuests] = useState('2 Guests, 1 Room');
@@ -100,7 +102,7 @@ const StayTab = () => {
           <Search size={16} className="stay-input-icon" />
           <input
             type="text"
-            placeholder="City, Hotel, or Area"
+            placeholder={t('auto_city_hotel_or_area_151d', 'City, Hotel, or Area')}
             value={location}
             onChange={e => setLocation(e.target.value)}
           />
@@ -112,7 +114,7 @@ const StayTab = () => {
               type="text"
               value={dates}
               onChange={e => setDates(e.target.value)}
-              placeholder="Dates"
+              placeholder={t('auto_dates_5f0c', 'Dates')}
             />
           </div>
           <div className="stay-input-group half">
@@ -121,11 +123,11 @@ const StayTab = () => {
               type="text"
               value={guests}
               onChange={e => setGuests(e.target.value)}
-              placeholder="Guests"
+              placeholder={t('auto_guests_4229', 'Guests')}
             />
           </div>
         </div>
-        <button className="stay-search-btn">Search Hotels</button>
+        <button className="stay-search-btn">{t('auto_search_hotels_861d', 'Search Hotels')}</button>
       </div>
 
       {/* Filters */}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 
 import { ShoppingCart, Pill, Activity, Heart, ShieldAlert, Sparkles, TrendingDown } from 'lucide-react';
@@ -51,6 +52,7 @@ const mockMedicines = [
 
 
 const MedicineTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   const { couponMode, appliedManualCoupons, setGlobalRedirectData } = useAppStore();
 
   const filteredMedicines = mockMedicines.filter(med => {
@@ -101,7 +103,7 @@ const MedicineTab = ({ searchQuery }) => {
         </h3>
         
         {filteredMedicines.length === 0 ? (
-          <div className="no-results">No medicines found for this query.</div>
+          <div className="no-results">{t('auto_no_medicines_found_f_36da', 'No medicines found for this query.')}</div>
         ) : (
           filteredMedicines.map(med => {
             const genericData = getGenericAlternatives(med);
@@ -144,10 +146,10 @@ const MedicineTab = ({ searchQuery }) => {
                     />
                     
                     <div className="comparison-header-row">
-                      <div className="col-platform">Platform</div>
-                      <div className="col-price">Original</div>
-                      <div className="col-discount">Discount</div>
-                      <div className="col-final">Final Price</div>
+                      <div className="col-platform">{t('auto_platform_419f', 'Platform')}</div>
+                      <div className="col-price">{t('auto_original_0a52', 'Original')}</div>
+                      <div className="col-discount">{t('auto_discount_104d', 'Discount')}</div>
+                      <div className="col-final">{t('auto_final_price_2ba8', 'Final Price')}</div>
                     </div>
 
                     {med.platforms.map((platform, idx) => {

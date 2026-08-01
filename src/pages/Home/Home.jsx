@@ -163,9 +163,9 @@ const Home = () => {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                 <span style={{ fontSize: '22px' }}>🎟️</span>
-                <span style={{ color: '#a5b4fc', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>AI-Powered</span>
+                <span style={{ color: '#a5b4fc', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>{t('auto_ai_powered_3c6e', 'AI-Powered')}</span>
               </div>
-              <h3 style={{ color: '#fff', margin: '0 0 4px', fontSize: '20px', fontWeight: '800', lineHeight: 1.2 }}>Deals & Coupons</h3>
+              <h3 style={{ color: '#fff', margin: '0 0 4px', fontSize: '20px', fontWeight: '800', lineHeight: 1.2 }}>{t('auto_deals_coupons_aef7', 'Deals & Coupons')}</h3>
               <p style={{ color: '#c7d2fe', margin: '0 0 14px', fontSize: '13px' }}>100+ verified codes from Amazon, Swiggy, Zomato, MakeMyTrip & more</p>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 {['🛒 Shopping', '🍕 Food', '✈️ Travel', '💊 Medicine'].map((tag, i) => (
@@ -183,9 +183,9 @@ const Home = () => {
 
           {/* Savings strip */}
           <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.15)', display: 'flex', gap: '16px' }}>
-            <div style={{ color: '#fff', fontSize: '12px' }}><span style={{ fontWeight: '800', fontSize: '16px' }}>₹{totalSaved.toLocaleString()}</span><br /><span style={{ color: '#a5b4fc' }}>Total Saved</span></div>
-            <div style={{ color: '#fff', fontSize: '12px' }}><span style={{ fontWeight: '800', fontSize: '16px' }}>{couponsUsed}</span><br /><span style={{ color: '#a5b4fc' }}>Coupons Used</span></div>
-            <div style={{ color: '#fff', fontSize: '12px' }}><span style={{ fontWeight: '800', fontSize: '16px' }}>100+</span><br /><span style={{ color: '#a5b4fc' }}>Live Codes</span></div>
+            <div style={{ color: '#fff', fontSize: '12px' }}><span style={{ fontWeight: '800', fontSize: '16px' }}>₹{totalSaved.toLocaleString()}</span><br /><span style={{ color: '#a5b4fc' }}>{t('auto_total_saved_dbf7', 'Total Saved')}</span></div>
+            <div style={{ color: '#fff', fontSize: '12px' }}><span style={{ fontWeight: '800', fontSize: '16px' }}>{couponsUsed}</span><br /><span style={{ color: '#a5b4fc' }}>{t('auto_coupons_used_ef16', 'Coupons Used')}</span></div>
+            <div style={{ color: '#fff', fontSize: '12px' }}><span style={{ fontWeight: '800', fontSize: '16px' }}>100+</span><br /><span style={{ color: '#a5b4fc' }}>{t('auto_live_codes_b8f8', 'Live Codes')}</span></div>
           </div>
         </div>
       </section>
@@ -213,10 +213,10 @@ const Home = () => {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                 <span style={{ fontSize: '22px' }}>🚗</span>
-                <span style={{ color: '#93c5fd', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>AI Discovery Engine</span>
+                <span style={{ color: '#93c5fd', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>{t('auto_ai_discovery_engine_d3d3', 'AI Discovery Engine')}</span>
               </div>
-              <h3 style={{ color: '#fff', margin: '0 0 4px', fontSize: '20px', fontWeight: '800', lineHeight: 1.2 }}>Vehicle Super Module</h3>
-              <p style={{ color: '#cbd5e1', margin: '0 0 14px', fontSize: '13px' }}>Buy, Sell, Auction & Compare</p>
+              <h3 style={{ color: '#fff', margin: '0 0 4px', fontSize: '20px', fontWeight: '800', lineHeight: 1.2 }}>{t('auto_vehicle_super_module_80d1', 'Vehicle Super Module')}</h3>
+              <p style={{ color: '#cbd5e1', margin: '0 0 14px', fontSize: '13px' }}>{t('auto_buy_sell_auction_com_7242', 'Buy, Sell, Auction & Compare')}</p>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 {['Marketplace', 'Auctions', 'Rentals', 'Services'].map((tag, i) => (
                   <span key={i} style={{ background: 'rgba(255,255,255,0.15)', color: '#f1f5f9', fontSize: '11px', padding: '3px 10px', borderRadius: '20px', fontWeight: '600' }}>{tag}</span>
@@ -254,10 +254,10 @@ const Home = () => {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                 <span style={{ fontSize: '22px' }}>📦</span>
-                <span style={{ color: '#94a3b8', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>Compare Prices</span>
+                <span style={{ color: '#94a3b8', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>{t('auto_compare_prices_ed83', 'Compare Prices')}</span>
               </div>
-              <h3 style={{ color: '#fff', margin: '0 0 4px', fontSize: '20px', fontWeight: '800', lineHeight: 1.2 }}>Courier & Logistics</h3>
-              <p style={{ color: '#cbd5e1', margin: '0 0 14px', fontSize: '13px' }}>Delhivery, Blue Dart, Porter & more</p>
+              <h3 style={{ color: '#fff', margin: '0 0 4px', fontSize: '20px', fontWeight: '800', lineHeight: 1.2 }}>{t('auto_courier_logistics_314e', 'Courier & Logistics')}</h3>
+              <p style={{ color: '#cbd5e1', margin: '0 0 14px', fontSize: '13px' }}>{t('auto_delhivery_blue_dart__7f4c', 'Delhivery, Blue Dart, Porter & more')}</p>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 {['Hyperlocal', 'Intercity', 'B2B', 'Same-day'].map((tag, i) => (
                   <span key={i} style={{ background: 'rgba(255,255,255,0.15)', color: '#f1f5f9', fontSize: '11px', padding: '3px 10px', borderRadius: '20px', fontWeight: '600' }}>{tag}</span>

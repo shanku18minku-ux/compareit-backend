@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { MapPin, Navigation, ChevronDown, Search } from 'lucide-react';
 import useAppStore from '../../store/appStore';
 import './LocationPicker.css';
 
 const LocationPicker = () => {
+  const { t } = useTranslation();
   const { userLocation, locationStatus, setUserLocation } = useAppStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,10 +42,10 @@ const LocationPicker = () => {
       <div className="location-trigger" onClick={() => setIsModalOpen(true)}>
         <MapPin className="location-icon" size={20} />
         <div className="location-info">
-          <span className="location-label">Delivering to</span>
+          <span className="location-label">{t('auto_delivering_to_d34e', 'Delivering to')}</span>
           <span className="location-address">
             {locationStatus === 'detecting' ? (
-              <span className="pulsing-text">Detecting your location...</span>
+              <span className="pulsing-text">{t('auto_detecting_your_locat_e365', 'Detecting your location...')}</span>
             ) : (
               <span className="truncate">{userLocation.address}</span>
             )}
@@ -56,7 +58,7 @@ const LocationPicker = () => {
         <div className="location-modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div className="location-modal" onClick={e => e.stopPropagation()}>
             <div className="location-modal-header">
-              <h3>Select Location</h3>
+              <h3>{t('auto_select_location_0afc', 'Select Location')}</h3>
               <button className="close-btn" onClick={() => setIsModalOpen(false)}>×</button>
             </div>
             
@@ -64,7 +66,7 @@ const LocationPicker = () => {
               <Search size={18} className="search-icon" />
               <input 
                 type="text" 
-                placeholder="Search for area, street name..."
+                placeholder={t('auto_search_for_area_stre_492b', 'Search for area, street name...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -78,11 +80,11 @@ const LocationPicker = () => {
               }}
             >
               <Navigation size={18} className="nav-icon" />
-              <span>Use current location</span>
+              <span>{t('auto_use_current_location_1759', 'Use current location')}</span>
             </div>
 
             <div className="saved-locations">
-              <h4>Suggested Locations</h4>
+              <h4>{t('auto_suggested_locations_f7d4', 'Suggested Locations')}</h4>
               {mockLocations.filter(loc => loc.address.toLowerCase().includes(searchQuery.toLowerCase())).map((loc, idx) => (
                 <div 
                   key={idx} 

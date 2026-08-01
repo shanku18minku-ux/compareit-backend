@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import styles from './ScholarshipsTab.module.css';
 import { useApi } from '../../services/api';
@@ -7,6 +8,7 @@ import UniversalCard from '../UniversalCard/UniversalCard';
 import EmptyState from '../Global/EmptyState';
 
 const ScholarshipsTab = () => {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const { getEduScholarships } = useApi();
   const [data, setData] = useState([]);
@@ -54,14 +56,14 @@ const ScholarshipsTab = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Financial Aid & Scholarships</h2>
-        <p className={styles.subtitle}>Discover opportunities to fund your education.</p>
+        <h2 className={styles.title}>{t('auto_financial_aid_schola_56f4', 'Financial Aid & Scholarships')}</h2>
+        <p className={styles.subtitle}>{t('auto_discover_opportuniti_3542', 'Discover opportunities to fund your education.')}</p>
         
         <div className={styles.searchContainer}>
           <Search size={20} className={styles.searchIcon} />
           <input 
             type="text" 
-            placeholder="Search by scholarship name or provider..." 
+            placeholder={t('auto_search_by_scholarshi_fb61', 'Search by scholarship name or provider...')} 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className={styles.searchInput}

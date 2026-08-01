@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Bot } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './FloatingAI.css';
 
 const FloatingAI = ({ onClick }) => {
+  const { t } = useTranslation();
   return (
     <motion.button 
       className="floating-ai-btn"
@@ -15,7 +17,7 @@ const FloatingAI = ({ onClick }) => {
       transition={{ type: 'spring', stiffness: 200, damping: 20 }}
     >
       <Bot size={24} color="#fff" />
-      <span>Ask AI</span>
+      <span>{t('auto_ask_ai_3ed8', 'Ask AI')}</span>
     </motion.button>
   );
 };

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import './JobsTab.css';
 import { Briefcase, MapPin, DollarSign, ExternalLink, Zap, TrendingUp, Search, User, Filter } from 'lucide-react';
@@ -119,6 +120,7 @@ const mockJobs = [
 ];
 
 const JobsTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   const [profile, setProfile] = useState({ role: '', location: '', type: 'All' });
   const [hasSearched, setHasSearched] = useState(false);
   const { setGlobalRedirectData } = useAppStore();
@@ -172,7 +174,7 @@ const JobsTab = ({ searchQuery }) => {
             <User size={16} className="input-icon" />
             <input 
               type="text" 
-              placeholder="e.g. Frontend Developer" 
+              placeholder={t('auto_e_g_frontend_develop_c034', 'e.g. Frontend Developer')} 
               value={profile.role}
               onChange={(e) => setProfile({...profile, role: e.target.value})}
             />
@@ -181,7 +183,7 @@ const JobsTab = ({ searchQuery }) => {
             <MapPin size={16} className="input-icon" />
             <input 
               type="text" 
-              placeholder="e.g. Remote, Bangalore" 
+              placeholder={t('auto_e_g_remote_bangalore_d892', 'e.g. Remote, Bangalore')} 
               value={profile.location}
               onChange={(e) => setProfile({...profile, location: e.target.value})}
             />
@@ -192,11 +194,11 @@ const JobsTab = ({ searchQuery }) => {
               value={profile.type}
               onChange={(e) => setProfile({...profile, type: e.target.value})}
             >
-              <option value="All">All Job Types</option>
-              <option value="Full Time">Full Time</option>
-              <option value="Freelance">Freelance</option>
-              <option value="Internship">Internship</option>
-              <option value="Government">Government</option>
+              <option value="All">{t('auto_all_job_types_6d16', 'All Job Types')}</option>
+              <option value="Full Time">{t('auto_full_time_1f0c', 'Full Time')}</option>
+              <option value="Freelance">{t('auto_freelance_0f28', 'Freelance')}</option>
+              <option value="Internship">{t('auto_internship_dabd', 'Internship')}</option>
+              <option value="Government">{t('auto_government_1845', 'Government')}</option>
             </select>
           </div>
           <button className="find-match-btn" onClick={handleSearch}>

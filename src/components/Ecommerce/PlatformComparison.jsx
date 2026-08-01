@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { ExternalLink, Tag } from 'lucide-react';
 import { Browser } from '@capacitor/browser';
@@ -36,7 +37,7 @@ export default function PlatformComparison({ product }) {
 
   return (
     <div className="platform-comparison-container">
-      <h2 className="comparison-title">Compare & Find Best Deal</h2>
+      <h2 className="comparison-title">{t('auto_compare_find_best_de_3478', 'Compare & Find Best Deal')}</h2>
       
       <CouponManager 
         itemId={product.id} 

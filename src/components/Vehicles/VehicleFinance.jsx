@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { DollarSign, CheckCircle2, ChevronDown, ChevronUp, ExternalLink, Zap } from 'lucide-react';
 import styles from './VehicleEcosystem.module.css';
@@ -6,6 +7,7 @@ import AffiliateRedirectModal from './AffiliateRedirectModal';
 import EmptyState from '../Global/EmptyState';
 
 const VehicleFinance = () => {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState('All');
   
   const categories = ['All', 'Car Loan', 'Used Vehicle Loan', 'Insurance'];
@@ -42,7 +44,7 @@ const VehicleFinance = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
             <label style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
-              <span>Loan Amount</span>
+              <span>{t('auto_loan_amount_e805', 'Loan Amount')}</span>
               <span style={{ fontWeight: 'bold' }}>₹{loanAmount.toLocaleString()}</span>
             </label>
             <input 

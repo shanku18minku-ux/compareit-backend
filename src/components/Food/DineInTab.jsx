@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { Star, MapPin, Check, ExternalLink, Percent } from 'lucide-react';
 import useAppStore from '../../store/appStore';
@@ -89,6 +90,7 @@ const MOCK_RESTAURANTS = [
 ];
 
 const DineInTab = ({ globalSearchQuery = '' }) => {
+  const { t } = useTranslation();
   const [restaurants, setRestaurants] = useState(MOCK_RESTAURANTS);
   const { setGlobalRedirectData } = useAppStore();
 
@@ -140,7 +142,7 @@ const DineInTab = ({ globalSearchQuery = '' }) => {
                   </div>
                   
                   <div className="di-platforms">
-                    <h4 className="di-offers-title">Best Booking Offers</h4>
+                    <h4 className="di-offers-title">{t('auto_best_booking_offers_30d6', 'Best Booking Offers')}</h4>
                     <div className="di-offers-list">
                       {rest.platforms.map((plat, idx) => (
                         <div key={idx} className={`di-offer-row ${plat.best ? 'best-offer' : ''}`}>

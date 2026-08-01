@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { Clock, ExternalLink, ShieldCheck } from 'lucide-react';
 import { auctionVehicles } from '../../services/vehicleMockData';
@@ -5,6 +6,7 @@ import useAppStore from '../../store/appStore';
 import './VehicleAuction.css';
 
 const VehicleAuctionCard = ({ vehicle }) => {
+  const { t } = useTranslation();
   const { setGlobalRedirectData } = useAppStore();
   const [timeLeft, setTimeLeft] = useState(vehicle.timeRemaining || 3600); // Default to 1 hour if not provided
 
@@ -49,11 +51,11 @@ const VehicleAuctionCard = ({ vehicle }) => {
         
         <div className="bidding-info">
           <div className="bid-section">
-            <span className="label">Current Bid</span>
+            <span className="label">{t('auto_current_bid_9c0e', 'Current Bid')}</span>
             <span className="current-bid">{vehicle.currentBid}</span>
           </div>
           <div className="reserve-section">
-            <span className="label">Reserve Price</span>
+            <span className="label">{t('auto_reserve_price_e58c', 'Reserve Price')}</span>
             <span className="reserve-price">{vehicle.reservePrice}</span>
           </div>
         </div>
@@ -61,7 +63,7 @@ const VehicleAuctionCard = ({ vehicle }) => {
         <div className={`countdown-timer ${isEndingSoon ? 'ending-soon' : ''}`}>
           <Clock size={18} className="icon-mr" />
           <span>Ends in: {formatTime(timeLeft)}</span>
-          {isEndingSoon && <span className="urgent-badge">Urgent</span>}
+          {isEndingSoon && <span className="urgent-badge">{t('auto_urgent_2708', 'Urgent')}</span>}
         </div>
 
         <button className="bid-now-btn" onClick={handleBidNow}>
@@ -116,7 +118,7 @@ const VehicleAuction = () => {
   return (
     <div className="vehicle-auction-container">
       <div className="header">
-        <h2>Live Vehicle Auctions</h2>
+        <h2>{t('auto_live_vehicle_auction_fdf4', 'Live Vehicle Auctions')}</h2>
         <p>Premium deals on Bank Repos, Gov Auctions, and Dealer Inventories.</p>
       </div>
       

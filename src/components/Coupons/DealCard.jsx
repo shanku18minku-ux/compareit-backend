@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { CheckCircle2, AlertTriangle, XCircle, Calculator, Copy, Check } from 'lucide-react';
 import styles from './DealCard.module.css';
 
 const DealCard = ({ coupon, onCalculate, isHighlighted }) => {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (code) => {
@@ -29,7 +31,7 @@ const DealCard = ({ coupon, onCalculate, isHighlighted }) => {
     <div className={`${styles.card} ${isHighlighted ? styles.highlightedCard : ''}`}>
       {isHighlighted && (
         <div className={styles.aiBadge}>
-          <span>AI Score 99</span>
+          <span>{t('auto_ai_score_99_36c5', 'AI Score 99')}</span>
         </div>
       )}
       
@@ -94,7 +96,7 @@ const DealCard = ({ coupon, onCalculate, isHighlighted }) => {
       <div className={styles.cardFooter}>
         <button className={styles.calculateBtn} onClick={onCalculate}>
           <Calculator size={16} />
-          <span>Calculate Savings</span>
+          <span>{t('auto_calculate_savings_f5b9', 'Calculate Savings')}</span>
         </button>
       </div>
     </div>

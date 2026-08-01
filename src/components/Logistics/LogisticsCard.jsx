@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Star, Clock, MapPin, Truck } from 'lucide-react';
 import './LogisticsCard.css';
 
 const LogisticsCard = ({ provider, onBook }) => {
+  const { t } = useTranslation();
   return (
     <div className="logistics-card">
       <div className="lc-header">
@@ -48,7 +50,7 @@ const LogisticsCard = ({ provider, onBook }) => {
 
       <button className="lc-book-button" onClick={() => onBook(provider)}>
         <Truck size={18} />
-        <span>Book Now</span>
+        <span>{t('auto_book_now_aed7', 'Book Now')}</span>
       </button>
     </div>
   );

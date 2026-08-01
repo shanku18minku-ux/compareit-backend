@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { Calendar, CheckCircle2, ChevronDown, ChevronUp, ExternalLink, Zap } from 'lucide-react';
 import styles from './VehicleEcosystem.module.css';
@@ -5,6 +6,7 @@ import { vehicleRentals } from '../../services/vehicleEcosystemData';
 import AffiliateRedirectModal from './AffiliateRedirectModal';
 
 const VehicleRentals = () => {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState('All');
   
   const categories = ['All', 'Self-Drive Cars', 'Bike Rentals'];
@@ -99,7 +101,7 @@ const RentalCard = ({ rental }) => {
             {bestPlatform && (
               <span className={styles.finalPrice}>₹{bestPlatform.price.toLocaleString()}</span>
             )}
-            <div style={{ fontSize: '10px', color: '#64748b', marginTop: '2px' }}>Per Day</div>
+            <div style={{ fontSize: '10px', color: '#64748b', marginTop: '2px' }}>{t('auto_per_day_4bbf', 'Per Day')}</div>
           </div>
           
           <button 

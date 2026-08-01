@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { Settings, Gauge, Fuel, ExternalLink, ChevronDown, ChevronUp, Trophy, Zap, Tag, CheckCircle2, CarFront, Calendar } from 'lucide-react';
 import styles from './VehicleCard.module.css';
@@ -5,6 +6,7 @@ import useAppStore from '../../store/appStore';
 import AffiliateRedirectModal from './AffiliateRedirectModal';
 
 const VehicleCard = ({ vehicle }) => {
+  const { t } = useTranslation();
   const [showComparisons, setShowComparisons] = useState(false);
   const [manualCoupon, setManualCoupon] = useState('');
   const [appliedManual, setAppliedManual] = useState(false);
@@ -128,7 +130,7 @@ const VehicleCard = ({ vehicle }) => {
             <div className={styles.manualInputRow}>
               <input 
                 type="text" 
-                placeholder="Enter promo code (Try SUPERCAR)"
+                placeholder={t('auto_enter_promo_code_try_e036', 'Enter promo code (Try SUPERCAR)')}
                 className={styles.couponInput}
                 value={manualCoupon}
                 onChange={(e) => setManualCoupon(e.target.value)}

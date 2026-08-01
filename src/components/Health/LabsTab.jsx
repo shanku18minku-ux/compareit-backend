@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { Stethoscope } from 'lucide-react';
 import styles from './LabsTab.module.css';
@@ -6,6 +7,7 @@ import SwipeDeck from '../SwipeDeck/SwipeDeck';
 import UniversalCard from '../UniversalCard/UniversalCard';
 
 const LabsTab = () => {
+  const { t } = useTranslation();
   const { getHealthLabs } = useApi();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +33,7 @@ const LabsTab = () => {
             <Stethoscope className={styles.icon} />
           </div>
           <div>
-            <h2 className={styles.title}>Diagnostic Packages</h2>
+            <h2 className={styles.title}>{t('auto_diagnostic_packages_4cbd', 'Diagnostic Packages')}</h2>
             <p className={styles.subtitle}>Compare lab tests, full body checkups, and diagnostic profiles.</p>
           </div>
         </div>

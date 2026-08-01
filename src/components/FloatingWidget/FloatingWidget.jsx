@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, X, Mic, Send, Bot, User, Sparkles, MoreHorizontal } from 'lucide-react';
 import './FloatingWidget.css';
@@ -5,6 +6,7 @@ import { parseAIIntent } from '../../services/aiIntentService';
 import useAppStore from '../../store/appStore';
 
 const FloatingWidget = () => {
+  const { t } = useTranslation();
   // Try to use the store if it's properly exported, otherwise fallback to local state for safety in this subagent build
   let isAICopilotOpen = false;
   let toggleAICopilot = () => {};
@@ -131,8 +133,8 @@ const FloatingWidget = () => {
                 <Sparkles size={16} color="#fff" />
               </div>
               <div>
-                <h3>CompareIt Copilot</h3>
-                <p>AI-Powered Assistant</p>
+                <h3>{t('auto_compareit_copilot_60af', 'CompareIt Copilot')}</h3>
+                <p>{t('auto_ai_powered_assistant_a094', 'AI-Powered Assistant')}</p>
               </div>
             </div>
             <button className="close-btn" onClick={toggleAICopilot} aria-label="Close chat">
@@ -183,7 +185,7 @@ const FloatingWidget = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask anything... (e.g. Under 30k phone)"
+                placeholder={t('auto_ask_anything_e_g_und_df26', 'Ask anything... (e.g. Under 30k phone)')}
                 rows={1}
                 className="chat-input"
               />

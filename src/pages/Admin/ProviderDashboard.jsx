@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Server, Activity, Power, CheckCircle, XCircle } from 'lucide-react';
 import useAppStore from '../../store/appStore';
@@ -5,6 +6,7 @@ import { ProviderManager } from '../../core/providers/ProviderManager';
 import './ProviderDashboard.css';
 
 const ProviderDashboard = () => {
+  const { t } = useTranslation();
   const [adapters, setAdapters] = useState([]);
   const goToDashboard = useAppStore(state => state.goToDashboard);
 
@@ -29,8 +31,8 @@ const ProviderDashboard = () => {
           <ArrowLeft size={24} />
         </button>
         <div className="header-title-col">
-          <h2>Provider Management</h2>
-          <p>Universal Adapter System</p>
+          <h2>{t('auto_provider_management_1d4e', 'Provider Management')}</h2>
+          <p>{t('auto_universal_adapter_sy_f6b9', 'Universal Adapter System')}</p>
         </div>
       </div>
 
@@ -40,19 +42,19 @@ const ProviderDashboard = () => {
             <Server size={24} color="#3b82f6" />
             <div className="stat-info">
               <h3>{adapters.length}</h3>
-              <p>Total Adapters</p>
+              <p>{t('auto_total_adapters_599a', 'Total Adapters')}</p>
             </div>
           </div>
           <div className="stat-card">
             <CheckCircle size={24} color="#10b981" />
             <div className="stat-info">
               <h3>{adapters.filter(a => a.enabled).length}</h3>
-              <p>Active</p>
+              <p>{t('auto_active_4d3d', 'Active')}</p>
             </div>
           </div>
         </div>
 
-        <h3 className="section-title">Registered Providers</h3>
+        <h3 className="section-title">{t('auto_registered_providers_2508', 'Registered Providers')}</h3>
         
         <div className="providers-list">
           {adapters.map((adapter, idx) => (

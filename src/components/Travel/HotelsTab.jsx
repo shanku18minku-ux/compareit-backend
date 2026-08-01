@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { Star, MapPin, Coffee, Wifi, Car, Waves, CheckCircle2, AlertCircle } from 'lucide-react';
 import styles from './HotelsTab.module.css';
@@ -37,7 +38,7 @@ export default function HotelsTab() {
   }
 
   if (!data || data.length === 0) {
-    return <div className={styles.emptyState}>No hotels available at the moment.</div>;
+    return <div className={styles.emptyState}>{t('auto_no_hotels_available__854c', 'No hotels available at the moment.')}</div>;
   }
 
   const hotelListings = data;
@@ -45,8 +46,8 @@ export default function HotelsTab() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h2>Premium Stays</h2>
-        <p>Compare luxury hotels across top booking platforms.</p>
+        <h2>{t('auto_premium_stays_02cd', 'Premium Stays')}</h2>
+        <p>{t('auto_compare_luxury_hotel_8c99', 'Compare luxury hotels across top booking platforms.')}</p>
       </header>
 
       <div className={styles.hotelGrid} style={{ margin: '0 -20px' }}>

@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { Tag, CheckCircle2, Sparkles, AlertCircle } from 'lucide-react';
 import useAppStore from '../../store/appStore';
 import './CouponManager.css';
 
 const CouponManager = ({ itemId, validCoupons = [], onCouponApplied }) => {
+  const { t } = useTranslation();
   const { couponMode, setCouponMode, appliedManualCoupons, setManualCoupon } = useAppStore();
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
@@ -47,7 +49,7 @@ const CouponManager = ({ itemId, validCoupons = [], onCouponApplied }) => {
       {couponMode === 'auto' ? (
         <div className="auto-coupon-state">
           <CheckCircle2 size={16} color="#10b981" />
-          <span>Best coupons automatically applied</span>
+          <span>{t('auto_best_coupons_automat_f7fa', 'Best coupons automatically applied')}</span>
         </div>
       ) : (
         <div className="manual-coupon-state">
@@ -55,11 +57,11 @@ const CouponManager = ({ itemId, validCoupons = [], onCouponApplied }) => {
             <input 
               type="text" 
               className="coupon-input"
-              placeholder="Enter code (e.g. SAVE20)"
+              placeholder={t('auto_enter_code_e_g_save2_2015', 'Enter code (e.g. SAVE20)')}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value.toUpperCase())}
             />
-            <button className="coupon-apply-btn" onClick={handleApply}>Apply</button>
+            <button className="coupon-apply-btn" onClick={handleApply}>{t('auto_apply_9639', 'Apply')}</button>
           </div>
           
           {error && <div className="coupon-error"><AlertCircle size={14} /> {error}</div>}

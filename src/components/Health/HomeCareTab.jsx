@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import useAppStore from '../../store/appStore';
 import './HealthTabsShared.css';
@@ -40,6 +41,7 @@ const mockHomeCare = [
 ];
 
 const HomeCareTab = ({ searchQuery }) => {
+  const { t } = useTranslation();
   const setGlobalRedirectData = useAppStore(state => state.setGlobalRedirectData);
 
   const filtered = mockHomeCare.filter(h => 
@@ -57,12 +59,12 @@ const HomeCareTab = ({ searchQuery }) => {
   return (
     <div className="shared-tab-container">
       <div className="shared-tab-intro">
-        <h3>Home Healthcare Services</h3>
+        <h3>{t('auto_home_healthcare_serv_08ac', 'Home Healthcare Services')}</h3>
         <p>Compare nursing, physiotherapy, and medical rentals for your loved ones.</p>
       </div>
 
       {filtered.length === 0 ? (
-        <div className="no-results">No homecare services found.</div>
+        <div className="no-results">{t('auto_no_homecare_services_e9a3', 'No homecare services found.')}</div>
       ) : (
         filtered.map(item => (
           <div key={item.id} className="shared-card">
@@ -88,7 +90,7 @@ const HomeCareTab = ({ searchQuery }) => {
                   <div className="plat-price-group">
                     <span className="plat-price">₹{plat.price}</span>
                     <span className="plat-mrp">₹{plat.mrp}</span>
-                    <button className="shared-buy-btn" onClick={() => handleBook(plat.name)}>Book</button>
+                    <button className="shared-buy-btn" onClick={() => handleBook(plat.name)}>{t('auto_book_2b1f', 'Book')}</button>
                   </div>
                 </div>
               ))}

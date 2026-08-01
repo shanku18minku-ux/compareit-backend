@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { ArrowLeft, MapPin, Package, Search, Zap, Tag, ShieldCheck } from 'lucide-react';
 import { Browser } from '@capacitor/browser';
@@ -8,6 +9,7 @@ import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
 import './Logistics.css';
 
 const Logistics = () => {
+  const { t } = useTranslation();
   const { goToDashboard, setGlobalRedirectData } = useAppStore();
   const [pickup, setPickup] = useState('');
   const [drop, setDrop] = useState('');
@@ -107,7 +109,7 @@ const Logistics = () => {
         <button className="back-btn" onClick={goToDashboard}>
           <ArrowLeft size={24} />
         </button>
-        <h1 className="page-title">Courier & Logistics</h1>
+        <h1 className="page-title">{t('auto_courier_logistics_314e', 'Courier & Logistics')}</h1>
       </header>
 
       <div className="logistics-content">
@@ -119,7 +121,7 @@ const Logistics = () => {
                 <label>Pickup From (Pincode)</label>
                 <input 
                   type="text" 
-                  placeholder="e.g. 400001" 
+                  placeholder={t('auto_e_g_400001_842e', 'e.g. 400001')} 
                   value={pickup} 
                   onChange={(e) => setPickup(e.target.value)}
                   required
@@ -133,7 +135,7 @@ const Logistics = () => {
                 <label>Drop To (Pincode)</label>
                 <input 
                   type="text" 
-                  placeholder="e.g. 110001" 
+                  placeholder={t('auto_e_g_110001_af26', 'e.g. 110001')} 
                   value={drop} 
                   onChange={(e) => setDrop(e.target.value)}
                   required
@@ -147,7 +149,7 @@ const Logistics = () => {
                 <label>Package Weight (kg)</label>
                 <input 
                   type="number" 
-                  placeholder="e.g. 2.5" 
+                  placeholder={t('auto_e_g_2_5_213c', 'e.g. 2.5')} 
                   value={weight} 
                   onChange={(e) => setWeight(e.target.value)}
                   required
@@ -159,7 +161,7 @@ const Logistics = () => {
 
             <button type="submit" className="search-btn">
               <Search size={18} />
-              <span>Compare Rates</span>
+              <span>{t('auto_compare_rates_d906', 'Compare Rates')}</span>
             </button>
           </form>
         </div>
@@ -171,11 +173,11 @@ const Logistics = () => {
                 <Tag size={16} color="#64748b" />
                 <input 
                   type="text" 
-                  placeholder="Have a promo code?" 
+                  placeholder={t('auto_have_a_promo_code_3111', 'Have a promo code?')} 
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                 />
-                <button onClick={() => handleApplyCoupon(couponCode)}>Apply</button>
+                <button onClick={() => handleApplyCoupon(couponCode)}>{t('auto_apply_9639', 'Apply')}</button>
               </div>
               {appliedCoupon && (
                 <div className="lc-applied-success">
