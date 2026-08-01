@@ -114,11 +114,21 @@ const ProductList = () => {
 
   const products = deals.filter(deal => {
     if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase().trim();
     if (q.includes('budget') || q.match(/15000|15k|under/)) return deal.dealScore > 85;
-    return deal.title.toLowerCase().includes(q) ||
-      deal.category.toLowerCase().includes(q) ||
-      deal.brand.toLowerCase().includes(q);
+    
+    // Split query into keywords for a looser match
+    const keywords = q.split(' ');
+    const searchableText = `${deal.title} ${deal.category} ${deal.subCategory || ''} ${deal.brand}`.toLowerCase();
+    
+    // If it's a generic category search, show everything from that category
+    if (q === 'smartphones' || q === 'phones' || q === 'mobile') return searchableText.includes('mobile') || searchableText.includes('phone') || searchableText.includes('electronics');
+    if (q === 'fashion clothing' || q === 'fashion') return searchableText.includes('fashion') || searchableText.includes('clothing') || searchableText.includes('shoe');
+    if (q === 'laptops' || q === 'laptop') return searchableText.includes('laptop') || searchableText.includes('macbook');
+    if (q === 'home appliances' || q === 'home') return searchableText.includes('home') || searchableText.includes('appliance') || searchableText.includes('tv');
+
+    // Return true if ANY keyword matches (loose match)
+    return keywords.some(kw => searchableText.includes(kw));
   });
 
   const sorted = [...products].sort((a, b) => {
