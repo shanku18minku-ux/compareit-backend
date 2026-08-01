@@ -85,5 +85,17 @@
   "shared_wishlist": "Shared Wishlist",
   "refer_earn": "Refer & Earn",
   "community": "Community",
-  "shopping_calendar": "Shopping Calendar"
+  "shopping_calendar": "Shopping Calendar",
+  "preferences": "Preferences",
+  "edit": "Edit",
+  "account": "Account",
+  "change_password": "Change Password",
+  "delete_account": "Delete Account",
+  "about": "About",
+  "privacy_policy": "Privacy Policy",
+  "terms_of_service": "Terms of Service",
+  "rate_us": "Rate Us",
+  "push_notifications": "Push Notifications",
+  "logout_confirm": "Are you sure you want to logout?",
+  "delete_confirm": "WARNING: This will permanently delete your account. Are you sure?"
 }

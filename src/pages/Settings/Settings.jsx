@@ -29,7 +29,7 @@ const Settings = () => {
   const { setSettingsOpen } = useAppStore();
 
   const handleLogout = async () => {
-    if (window.confirm(t('Are you sure you want to logout?'))) {
+    if (window.confirm(t('logout_confirm', 'Are you sure you want to logout?'))) {
       console.log('Logging out...');
       try {
         await logOut();
@@ -41,7 +41,7 @@ const Settings = () => {
   };
 
   const handleDeleteAccount = () => {
-    if (window.confirm(t('WARNING: This will permanently delete your account. Are you sure?'))) {
+    if (window.confirm(t('delete_confirm', 'WARNING: This will permanently delete your account. Are you sure?'))) {
       console.log('Deleting account...');
     }
   };
@@ -49,7 +49,7 @@ const Settings = () => {
   return (
     <div className="settings-container">
       <header className="settings-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>{t('Settings', 'Settings')}</h1>
+        <h1>{t('settings', 'Settings')}</h1>
         <button onClick={() => {
           import('../../store/appStore').then(module => {
             module.default.getState().setSettingsOpen(false);
@@ -72,14 +72,14 @@ const Settings = () => {
             </div>
             <button className="edit-profile-btn">
               <Edit3 size={18} />
-              <span>{t('Edit', 'Edit')}</span>
+              <span>{t('edit', 'Edit')}</span>
             </button>
           </div>
         </section>
 
         {/* Preferences Section */}
         <section className="settings-section">
-          <h3>{t('Preferences', 'Preferences')}</h3>
+          <h3>{t('preferences', 'Preferences')}</h3>
           <div className="settings-card">
             
             <div 
@@ -88,7 +88,7 @@ const Settings = () => {
             >
               <div className="item-left">
                 <div className="icon-wrapper bg-blue"><Globe size={20} /></div>
-                <span>{t('Language', 'Language')}</span>
+                <span>{t('language', 'Language')}</span>
               </div>
               <div className="item-right">
                 <span className="value-text">{i18n.language === 'hi' ? 'हिन्दी' : 'English'}</span>
@@ -101,7 +101,7 @@ const Settings = () => {
             <div className="settings-item">
               <div className="item-left">
                 <div className="icon-wrapper bg-purple"><Bell size={20} /></div>
-                <span>{t('Push Notifications', 'Push Notifications')}</span>
+                <span>{t('push_notifications', 'Push Notifications')}</span>
               </div>
               <div className="item-right">
                 <label className="toggle-switch">
@@ -120,13 +120,13 @@ const Settings = () => {
 
         {/* Account Section */}
         <section className="settings-section">
-          <h3>{t('Account', 'Account')}</h3>
+          <h3>{t('account', 'Account')}</h3>
           <div className="settings-card">
             
             <div className="settings-item clickable">
               <div className="item-left">
                 <div className="icon-wrapper bg-gray"><Lock size={20} /></div>
-                <span>{t('Change Password', 'Change Password')}</span>
+                <span>{t('change_password', 'Change Password')}</span>
               </div>
               <div className="item-right">
                 <ChevronRight size={20} color="#94a3b8" />
@@ -138,7 +138,7 @@ const Settings = () => {
             <div className="settings-item clickable text-red" onClick={handleLogout}>
               <div className="item-left">
                 <div className="icon-wrapper bg-red-light"><LogOut size={20} /></div>
-                <span>{t('Logout', 'Logout')}</span>
+                <span>{t('logout', 'Logout')}</span>
               </div>
             </div>
             
@@ -147,7 +147,7 @@ const Settings = () => {
             <div className="settings-item clickable text-red" onClick={handleDeleteAccount}>
               <div className="item-left">
                 <div className="icon-wrapper bg-red-light"><Trash2 size={20} /></div>
-                <span>{t('Delete Account', 'Delete Account')}</span>
+                <span>{t('delete_account', 'Delete Account')}</span>
               </div>
             </div>
 
@@ -157,13 +157,13 @@ const Settings = () => {
         {/* Support Section is moved to Home Header */}
 
         <div className="settings-section">
-          <h2>{t('About', 'About')}</h2>
+          <h2>{t('about', 'About')}</h2>
           <div className="settings-card">
 
             <div className="settings-item clickable" onClick={() => setIsPrivacyOpen(true)}>
               <div className="item-left">
                 <div className="icon-wrapper bg-gray"><Shield size={20} /></div>
-                <span>{t('Privacy Policy', 'Privacy Policy')}</span>
+                <span>{t('privacy_policy', 'Privacy Policy')}</span>
               </div>
               <div className="item-right">
                 <ChevronRight size={20} color="#94a3b8" />
@@ -175,7 +175,7 @@ const Settings = () => {
             <div className="settings-item clickable" onClick={() => setIsTermsOpen(true)}>
               <div className="item-left">
                 <div className="icon-wrapper bg-gray"><Info size={20} /></div>
-                <span>{t('Terms of Service', 'Terms of Service')}</span>
+                <span>{t('terms_of_service', 'Terms of Service')}</span>
               </div>
               <div className="item-right">
                 <ChevronRight size={20} color="#94a3b8" />
@@ -187,7 +187,7 @@ const Settings = () => {
             <div className="settings-item clickable">
               <div className="item-left">
                 <div className="icon-wrapper bg-yellow"><Star size={20} /></div>
-                <span>{t('Rate Us', 'Rate Us')}</span>
+                <span>{t('rate_us', 'Rate Us')}</span>
               </div>
               <div className="item-right">
                 <ChevronRight size={20} color="#94a3b8" />
