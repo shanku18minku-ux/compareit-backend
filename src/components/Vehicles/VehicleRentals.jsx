@@ -41,6 +41,7 @@ const VehicleRentals = () => {
 };
 
 const RentalCard = ({ rental }) => {
+  const { t } = useTranslation();
   const [showPlatforms, setShowPlatforms] = useState(false);
   const [redirectData, setRedirectData] = useState(null);
 
