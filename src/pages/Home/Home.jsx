@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Bell, User, MapPin, Mic, Camera, TrendingUp, Zap, Tag, ChevronRight, Star, Clock, ShieldCheck, ArrowDown, ArrowUp, Flame, Ticket, Sparkles, Package } from 'lucide-react';
+import { Search, Bell, User, MapPin, Mic, Camera, TrendingUp, Zap, Tag, ChevronRight, Star, Clock, ShieldCheck, ArrowDown, ArrowUp, Flame, Ticket, Sparkles, Package, HelpCircle } from 'lucide-react';
 import useAppStore from '../../store/appStore';
 import { useApi } from '../../services/api';
 import { Browser } from '@capacitor/browser';
@@ -88,6 +88,9 @@ const Home = () => {
             </div>
           </div>
           <div className="header-actions">
+            <button className="icon-btn support-btn" onClick={() => useAppStore.getState().setIsSupportOpen(true)}>
+              <HelpCircle size={22} color="#2563EB" />
+            </button>
             <button className="icon-btn bell-btn">
               <Bell size={22} />
               {notifications.filter(n => !n.read).length > 0 && (

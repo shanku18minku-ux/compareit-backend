@@ -18,8 +18,10 @@ const MOCK_TICKETS = [
   { id: '#T-4811', status: 'resolved', title: 'Account login problem', date: 'Jul 25, 2026' }
 ];
 
-const CustomerSupportModal = ({ isOpen, onClose }) => {
+const CustomerSupportModal = () => {
   const { t } = useTranslation();
+  const isSupportOpen = useAppStore(state => state.isSupportOpen);
+  const setIsSupportOpen = useAppStore(state => state.setIsSupportOpen);
   
   // States: 'menu' | 'chat' | 'tickets' | 'faqs'
   const [view, setView] = useState('menu');
@@ -41,13 +43,15 @@ const CustomerSupportModal = ({ isOpen, onClose }) => {
     }
   }, [messages, view, isTyping]);
 
-  if (!isOpen) return null;
+  if (!isSupportOpen) return null;
 
   const handleClose = () => {
-    setView('menu');
-    setMessages(INITIAL_MESSAGES);
-    setEscalated(false);
-    onClose();
+    setIsSupportOpen(false);
+    setTimeout(() => {
+      setView('menu');
+      setMessages(INITIAL_MESSAGES);
+      setEscalated(false);
+    }, 300);
   };
 
   const handleSendMessage = (e) => {

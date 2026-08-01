@@ -15,6 +15,14 @@ const useAppStore = create(
       setAuthError: (error) => set({ authError: error }),
       clearAuth: () => set({ user: null, isAuthenticated: false, isGuest: false, isLoading: false, authError: null }),
 
+      // === ONBOARDING & SUPPORT STATE ===
+      hasSeenAppTour: false,
+      setHasSeenAppTour: (status) => set({ hasSeenAppTour: status }),
+      isAppTourOpen: false,
+      setIsAppTourOpen: (status) => set({ isAppTourOpen: status }),
+      isSupportOpen: false,
+      setIsSupportOpen: (status) => set({ isSupportOpen: status }),
+
       // === APP FLOW STATE ===
       currentScreen: 'loading',
       authPage: 'login',

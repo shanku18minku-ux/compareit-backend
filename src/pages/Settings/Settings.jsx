@@ -9,8 +9,7 @@ import useAppStore from '../../store/appStore';
 import LanguagePicker from '../../components/LanguagePicker/LanguagePicker';
 import PrivacyPolicyModal from './PrivacyPolicyModal';
 import TermsOfServiceModal from './TermsOfServiceModal';
-import CustomerSupportModal from './CustomerSupportModal';
-import { HelpCircle } from 'lucide-react';
+import { HelpCircle, PlayCircle } from 'lucide-react';
 import './Settings.css';
 
 const Settings = () => {
@@ -18,7 +17,6 @@ const Settings = () => {
   const [isLangPickerOpen, setIsLangPickerOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
-  const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [notifications, setNotifications] = useState(true);
 
   // Mock user data
@@ -156,27 +154,23 @@ const Settings = () => {
           </div>
         </section>
 
-        {/* Support Section */}
-        <section className="settings-section">
-          <h3>{t('support.title', 'Help & Support')}</h3>
+        {/* Support Section is moved to Home Header */}
+
+        <div className="settings-section">
+          <h2>{t('About', 'About')}</h2>
           <div className="settings-card">
-            <div className="settings-item clickable" onClick={() => setIsSupportOpen(true)}>
+
+            <div className="settings-item clickable" onClick={() => useAppStore.getState().setIsAppTourOpen(true)}>
               <div className="item-left">
-                <div className="icon-wrapper bg-blue"><HelpCircle size={20} color="#ffffff" /></div>
-                <span>{t('support.customerCare', 'Customer Care & Help')}</span>
+                <div className="icon-wrapper bg-blue"><PlayCircle size={20} color="#ffffff" /></div>
+                <span>{t('App Tour', 'App Tour (Replay Tutorial)')}</span>
               </div>
               <div className="item-right">
                 <ChevronRight size={20} color="#94a3b8" />
               </div>
             </div>
-          </div>
-        </section>
-
-
-
-        <div className="settings-section">
-          <h2>{t('About', 'About')}</h2>
-          <div className="settings-card">
+            
+            <div className="settings-divider" />
             
             <div className="settings-item clickable" onClick={() => setIsPrivacyOpen(true)}>
               <div className="item-left">
@@ -233,10 +227,6 @@ const Settings = () => {
       <TermsOfServiceModal 
         isOpen={isTermsOpen}
         onClose={() => setIsTermsOpen(false)}
-      />
-      <CustomerSupportModal 
-        isOpen={isSupportOpen} 
-        onClose={() => setIsSupportOpen(false)} 
       />
     </div>
   );

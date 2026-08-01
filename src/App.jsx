@@ -26,6 +26,8 @@ import Settings from './pages/Settings/Settings';
 import BottomNav from './components/BottomNav/BottomNav';
 import AICopilot from './components/AICopilot/AICopilot';
 import FloatingWidget from './components/FloatingWidget/FloatingWidget';
+import CustomerSupportModal from './pages/Settings/CustomerSupportModal';
+import AIOnboarding from './components/Onboarding/AIOnboarding';
 import LanguagePicker from './components/LanguagePicker/LanguagePicker';
 import LocationPrompt from './components/LocationPrompt/LocationPrompt';
 import ModuleLoadingSkeleton from './components/Global/ModuleLoadingSkeleton';
@@ -275,7 +277,9 @@ const App = () => {
       <GlobalAffiliateRedirectModal />
       <OfflineOverlay />
       
-      {/* Search Input Widget */}
+      {/* Global Modals */}
+      <CustomerSupportModal />
+      <AIOnboarding />
     </div>
   );
 };
