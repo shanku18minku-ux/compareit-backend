@@ -13,3 +13,19 @@ services:
       # Allow the mobile app and localhost for local dev testing against production server
       - key: CORS_ORIGINS
         value: capacitor://localhost,http://localhost,http://localhost:5173
+
+  - type: web
+    name: compareit-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_SUPABASE_URL
+        value: https://aocmjmkqifdpohdfzrps.supabase.co
+      - key: VITE_SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFvY21qbWtxaWZkcG9oZGZ6cnBzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MjE2MzQsImV4cCI6MjEwMDk5NzYzNH0.Fo-8IrCffyC3IsHmSfwF7h2nDKTA71gThlpYYud5Cr8
+      - key: VITE_API_URL
+        value: https://compareit-backend-jib3.onrender.com/api/v1
+
