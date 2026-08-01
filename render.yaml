@@ -4,7 +4,7 @@ services:
   - type: web
     name: compareit-app-frontend
     env: static
-    buildCommand: npm install && npm run build
+    buildCommand: npm install --include=dev && npm run build
     staticPublishPath: dist
     envVars:
       - key: NODE_VERSION
