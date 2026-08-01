@@ -76,16 +76,13 @@ const Home = () => {
       {/* Header */}
       <header className="home-header">
         <div className="header-top">
-          <div className="logo-wrap">
-            <img 
-              src={appLogo} 
-              alt="CompareIt Logo" 
-              style={{ width: '135px', height: 'auto', marginBottom: '4px' }} 
-            />
-            <div className="location-badge" onClick={() => {}}>
-              <MapPin size={12} />
-              <span>{userLocation?.city || 'Delhi'}</span>
+          <div className="logo-wrap" style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            <div className="location-badge" onClick={() => {}} style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+              <MapPin size={18} color="#ef4444" />
+              <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '1.05rem', letterSpacing: '-0.3px' }}>{userLocation?.city || 'Delhi'}</span>
+              <ChevronRight size={16} color="#64748b" />
             </div>
+            <span style={{ color: '#64748b', fontSize: '0.75rem', marginLeft: '22px' }}>Deliver to your location</span>
           </div>
           <div className="header-actions">
             <button className="icon-btn support-btn" onClick={() => useAppStore.getState().setIsSupportOpen(true)}>
@@ -106,7 +103,7 @@ const Home = () => {
         </div>
 
         {/* Universal Search */}
-        <div className="home-search-container" style={{ marginTop: '16px', padding: '0 8px' }}>
+        <div className="home-search-container" style={{ marginTop: '12px' }}>
           <UniversalSearch />
         </div>
       </header>

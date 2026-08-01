@@ -16,13 +16,14 @@
 
 /* Header */
 .home-header {
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563EB 60%, #4f46e5 100%);
-  padding: 12px 14px 16px;
+  background: #ffffff;
+  padding: 10px 14px 12px;
   position: sticky;
   top: 0;
   z-index: 100;
   width: 100%;
   box-sizing: border-box;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
 }
 
 .header-top {
@@ -66,19 +67,24 @@
   gap: 10px;
 }
 
-.icon-btn {
-  background: rgba(255,255,255,0.15);
-  border: none;
+.home-header .icon-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
   border-radius: 50%;
   width: 38px;
   height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #334155;
   cursor: pointer;
   position: relative;
-  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+}
+
+.home-header .icon-btn:active {
+  background: #e2e8f0;
+  transform: scale(0.95);
 }
 
 .notif-dot {
