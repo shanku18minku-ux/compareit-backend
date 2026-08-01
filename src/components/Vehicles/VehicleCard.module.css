@@ -1,0 +1,166 @@
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.imageContainer {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1e40af;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.content {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.year {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.specs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
+.specItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.comparisons {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 12px;
+  margin-bottom: 16px;
+}
+
+.comparisonTitle {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+.comparisonList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comparisonItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.platform {
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.platformPrice {
+  font-weight: 600;
+  color: #111827;
+}
+
+.bestPrice {
+  color: #059669;
+}
+
+.button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+  width: 100%;
+  margin-top: auto;
+}
+
+.button:hover {
+  background: #1d4ed8;
+}
+.couponSection { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin-top: 16px; margin-bottom: 16px; } .couponToggleRow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; } .couponTitle { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px; color: #1e293b; } .toggleWrap { display: flex; background: #e2e8f0; border-radius: 20px; padding: 2px; } .toggleBtn { border: none; background: transparent; padding: 4px 12px; font-size: 11px; font-weight: 600; border-radius: 18px; color: #64748b; cursor: pointer; transition: all 0.2s; } .toggleBtn.active { background: #fff; color: #2563eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1); } .autoApplied { display: flex; align-items: center; gap: 6px; background: #ecfdf5; color: #065f46; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; } .manualInputRow { display: flex; gap: 8px; } .couponInput { flex: 1; padding: 8px 12px; border: 1px dashed #cbd5e1; border-radius: 8px; font-size: 12px; outline: none; } .couponInput:focus { border-color: #2563eb; } .applyBtn { background: #1e293b; color: #fff; border: none; padding: 0 16px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; } .bestPlatRow { background: rgba(37, 99, 235, 0.04); border-radius: 8px; border: 1px solid rgba(37, 99, 235, 0.2); } .platLeft { display: flex; align-items: center; gap: 6px; } .platRight { display: flex; align-items: center; gap: 8px; } .strikePrice { color: #94a3b8; text-decoration: line-through; font-size: 12px; } .bestPriceTag { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #fff; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; } .certTag { background: #dbeafe; color: #1e40af; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; } .priceContainer { text-align: right; } .priceLabel { font-size: 11px; color: #64748b; font-weight: 600; margin-bottom: 2px; } .savingsLabel { font-size: 11px; color: #16a34a; font-weight: 700; margin-top: 2px; } 
+.rowBuyBtn { background: #2563eb; color: white; border: none; border-radius: 6px; padding: 4px 12px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background 0.2s; } .rowBuyBtn:hover { background: #1d4ed8; } 
+.badgesTopLeft { position: absolute; top: 12px; left: 12px; } .redBadge { background: #ef4444; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; } .badgesTopRight { position: absolute; top: 12px; right: 12px; } .aiBadge { background: #334155; color: #facc15; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; } .categoryBrand { font-size: 10px; font-weight: 700; color: #1d4ed8; letter-spacing: 0.5px; margin-bottom: 6px; } .title { font-size: 18px; font-weight: 800; color: #0f172a; margin: 0 0 8px; line-height: 1.2; } .specsRow { display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 12px; color: #64748b; } .rating { color: #f59e0b; font-weight: 700; } .reviews { color: #94a3b8; } .specPill { background: #f1f5f9; padding: 2px 8px; border-radius: 4px; } .highlightBox { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 12px; display: flex; gap: 12px; margin-bottom: 16px; } .highlightIcon { display: flex; padding-top: 2px; } .highlightText { font-size: 12px; color: #1e3a8a; line-height: 1.4; } .bottomRow { display: flex; justify-content: space-between; align-items: flex-end; } .originalPrice { color: #94a3b8; text-decoration: line-through; font-size: 14px; margin-right: 8px; } .finalPrice { color: #0f172a; font-size: 24px; font-weight: 800; } .expandSitesBtn { display: flex; align-items: center; gap: 4px; background: white; border: 1px solid #cbd5e1; color: #3b82f6; font-weight: 600; padding: 6px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; transition: background 0.2s; } .expandSitesBtn:hover { background: #f8fafc; } .comparisonsListWrap { border-top: 1px solid #e2e8f0; padding-top: 16px; margin-top: 16px; } 
+.certTag { white-space: nowrap; } .bestPriceTag { white-space: nowrap; } .rating { white-space: nowrap; } .reviews { white-space: nowrap; } 

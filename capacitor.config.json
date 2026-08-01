@@ -1,0 +1,10 @@
+{
+  "appId": "com.compareit.app",
+  "appName": "CompareIt",
+  "webDir": "dist",
+  "plugins": {
+    "GoogleSignIn": {
+      "clientId": "502172302950-nej2aod4j8ugr99ks29fen5btqsaa07a.apps.googleusercontent.com"
+    }
+  }
+}

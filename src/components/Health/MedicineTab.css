@@ -1,0 +1,238 @@
+.medicine-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.medicine-categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.med-cat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  padding: 16px 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.med-cat-card:active {
+  transform: scale(0.95);
+}
+
+.med-cat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.med-cat-name {
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  color: #334155;
+}
+
+.medicines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.medicine-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #f1f5f9;
+}
+
+.medicine-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.medicine-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.medicine-type {
+  font-size: 11px;
+  background: #f1f5f9;
+  color: #64748b;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.medicine-composition {
+  font-size: 13px;
+  color: #475569;
+  margin: 0 0 4px 0;
+}
+
+.medicine-manufacturer {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 0 0 12px 0;
+}
+
+.generic-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.generic-icon {
+  color: #16a34a;
+}
+
+.generic-text {
+  font-size: 12px;
+  color: #166534;
+}
+
+.comparison-header-row {
+  display: flex;
+  padding: 0 12px 8px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 8px;
+}
+
+.med-platform-row {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+
+.med-platform-row.cheapest-row {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.col-platform {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.col-price {
+  flex: 1;
+  text-align: center;
+}
+
+.col-discount {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.col-final {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.platform-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: #334155;
+}
+
+.lowest-badge {
+  background: #10b981;
+  color: white;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.discount-tag {
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.coupon-code {
+  font-size: 10px;
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #475569;
+  border: 1px dashed #cbd5e1;
+}
+
+.final-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.cheapest-row .final-price {
+  color: #2563eb;
+}
+
+.buy-btn {
+  background: white;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cheapest-row .buy-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.buy-btn:hover {
+  background: #1d4ed8;
+  color: white;
+}

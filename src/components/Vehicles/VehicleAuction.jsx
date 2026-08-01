@@ -1,0 +1,132 @@
+import React, { useState, useEffect } from 'react';
+import { Clock, ExternalLink, ShieldCheck } from 'lucide-react';
+import { auctionVehicles } from '../../services/vehicleMockData';
+import useAppStore from '../../store/appStore';
+import './VehicleAuction.css';
+
+const VehicleAuctionCard = ({ vehicle }) => {
+  const { setGlobalRedirectData } = useAppStore();
+  const [timeLeft, setTimeLeft] = useState(vehicle.timeRemaining || 3600); // Default to 1 hour if not provided
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return `${h}h ${m}m ${s}s`;
+  };
+
+  const isEndingSoon = timeLeft < 3600; // less than 1 hour
+
+  const handleBidNow = () => {
+    setGlobalRedirectData({ 
+      providerName: vehicle.provider || 'Auction Site', 
+      targetUrl: vehicle.url || 'https://example.com/auction' 
+    });
+  };
+
+  return (
+    <div className="auction-card">
+      <div className="image-container">
+        <img src={vehicle.image} alt={vehicle.name} className="vehicle-image" />
+        <div className="provider-badge">
+          {vehicle.provider || 'Bank Repo'}
+        </div>
+        <div className="ai-recommendation">
+          <ShieldCheck size={16} className="icon-mr" />
+          Est. Value: {vehicle.estimatedValue || '₹6 Lakh'} - {vehicle.dealStatus || 'Good Deal!'}
+        </div>
+      </div>
+      
+      <div className="card-content">
+        <h3 className="vehicle-name">{vehicle.name}</h3>
+        
+        <div className="bidding-info">
+          <div className="bid-section">
+            <span className="label">Current Bid</span>
+            <span className="current-bid">{vehicle.currentBid}</span>
+          </div>
+          <div className="reserve-section">
+            <span className="label">Reserve Price</span>
+            <span className="reserve-price">{vehicle.reservePrice}</span>
+          </div>
+        </div>
+
+        <div className={`countdown-timer ${isEndingSoon ? 'ending-soon' : ''}`}>
+          <Clock size={18} className="icon-mr" />
+          <span>Ends in: {formatTime(timeLeft)}</span>
+          {isEndingSoon && <span className="urgent-badge">Urgent</span>}
+        </div>
+
+        <button className="bid-now-btn" onClick={handleBidNow}>
+          Bid Now <ExternalLink size={18} className="icon-ml" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const VehicleAuction = () => {
+  // Fallback data in case auctionVehicles is not populated in mock data yet
+  const vehicles = auctionVehicles && auctionVehicles.length > 0 ? auctionVehicles : [
+    {
+      id: 1,
+      name: '2022 Hyundai i20 Asta',
+      image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80',
+      provider: 'Bank Repo',
+      estimatedValue: '₹7.5 Lakh',
+      dealStatus: 'Great Deal',
+      currentBid: '₹5,20,000',
+      reservePrice: '₹6,00,000',
+      timeRemaining: 1850,
+      url: 'https://example.com/bid/1'
+    },
+    {
+      id: 2,
+      name: '2019 Honda City VX',
+      image: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&q=80',
+      provider: 'Gov Auction',
+      estimatedValue: '₹8.2 Lakh',
+      dealStatus: 'Good Deal',
+      currentBid: '₹6,80,000',
+      reservePrice: '₹7,50,000',
+      timeRemaining: 7200,
+      url: 'https://example.com/bid/2'
+    },
+    {
+      id: 3,
+      name: '2021 Tata Nexon XZ+',
+      image: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&q=80',
+      provider: 'Dealer Auction',
+      estimatedValue: '₹9.0 Lakh',
+      dealStatus: 'Fair Deal',
+      currentBid: '₹8,10,000',
+      reservePrice: '₹8,50,000',
+      timeRemaining: 900,
+      url: 'https://example.com/bid/3'
+    }
+  ];
+
+  return (
+    <div className="vehicle-auction-container">
+      <div className="header">
+        <h2>Live Vehicle Auctions</h2>
+        <p>Premium deals on Bank Repos, Gov Auctions, and Dealer Inventories.</p>
+      </div>
+      
+      <div className="auction-grid">
+        {vehicles.map((vehicle, index) => (
+          <VehicleAuctionCard key={vehicle.id || index} vehicle={vehicle} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default VehicleAuction;

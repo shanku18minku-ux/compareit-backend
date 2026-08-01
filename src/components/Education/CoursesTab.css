@@ -1,0 +1,193 @@
+.courses-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chips-container {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+
+.chips-container::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ccc;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip.active {
+  background: rgba(37, 99, 235, 0.2);
+  border-color: #2563EB;
+  color: #fff;
+}
+
+.courses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.course-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1rem;
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.ai-badge {
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  background: linear-gradient(135deg, #2563EB, #1d4ed8);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+}
+
+.course-header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.course-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.course-title-section h3 {
+  font-size: 1rem;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.3;
+}
+
+.instructor {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.course-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #ddd;
+}
+
+.star-icon {
+  color: #fbbf24;
+}
+
+.platform-comparisons h4 {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin: 0 0 0.8rem 0;
+}
+
+.platform-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.plat-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #666;
+  font-size: 0.75rem;
+}
+
+.new-price {
+  font-weight: 700;
+  color: #10b981;
+  font-size: 0.9rem;
+}
+
+.enroll-btn {
+  background: #2563EB;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.enroll-btn:hover {
+  background: #1d4ed8;
+}
+
+.coupon-alert {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px dashed rgba(37, 99, 235, 0.5);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+}

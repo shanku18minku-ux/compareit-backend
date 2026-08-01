@@ -1,0 +1,272 @@
+.delivery-tab-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.delivery-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.filter-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: #ddd;
+  font-size: 13px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-chip.active {
+  background: rgba(37, 99, 235, 0.2);
+  border-color: #2563EB;
+  color: #fff;
+}
+
+.veg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #4CAF50;
+}
+
+.nonveg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #F44336;
+}
+
+.sort-dropdown select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  outline: none;
+  font-size: 13px;
+  width: 100%;
+}
+
+.dish-section {
+  margin-bottom: 24px;
+}
+
+.dish-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dish-type-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.dish-type-badge.veg {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+  border: 1px solid rgba(76, 175, 80, 0.5);
+}
+
+.dish-type-badge.non-veg {
+  background: rgba(244, 67, 54, 0.2);
+  color: #F44336;
+  border: 1px solid rgba(244, 67, 54, 0.5);
+}
+
+.restaurants-scroll-container {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scroll-snap-type: x mandatory;
+}
+
+.restaurants-scroll-container::-webkit-scrollbar {
+  height: 4px;
+}
+.restaurants-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.restaurants-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.restaurant-card {
+  min-width: 280px;
+  max-width: 280px;
+  scroll-snap-align: start;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.glass-card {
+  background: rgba(30, 30, 30, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.rest-image-container {
+  position: relative;
+  height: 140px;
+  width: 100%;
+}
+
+.rest-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rest-badges {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.rest-rating, .rest-time {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+}
+
+.rest-info {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.rest-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rest-meta {
+  color: #aaa;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.platform-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.plat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.plat-row.cheapest {
+  background: rgba(76, 175, 80, 0.15);
+  border-left: 2px solid #4CAF50;
+}
+
+.plat-name {
+  font-weight: 500;
+  color: #ddd;
+  width: 60px;
+}
+
+.plat-calc {
+  display: flex;
+  gap: 4px;
+  color: #888;
+  font-size: 10px;
+}
+
+.plat-calc .discount {
+  color: #4CAF50;
+}
+
+.plat-final {
+  font-weight: 700;
+  color: #fff;
+}
+
+.plat-row.cheapest .plat-final {
+  color: #4CAF50;
+}
+
+.order-btn {
+  background: #2563EB;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.order-btn:hover {
+  background: #1d4ed8;
+}
+
+.no-results {
+  text-align: center;
+  color: #888;
+  padding: 40px 0;
+}

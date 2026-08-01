@@ -1,0 +1,145 @@
+.logistics-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logistics-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.1);
+  border-color: #2563EB;
+}
+
+.lc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.lc-brand-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lc-logo-placeholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  color: #2563EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.lc-name-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lc-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.lc-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.lc-star-icon {
+  color: #f59e0b;
+  fill: #f59e0b;
+}
+
+.lc-price-container {
+  text-align: right;
+}
+
+.lc-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2563EB;
+}
+
+.lc-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px dashed #e2e8f0;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.lc-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.lc-detail-icon {
+  color: #2563EB;
+}
+
+.lc-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lc-feature-badge {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.lc-book-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #2563EB;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 4px;
+}
+
+.lc-book-button:hover {
+  background: #1d4ed8;
+}
+
+.lc-book-button:active {
+  transform: scale(0.98);
+}
+.lc-original-price { font-size: 13px; color: #94a3b8; text-decoration: line-through; margin-right: 6px; } .lc-discount-tag { font-size: 11px; background: #fee2e2; color: #ef4444; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-top: 4px; display: inline-block; } 

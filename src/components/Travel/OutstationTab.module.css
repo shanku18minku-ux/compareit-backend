@@ -1,0 +1,294 @@
+.container {
+  padding: 24px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.header p {
+  color: #64748b;
+  font-size: 16px;
+}
+
+.routesList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.routeCard {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.routeHeader {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.routePoints {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.city {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.connector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.8;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+}
+
+.line {
+  height: 1px;
+  width: 30px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.routeDate {
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  backdrop-filter: blur(4px);
+}
+
+.modesContainer {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modeCard {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.modeCard:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+}
+
+.modeInfo {
+  padding: 24px;
+  border-right: 1px dashed #e2e8f0;
+}
+
+.modeType {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.modeIcon {
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 8px;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+}
+
+.providerName {
+  font-weight: 600;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  border-top: 1px dashed #cbd5e1;
+  z-index: 0;
+}
+
+.timeBlock {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  z-index: 1;
+  padding: 0 8px;
+}
+
+.time {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.label {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.duration {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 13px;
+  background: white;
+  z-index: 1;
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+}
+
+.priceComparison {
+  padding: 24px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+.compareTitle {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.platforms {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.platformItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.platformItem.cheapest {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+.platformName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.checkIcon {
+  color: #22c55e;
+}
+
+.price {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.platformItem.cheapest .price {
+  color: #166534;
+}
+
+.bookBtn {
+  margin-top: 20px;
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s ease;
+}
+
+.bookBtn:hover {
+  background: #1d4ed8;
+}
+
+.emptyState {
+  padding: 48px;
+  text-align: center;
+  color: #64748b;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .modeCard {
+    grid-template-columns: 1fr;
+  }
+  
+  .modeInfo {
+    border-right: none;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+  
+  .routeHeader {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

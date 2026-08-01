@@ -1,0 +1,178 @@
+.services-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.services-intro {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.services-intro h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.services-intro p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.services-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.service-category-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.category-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.service-cards-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.service-cards-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.service-card {
+  min-width: 220px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.service-card.urgent-card {
+  border-color: #fca5a5;
+  background: #fef2f2;
+}
+
+.service-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.service-name {
+  font-weight: 600;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.urgent-card .service-name {
+  color: #dc2626;
+}
+
+.service-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.star-icon {
+  color: #f59e0b;
+  fill: #f59e0b;
+}
+
+.service-desc {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+  flex-grow: 1;
+}
+
+.service-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.urgent-card .service-footer {
+  border-top-color: #fecaca;
+}
+
+.service-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.visit-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.visit-btn:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.visit-btn.urgent-btn {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}
+
+.visit-btn.urgent-btn:hover {
+  background: #dc2626;
+}

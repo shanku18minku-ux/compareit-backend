@@ -1,0 +1,375 @@
+.doctor-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.specialty-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding-bottom: 8px;
+  scrollbar-width: none; /* Firefox */
+}
+
+.specialty-scroll::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.specialty-chip {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.specialty-chip.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.hospitals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.hospital-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: transform 0.2s;
+  border: 1px solid #f1f5f9;
+}
+
+.hospital-card:active {
+  transform: scale(0.98);
+}
+
+.hospital-logo {
+  font-size: 24px;
+}
+
+.hospital-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #334155;
+  text-align: center;
+}
+
+.doctors-section-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.horizontal-doctors-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 10px 0 24px 0;
+  margin: 0 -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  scroll-snap-type: x mandatory;
+}
+
+.horizontal-doctors-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.doctor-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #f1f5f9;
+  min-width: 330px;
+  max-width: 330px;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.doctor-header {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.doctor-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid #eff6ff;
+}
+
+.doctor-info {
+  flex: 1;
+}
+
+.doctor-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.verified-icon {
+  color: #2563eb;
+}
+
+.doctor-specialty {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 6px 0;
+}
+
+.doctor-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.star-icon {
+  color: #f59e0b;
+  fill: #f59e0b;
+}
+
+.rating-val {
+  font-weight: 600;
+  color: #334155;
+}
+
+.reviews-val {
+  color: #94a3b8;
+}
+
+.platforms-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comparison-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.platform-tabs {
+  display: flex;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.plat-tab-btn {
+  flex: 1;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.plat-tab-btn.active {
+  background: white;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.platform-content-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+
+.platform-content-box.recommended-box {
+  background: #ecfdf5;
+  border-color: #10b981;
+}
+
+.rec-badge-top {
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  background: #10b981;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.plat-content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.consult-type {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.coupon-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+}
+
+.coupon-toggle {
+  display: flex;
+  gap: 16px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+}
+
+.manual-coupon-input {
+  display: flex;
+  gap: 8px;
+}
+
+.manual-coupon-input input {
+  flex: 1;
+  padding: 6px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.manual-coupon-input input:focus {
+  border-color: #2563eb;
+}
+
+.apply-btn {
+  padding: 6px 16px;
+  background: #0f172a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auto-applied-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.platform-action-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.price-col-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.strike-price {
+  font-size: 12px;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.final-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.book-btn-bottom {
+  padding: 10px 24px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-recommended {
+  background: #10b981;
+}
+
+.book-btn-bottom:active {
+  transform: scale(0.96);
+}
+
+.no-results {
+  text-align: center;
+  padding: 32px;
+  color: #64748b;
+  font-size: 14px;
+  background: white;
+  border-radius: 12px;
+}

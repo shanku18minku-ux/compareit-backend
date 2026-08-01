@@ -1,0 +1,273 @@
+.consultContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sectionTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 24px;
+}
+
+.horizontalScroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 24px;
+  padding: 10px 0 20px 0;
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  scroll-snap-type: x mandatory;
+}
+
+.horizontalScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.doctorCard {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+  min-width: 320px;
+  max-width: 320px;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.doctorCard:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.doctorHeader {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 20px;
+}
+
+.doctorImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  object-fit: cover;
+  background-color: #f1f5f9;
+}
+
+.doctorInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.doctorName {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.doctorSpecialty {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: #2563EB;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+
+.doctorExperience {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0 0 8px 0;
+}
+
+.ratingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fef08a;
+  color: #854d0e;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.starIcon {
+  color: #eab308;
+}
+
+.platformsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.platformsTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.platformList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.platformRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.recommendedPlatform {
+  border-color: #10b981;
+  background: #ecfdf5;
+}
+
+.platformDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.platformName {
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.platformSlot {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.platformPriceCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.recommendTag {
+  font-size: 0.6rem;
+  background: #10b981;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.platformPrice {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.bookBtn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.recommendedPlatform .bookBtn {
+  background: #10b981;
+}
+
+.earliestText {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.earliestIcon {
+  color: #10b981;
+}
+
+.cheapestFee {
+  color: #10b981;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.cheapestIcon {
+  color: #10b981;
+}
+
+.normalText, .normalIcon, .normalFee {
+  color: #64748b;
+}
+
+.bookButton {
+  background-color: #2563EB;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.bookButton:hover {
+  background-color: #1d4ed8;
+}
+
+.noResults {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-family: 'Inter', sans-serif;
+  color: #64748b;
+  font-size: 1.125rem;
+}
+
+@media (max-width: 640px) {
+  .doctorGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .platformRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .platformNameWrap {
+    width: 100%;
+  }
+  
+  .platformDetails {
+    width: 100%;
+    padding: 0;
+    justify-content: flex-start;
+    gap: 16px;
+  }
+  
+  .bookButton {
+    width: 100%;
+  }
+}

@@ -1,0 +1,257 @@
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.highlightedCard {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.15);
+  position: relative;
+}
+
+.highlightedCard::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -1;
+  margin: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #7c3aed, #2563eb, #ec4899);
+}
+
+.aiBadge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #ffd700, #f59e0b);
+  color: #78350f;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-bottom-left-radius: 12px;
+  box-shadow: -2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.platformInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.platformLogo {
+  font-size: 1.25rem;
+}
+
+.platformName {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.verificationBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: #f8fafc;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.verificationText {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.verified { color: #10b981; }
+.unverified { color: #f59e0b; }
+.expired { color: #94a3b8; }
+
+.verifiedIcon { color: #10b981; }
+.unverifiedIcon { color: #f59e0b; }
+.expiredIcon { color: #94a3b8; }
+
+.cardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.offerTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.discountBadge {
+  display: inline-block;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.codeContainer {
+  margin-top: 0.25rem;
+}
+
+.codePill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.codePill:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.codePill.copied {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.codeText {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #0f172a;
+  letter-spacing: 0.5px;
+}
+
+.copyAction {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.codePill.copied .copyAction {
+  color: #10b981;
+}
+
+.autoApplyBadge {
+  display: inline-flex;
+  align-items: center;
+  background: #fdfae8;
+  color: #ca8a04;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #fef08a;
+}
+
+.statsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.successRate {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progressBarBg {
+  width: 40px;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #10b981;
+  border-radius: 2px;
+}
+
+.successText {
+  font-size: 0.7rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.lastWorked {
+  font-size: 0.7rem;
+  color: #64748b;
+  font-style: italic;
+}
+
+.expiryDate {
+  font-size: 0.75rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.cardFooter {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.calculateBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calculateBtn:hover, .calculateBtn:active {
+  background: #f8fafc;
+  color: #2563eb;
+  border-color: #2563eb;
+}
