@@ -85,5 +85,17 @@
   "shared_wishlist": "साझा विशलिस्ट",
   "refer_earn": "रेफर करें और कमाएं",
   "community": "समुदाय",
-  "shopping_calendar": "शॉपिंग कैलेंडर"
+  "shopping_calendar": "शॉपिंग कैलेंडर",
+  "preferences": "प्राथमिकताएँ",
+  "edit": "संपादन करना",
+  "account": "खाता",
+  "change_password": "पासवर्ड बदलें",
+  "delete_account": "खाता हटा दो",
+  "about": "के बारे में",
+  "privacy_policy": "गोपनीयता नीति",
+  "terms_of_service": "सेवा की शर्तें",
+  "rate_us": "हमें रेटिंग दें",
+  "push_notifications": "सूचनाएं धक्का",
+  "logout_confirm": "क्या आप लॉग आउट करना चाहते हैं?",
+  "delete_confirm": "चेतावनी: इससे आपका खाता स्थायी रूप से हटा दिया जाएगा। क्या आपको यकीन है?"
 }

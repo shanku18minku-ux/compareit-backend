@@ -85,5 +85,17 @@
   "shared_wishlist": "শেয়ার করা উইশলিস্ট",
   "refer_earn": "রেফার এবং আর্ন",
   "community": "কমিউনিটি",
-  "shopping_calendar": "শপিং ক্যালেন্ডার"
+  "shopping_calendar": "শপিং ক্যালেন্ডার",
+  "preferences": "পছন্দসমূহ",
+  "edit": "সম্পাদনা করুন",
+  "account": "হিসাব",
+  "change_password": "পাসওয়ার্ড পরিবর্তন করুন",
+  "delete_account": "অ্যাকাউন্ট মুছুন",
+  "about": "সম্পর্কে",
+  "privacy_policy": "গোপনীয়তা নীতি",
+  "terms_of_service": "পরিষেবার শর্তাবলী",
+  "rate_us": "আমাদের রেট",
+  "push_notifications": "পুশ বিজ্ঞপ্তি",
+  "logout_confirm": "আপনি কি নিশ্চিত আপনি লগআউট করতে চান?",
+  "delete_confirm": "সতর্কতা: এটি আপনার অ্যাকাউন্ট স্থায়ীভাবে মুছে ফেলবে। আপনি কি নিশ্চিত?"
 }

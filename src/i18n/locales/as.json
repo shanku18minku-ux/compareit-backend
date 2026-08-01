@@ -85,5 +85,17 @@
   "shared_wishlist": "শ্বেয়াৰ্ড উইচলিষ্ট",
   "refer_earn": "ৰেফাৰ আৰু আৰ্ণ",
   "community": "কমিউনিটি",
-  "shopping_calendar": "শ্বপিং কেলেণ্ডাৰ"
+  "shopping_calendar": "শ্বপিং কেলেণ্ডাৰ",
+  "preferences": "পছন্দসমূহ",
+  "edit": "সম্পাদনা কৰক",
+  "account": "একাউণ্ট",
+  "change_password": "পাছৱৰ্ড সলনি কৰক",
+  "delete_account": "একাউণ্ট মচি পেলাওক",
+  "about": "বিষয়ে",
+  "privacy_policy": "গোপনীয়তা নীতি",
+  "terms_of_service": "সেৱাৰ চৰ্তসমূহ",
+  "rate_us": "আমাক ৰেটিং দিয়ক",
+  "push_notifications": "পুছ জাননীসমূহ",
+  "logout_confirm": "আপুনি নিশ্চিতভাৱে লগআউট কৰিব বিচাৰেনে?",
+  "delete_confirm": "সতৰ্কবাণী: ই আপোনাৰ একাউণ্ট স্থায়ীভাৱে মচি পেলাব। আপুনি নিশ্চিত নেকি?"
 }

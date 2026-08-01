@@ -85,5 +85,17 @@
   "shared_wishlist": "ಹಂಚಿದ ವಿಶ್‌ಲಿಸ್ಟ್",
   "refer_earn": "ಉಲ್ಲೇಖಿಸಿ ಮತ್ತು ಗಳಿಸಿ",
   "community": "ಸಮುದಾಯ",
-  "shopping_calendar": "ಶಾಪಿಂಗ್ ಕ್ಯಾಲೆಂಡರ್"
+  "shopping_calendar": "ಶಾಪಿಂಗ್ ಕ್ಯಾಲೆಂಡರ್",
+  "preferences": "ಆದ್ಯತೆಗಳು",
+  "edit": "ಸಂಪಾದಿಸು",
+  "account": "ಖಾತೆ",
+  "change_password": "ಪಾಸ್ವರ್ಡ್ ಬದಲಾಯಿಸಿ",
+  "delete_account": "ಖಾತೆಯನ್ನು ಅಳಿಸಿ",
+  "about": "ಬಗ್ಗೆ",
+  "privacy_policy": "ಗೌಪ್ಯತೆ ನೀತಿ",
+  "terms_of_service": "ಸೇವಾ ನಿಯಮಗಳು",
+  "rate_us": "ನಮ್ಮನ್ನು ರೇಟ್ ಮಾಡಿ",
+  "push_notifications": "ಪುಶ್ ಅಧಿಸೂಚನೆಗಳು",
+  "logout_confirm": "ನೀವು ಲಾಗ್ಔಟ್ ಮಾಡಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?",
+  "delete_confirm": "ಎಚ್ಚರಿಕೆ: ಇದು ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಶಾಶ್ವತವಾಗಿ ಅಳಿಸುತ್ತದೆ. ನೀವು ಖಚಿತವಾಗಿರುವಿರಾ?"
 }

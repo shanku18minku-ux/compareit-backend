@@ -85,5 +85,17 @@
   "shared_wishlist": "सामायिक विशलिस्ट",
   "refer_earn": "रेफर करा आणि कमवा",
   "community": "समुदाय",
-  "shopping_calendar": "खरेदी कॅलेंडर"
+  "shopping_calendar": "खरेदी कॅलेंडर",
+  "preferences": "प्राधान्ये",
+  "edit": "संपादित करा",
+  "account": "खाते",
+  "change_password": "पासवर्ड बदला",
+  "delete_account": "खाते हटवा",
+  "about": "बद्दल",
+  "privacy_policy": "गोपनीयता धोरण",
+  "terms_of_service": "सेवा अटी",
+  "rate_us": "आम्हाला रेट करा",
+  "push_notifications": "पुश सूचना",
+  "logout_confirm": "तुमची खात्री आहे की तुम्ही लॉगआउट करू इच्छिता?",
+  "delete_confirm": "चेतावणी: हे तुमचे खाते कायमचे हटवेल. तुम्हाला खात्री आहे का?"
 }

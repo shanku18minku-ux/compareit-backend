@@ -85,5 +85,17 @@
   "shared_wishlist": "साझा इच्छासूची",
   "refer_earn": "प्रेषयतु तथा अर्जयतु",
   "community": "समुदायः",
-  "shopping_calendar": "क्रयण पञ्चाङ्गम्"
+  "shopping_calendar": "क्रयण पञ्चाङ्गम्",
+  "preferences": "प्राधान्यानि",
+  "edit": "सम्पादन",
+  "account": "वृतांत्तः",
+  "change_password": "गुप्तशब्दं परिवर्तयन्तु",
+  "delete_account": "खाता विलोपयतु",
+  "about": "विषये",
+  "privacy_policy": "गोपनीयता नीति",
+  "terms_of_service": "सेवानियमाः",
+  "rate_us": "अस्मान् मूल्याङ्कयतु",
+  "push_notifications": "पुश सूचनाएँ",
+  "logout_confirm": "किं भवन्तः निश्चयेन लॉगआउट् कर्तुम् इच्छन्ति?",
+  "delete_confirm": "चेतावनी: एतेन भवतः खातं स्थायिरूपेण विलोपितं भविष्यति। किं त्वं निश्चिन्तः असि ?"
 }
