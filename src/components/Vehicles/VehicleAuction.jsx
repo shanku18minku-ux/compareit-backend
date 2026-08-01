@@ -8,7 +8,31 @@ import './VehicleAuction.css';
 const VehicleAuctionCard = ({ vehicle }) => {
   const { t } = useTranslation();
   const { setGlobalRedirectData } = useAppStore();
-  const [timeLeft, setTimeLeft] = useState(vehicle.timeRemaining || 3600); // Default to 1 hour if not provided
+  
+  // Support both fallback structure and real mock data structure
+  const name = vehicle.name || (vehicle.brand ? `${vehicle.year} ${vehicle.brand} ${vehicle.model}` : 'Vehicle');
+  const provider = vehicle.provider || vehicle.auctionProvider || 'Bank Repo';
+  const estValue = vehicle.estimatedValue || (vehicle.marketValue ? `₹${(vehicle.marketValue/100000).toFixed(1)} Lakh` : '₹6 Lakh');
+  const dealStatus = vehicle.dealStatus || vehicle.aiRecommendation || 'Good Deal!';
+  
+  // Handle currentBid and reservePrice formatting if they are numbers
+  const formatPrice = (val) => {
+    if (typeof val === 'number') return `₹${val.toLocaleString()}`;
+    return val;
+  };
+  const currentBid = formatPrice(vehicle.currentBid) || '₹0';
+  const reservePrice = formatPrice(vehicle.reservePrice) || '₹0';
+
+  // Parse endsIn like "02:15:30" into seconds
+  const parseTime = (timeStr) => {
+    if (!timeStr) return 3600;
+    if (typeof timeStr === 'number') return timeStr;
+    const parts = timeStr.split(':').map(Number);
+    if (parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
+    return 3600;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(vehicle.timeRemaining || parseTime(vehicle.endsIn));
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,11 +48,11 @@ const VehicleAuctionCard = ({ vehicle }) => {
     return `${h}h ${m}m ${s}s`;
   };
 
-  const isEndingSoon = timeLeft < 3600; // less than 1 hour
+  const isEndingSoon = timeLeft < 3600;
 
   const handleBidNow = () => {
     setGlobalRedirectData({ 
-      providerName: vehicle.provider || 'Auction Site', 
+      providerName: provider, 
       targetUrl: vehicle.url || 'https://example.com/auction' 
     });
   };
@@ -36,27 +60,25 @@ const VehicleAuctionCard = ({ vehicle }) => {
   return (
     <div className="auction-card">
       <div className="image-container">
-        <img src={vehicle.image} alt={vehicle.name} className="vehicle-image" />
-        <div className="provider-badge">
-          {vehicle.provider || 'Bank Repo'}
-        </div>
+        <img src={vehicle.image} alt={name} className="vehicle-image" />
+        <div className="provider-badge">{provider}</div>
         <div className="ai-recommendation">
           <ShieldCheck size={16} className="icon-mr" />
-          Est. Value: {vehicle.estimatedValue || '₹6 Lakh'} - {vehicle.dealStatus || 'Good Deal!'}
+          Est. Value: {estValue} - {dealStatus}
         </div>
       </div>
       
       <div className="card-content">
-        <h3 className="vehicle-name">{vehicle.name}</h3>
+        <h3 className="vehicle-name">{name}</h3>
         
         <div className="bidding-info">
           <div className="bid-section">
             <span className="label">{t('auto_current_bid_9c0e', 'Current Bid')}</span>
-            <span className="current-bid">{vehicle.currentBid}</span>
+            <span className="current-bid">{currentBid}</span>
           </div>
           <div className="reserve-section">
             <span className="label">{t('auto_reserve_price_e58c', 'Reserve Price')}</span>
-            <span className="reserve-price">{vehicle.reservePrice}</span>
+            <span className="reserve-price">{reservePrice}</span>
           </div>
         </div>
 
