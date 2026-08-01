@@ -172,22 +172,7 @@ const Settings = () => {
           </div>
         </section>
 
-        {/* About Section */}
-        <div className="settings-section">
-          <h2>Developer</h2>
-          <div className="settings-list">
-            <button className="settings-item" onClick={() => {
-              useAppStore.getState().goToAdmin();
-              useAppStore.getState().setSettingsOpen(false);
-            }}>
-              <div className="settings-item-left">
-                <div className="settings-icon"><Database size={20} color="#8b5cf6" /></div>
-                <span>Provider Management Dashboard</span>
-              </div>
-              <ChevronRight size={20} color="#9ca3af" />
-            </button>
-          </div>
-        </div>
+
 
         <div className="settings-section">
           <h2>{t('About', 'About')}</h2>
