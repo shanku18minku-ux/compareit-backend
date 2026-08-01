@@ -144,13 +144,6 @@ const MedicineTab = ({ searchQuery }) => {
               </div>
 
                 <div style={{ marginTop: '12px' }}>
-                  <GenericAlternatives 
-                    medicine={med} 
-                    originalCheapestPrice={Math.min(...med.platforms.map(p => getPlatformFinalPrice(med.id, p)))} 
-                  />
-                </div>
-
-                <div style={{ marginTop: '12px' }}>
                   <button 
                     onClick={() => toggleMed(med.id)}
                     style={{ 
@@ -216,6 +209,11 @@ const MedicineTab = ({ searchQuery }) => {
                         </div>
                       );
                     })}
+
+                    <GenericAlternatives 
+                      medicine={med} 
+                      originalCheapestPrice={Math.min(...med.platforms.map(p => getPlatformFinalPrice(med.id, p)))} 
+                    />
                   </div>
                 )}
               </div>
