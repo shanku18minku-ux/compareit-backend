@@ -6,7 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { logOut } from '../../services/authService';
 import useAppStore from '../../store/appStore';
-import LanguagePicker from '../../components/LanguagePicker/LanguagePicker';
+import LanguagePicker, { LANGUAGES } from '../../components/LanguagePicker/LanguagePicker';
 import PrivacyPolicyModal from './PrivacyPolicyModal';
 import TermsOfServiceModal from './TermsOfServiceModal';
 import { HelpCircle, PlayCircle } from 'lucide-react';
@@ -18,6 +18,8 @@ const Settings = () => {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [notifications, setNotifications] = useState(true);
+  
+  const currentLang = LANGUAGES.find(l => l.code === i18n.language) || LANGUAGES[0];
 
   // Mock user data
   const user = {
@@ -91,7 +93,7 @@ const Settings = () => {
                 <span>{t('language', 'Language')}</span>
               </div>
               <div className="item-right">
-                <span className="value-text">{i18n.language === 'hi' ? 'हिन्दी' : 'English'}</span>
+                <span className="value-text">{currentLang.native}</span>
                 <ChevronRight size={20} color="#94a3b8" />
               </div>
             </div>

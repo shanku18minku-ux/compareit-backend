@@ -3,7 +3,7 @@ import { X, Search, Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import './LanguagePicker.css';
 
-const LANGUAGES = [
+export const LANGUAGES = [
   { code: 'en', name: 'English', native: 'English' },
   { code: 'as', name: 'Assamese', native: 'অসমীয়া' },
   { code: 'bn', name: 'Bengali', native: 'বাংলা' },
