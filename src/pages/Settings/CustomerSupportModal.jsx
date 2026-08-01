@@ -128,13 +128,13 @@ const CustomerSupportModal = ({ isOpen, onClose }) => {
         </div>
       </button>
 
-      <button className="support-action-btn" onClick={() => window.location.href = 'mailto:support@compareit.com'}>
+      <button className="support-action-btn" onClick={() => window.location.href = 'mailto:www.compareit19022026@gmail.com'}>
         <div className="support-action-icon" style={{ backgroundColor: '#fee2e2', color: '#dc2626' }}>
           <Mail size={24} />
         </div>
         <div className="support-action-text">
           <h4>{t('support.email', 'Email Support')}</h4>
-          <p>{t('support.emailDesc', 'support@compareit.com')}</p>
+          <p>{t('support.emailDesc', 'www.compareit19022026@gmail.com')}</p>
         </div>
       </button>
 
