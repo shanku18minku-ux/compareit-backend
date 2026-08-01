@@ -65,7 +65,7 @@ const LanguagePicker = ({ isOpen, onClose, onSelectLanguage }) => {
         onClick={e => e.stopPropagation()}
       >
         <div className="lang-modal-header">
-          <h2>{t('Choose Language', 'Choose Language')}</h2>
+          <h2>{t('lang_choose', 'Choose Language')}</h2>
           <button className="close-btn" onClick={onClose}>
             <X size={24} />
           </button>
@@ -75,7 +75,7 @@ const LanguagePicker = ({ isOpen, onClose, onSelectLanguage }) => {
           <Search className="search-icon" size={20} />
           <input 
             type="text" 
-            placeholder={t('Search language...', 'Search language...')}
+            placeholder={t('lang_search', 'Search language...')}
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             className="lang-search-input"

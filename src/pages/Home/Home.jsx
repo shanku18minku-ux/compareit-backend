@@ -9,23 +9,23 @@ import appLogo from '../../assets/logo.png';
 import './Home.css';
 
 // Upcoming sales data
-const upcomingSalesData = [
-  { name: 'Prime Day', date: '2025-07-20', daysLeft: 12, color: '#FF9900', icon: '🛒' },
-  { name: 'Big Billion Days', date: '2025-10-10', daysLeft: 94, color: '#FF6161', icon: '🎯' },
-  { name: 'Great Indian Festival', date: '2025-10-10', daysLeft: 94, color: '#FF9500', icon: '🎪' },
-  { name: 'Diwali Sale', date: '2025-10-20', daysLeft: 104, color: '#FFD700', icon: '✨' },
+const getUpcomingSalesData = (t) => [
+  { name: t('sale_prime_day', 'Prime Day'), date: '2025-07-20', daysLeft: 12, color: '#FF9900', icon: '🛒' },
+  { name: t('sale_big_billion', 'Big Billion Days'), date: '2025-10-10', daysLeft: 94, color: '#FF6161', icon: '🎯' },
+  { name: t('sale_great_indian', 'Great Indian Festival'), date: '2025-10-10', daysLeft: 94, color: '#FF9500', icon: '🎪' },
+  { name: t('sale_diwali', 'Diwali Sale'), date: '2025-10-20', daysLeft: 104, color: '#FFD700', icon: '✨' },
 ];
 
 // Price heatmap data
-const heatmapData = [
-  { category: '📱 Smartphones', trend: 'down', savings: '↓ 18%', color: '#22c55e' },
-  { category: '💻 Laptops', trend: 'up', savings: '↑ 5%', color: '#ef4444' },
-  { category: '📺 TVs', trend: 'down', savings: '↓ 22%', color: '#22c55e' },
-  { category: '👟 Footwear', trend: 'down', savings: '↓ 35%', color: '#22c55e' },
-  { category: '🛋 Furniture', trend: 'up', savings: '↑ 8%', color: '#ef4444' },
-  { category: '🍳 Kitchen', trend: 'down', savings: '↓ 12%', color: '#22c55e' },
-  { category: '💄 Beauty', trend: 'down', savings: '↓ 20%', color: '#22c55e' },
-  { category: '🎮 Gaming', trend: 'up', savings: '↑ 3%', color: '#f59e0b' },
+const getHeatmapData = (t) => [
+  { category: t('heatmap_smartphones', '📱 Smartphones'), trend: 'down', savings: '↓ 18%', color: '#22c55e' },
+  { category: t('heatmap_laptops', '💻 Laptops'), trend: 'up', savings: '↑ 5%', color: '#ef4444' },
+  { category: t('heatmap_tvs', '📺 TVs'), trend: 'down', savings: '↓ 22%', color: '#22c55e' },
+  { category: t('heatmap_footwear', '👟 Footwear'), trend: 'down', savings: '↓ 35%', color: '#22c55e' },
+  { category: t('heatmap_furniture', '🛋 Furniture'), trend: 'up', savings: '↑ 8%', color: '#ef4444' },
+  { category: t('heatmap_kitchen', '🍳 Kitchen'), trend: 'down', savings: '↓ 12%', color: '#22c55e' },
+  { category: t('heatmap_beauty', '💄 Beauty'), trend: 'down', savings: '↓ 20%', color: '#22c55e' },
+  { category: t('heatmap_gaming', '🎮 Gaming'), trend: 'up', savings: '↑ 3%', color: '#f59e0b' },
 ];
 
 // Second-hand platforms
@@ -63,15 +63,18 @@ const Home = () => {
   };
 
   const quickCategories = [
-    { icon: '📱', label: 'Phones', q: 'smartphones' },
-    { icon: '👗', label: 'Fashion', q: 'fashion clothing' },
-    { icon: '💊', label: 'Health', tab: 'health' },
-    { icon: '🍕', label: 'Food', tab: 'food' },
-    { icon: '✈️', label: 'Travel', tab: 'travel' },
-    { icon: '📚', label: 'Learn', tab: 'education' },
-    { icon: '💻', label: 'Laptops', q: 'laptops' },
-    { icon: '🏠', label: 'Home', q: 'home appliances' },
+    { icon: '📱', label: t('home_cat_phones', 'Phones'), q: 'smartphones' },
+    { icon: '👗', label: t('home_cat_fashion', 'Fashion'), q: 'fashion clothing' },
+    { icon: '💊', label: t('home_cat_health', 'Health'), tab: 'health' },
+    { icon: '🍕', label: t('home_cat_food', 'Food'), tab: 'food' },
+    { icon: '✈️', label: t('home_cat_travel', 'Travel'), tab: 'travel' },
+    { icon: '📚', label: t('home_cat_learn', 'Learn'), tab: 'education' },
+    { icon: '💻', label: t('home_cat_laptops', 'Laptops'), q: 'laptops' },
+    { icon: '🏠', label: t('home_cat_home', 'Home'), q: 'home appliances' },
   ];
+  
+  const upcomingSalesData = getUpcomingSalesData(t);
+  const heatmapData = getHeatmapData(t);
 
   return (
     <div className={`home-page ${mounted ? 'fade-in' : ''}`}>
