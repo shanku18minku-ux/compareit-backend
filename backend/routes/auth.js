@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
 const rateLimit = require('express-rate-limit');
+const { OAuth2Client } = require('google-auth-library');
 const authenticateToken = require('../middleware/auth');
 
 const prisma = new PrismaClient();
@@ -162,8 +163,71 @@ router.get('/me', authenticateToken, async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Get User Error:', error);
     res.status(500).json({ error: 'Internal server error.' });
+  }
+});
+
+// 4. Google Sign-In
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+router.post('/google', authLimiter, async (req, res) => {
+  const { idToken } = req.body;
+
+  if (!idToken) {
+    return res.status(400).json({ error: 'idToken is required.' });
+  }
+
+  try {
+    // Verify the token
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    
+    const payload = ticket.getPayload();
+    const { email, name, sub: google_id, picture: avatar_url } = payload;
+
+    // Check if user exists
+    let user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      // Create new user for Google Sign-in (no password required)
+      user = await prisma.user.create({
+        data: {
+          email,
+          display_name: name || 'Google User',
+          google_id,
+          avatar_url
+        },
+      });
+    } else if (!user.google_id) {
+      // User exists with email/password, link Google account
+      user = await prisma.user.update({
+        where: { email },
+        data: { google_id, avatar_url: user.avatar_url || avatar_url }
+      });
+    }
+
+    // Generate JWT
+    const token = jwt.sign(
+      { id: user.id, email: user.email, displayName: user.display_name },
+      SECRET,
+      { expiresIn: '30d' }
+    );
+
+    res.status(200).json({
+      success: true,
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        displayName: user.display_name,
+        avatarUrl: user.avatar_url
+      }
+    });
+  } catch (error) {
+    console.error('Google Sign-In Error:', error);
+    res.status(401).json({ error: 'Invalid Google token.' });
   }
 });
 

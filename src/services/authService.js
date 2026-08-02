@@ -1,4 +1,10 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
+import { GoogleSignIn } from '@capawesome/capacitor-google-sign-in';
+
+// Initialize GoogleSignIn plugin 
+GoogleSignIn.initialize({
+  clientId: 'YOUR_WEB_CLIENT_ID_HERE.apps.googleusercontent.com',
+});
 
 /**
  * Helper to get user-friendly error messages
@@ -105,7 +111,26 @@ export const getCurrentUser = async () => {
  * to prevent breaking the existing UI
  */
 export const signInWithGoogle = async () => {
-  throw new Error('Google Sign-In is disabled on the local backend.');
+  try {
+    const result = await GoogleSignIn.signIn();
+    const idToken = result.idToken;
+
+    if (!idToken) throw new Error('No ID Token returned from Google.');
+
+    const response = await fetch(`${API_URL}/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Google Login failed on server');
+
+    localStorage.setItem('token', data.token);
+    return data.user;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
 };
 
 export const signInAsGuest = async () => {
