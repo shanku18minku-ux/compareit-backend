@@ -44,7 +44,7 @@ app.use('/api/', apiLimiter);
 
 // 5. CORS Configuration for Production
 const allowedOrigins = process.env.CORS_ORIGINS 
-  ? process.env.CORS_ORIGINS.split(',') 
+  ? process.env.CORS_ORIGINS.split(',').map(o => o.trim())  // trim() prevents whitespace CORS failures
   : ['http://localhost:5173', 'http://localhost:3000', 'capacitor://localhost', 'http://localhost'];
 
 app.use(cors({
@@ -58,7 +58,7 @@ app.use(cors({
       callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'));
     }
   },
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 

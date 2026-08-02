@@ -74,7 +74,7 @@ const SearchBar = ({ onSearch, onModeChange }) => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      onSearch(query);
+      onSearch?.(query);  // Optional chaining prevents crash if onSearch prop not passed
       setIsFocused(false);
     }
   };

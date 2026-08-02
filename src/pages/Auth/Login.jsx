@@ -118,7 +118,7 @@ const Login = ({ onNavigate, onLoginSuccess }) => {
             <div className="forgot-password">
               <button
                 type="button"
-                onClick={() => onNavigate('forgot-password')}
+                onClick={() => onNavigate('forgot')}
                 className="text-link"
               >
                 {t('auth.forgotPassword', 'Forgot Password?')}

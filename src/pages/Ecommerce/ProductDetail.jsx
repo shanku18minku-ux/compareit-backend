@@ -100,7 +100,12 @@ export default function ProductDetail() {
                 <h3>{t('auto_key_specifications_d23e', 'Key Specifications')}</h3>
                 <ul>
                   {activeProduct.specs?.map((spec, idx) => (
-                    <li key={idx}><strong>{spec.name}:</strong> {spec.value}</li>
+                    <li key={idx}>
+                      {typeof spec === 'string'
+                        ? spec
+                        : <><strong>{spec.name}:</strong> {spec.value}</>
+                      }
+                    </li>
                   )) || (
                     <>
                       <li><strong>Display:</strong> 6.7" OLED, 120Hz</li>

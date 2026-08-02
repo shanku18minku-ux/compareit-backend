@@ -2,7 +2,6 @@ import React, { useEffect, Suspense, lazy } from 'react';
 import useAppStore from './store/appStore';
 import { onAuthChange, getUserProfile } from './services/authService';
 import { App as CapApp } from '@capacitor/app';
-import { Browser } from '@capacitor/browser';
 import './i18n';
 import './App.css';
 import appLogo from './assets/logo.png';
@@ -112,9 +111,10 @@ const App = () => {
       setShowSplash(false);
     }, 2500);
 
-    // Setup deep link listener for Capacitor (if needed in future)
+    // Setup deep link listener for Capacitor — store handle for cleanup
+    let deepLinkHandle;
     const setupDeepLink = async () => {
-      await CapApp.addListener('appUrlOpen', async (event) => {
+      deepLinkHandle = await CapApp.addListener('appUrlOpen', async (event) => {
         // Handle custom URL schemes if needed
       });
     };
@@ -162,6 +162,8 @@ const App = () => {
     return () => {
       clearTimeout(splashTimer);
       unsubscribe();
+      // Cleanup Capacitor listener to prevent memory leak
+      deepLinkHandle?.remove();
     };
   }, [setUser, setCurrentScreen]);
 

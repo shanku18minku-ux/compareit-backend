@@ -17,8 +17,9 @@ export class AIAggregationEngine {
     const map = new Map();
     
     items.forEach(item => {
-      // Very basic normalization for grouping: lowercase and strip spaces
-      const normalizedName = item.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+      // Guard against null/undefined item.name to prevent TypeError
+      const safeName = item.name ? String(item.name) : 'unnamed-product';
+      const normalizedName = safeName.toLowerCase().replace(/[^a-z0-9]/g, '');
       
       if (!map.has(normalizedName)) {
         map.set(normalizedName, {
@@ -62,10 +63,10 @@ export class AIAggregationEngine {
       })).sort((a, b) => a.price - b.price);
 
       return {
-        id: `ai_${Math.random().toString(36).substr(2, 9)}`,
+        id: `ai_${Math.random().toString(36).slice(2, 11)}`,
         title: base.name,
         subtitle: base.brand || base.category || moduleType,
-        coverImage: base.image || 'https://via.placeholder.com/150',
+        coverImage: base.image || null,
         price: minPrice,
         mrp: base.mrp || minPrice,
         rating: avgRating.toFixed(1),
