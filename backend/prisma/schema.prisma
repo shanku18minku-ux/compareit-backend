@@ -62,3 +62,12 @@ model Vehicle {
   is_ev    Boolean?
   ai_score Int?
 }
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password_hash String
+  display_name  String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}

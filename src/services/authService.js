@@ -1,13 +1,21 @@
-import { supabase } from '../config/supabase';
-import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
-import { GoogleSignIn } from '@capawesome/capacitor-google-sign-in';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
 
 /**
- * Helper to get a user-friendly error message
+ * Helper to get user-friendly error messages
  */
 const getErrorMessage = (error) => {
   return error.message || 'An unexpected error occurred.';
+};
+
+/**
+ * Common Headers
+ */
+const getHeaders = () => {
+  const token = localStorage.getItem('token');
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+  };
 };
 
 /**
@@ -15,36 +23,17 @@ const getErrorMessage = (error) => {
  */
 export const signUpWithEmail = async (email, password, displayName) => {
   try {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          displayName,
-        }
-      }
+    const response = await fetch(`${API_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, displayName }),
     });
-    
-    if (error) throw error;
-    
-    // Supabase Auth trigger should ideally create the user in the `users` table.
-    // If not using triggers, we create it manually:
-    if (data.user) {
-      const { error: dbError } = await supabase.from('users').insert([{
-        uid: data.user.id,
-        email: data.user.email,
-        displayName: displayName,
-        photoURL: null,
-        gender: null,
-        dob: null,
-        authProvider: 'email',
-        preferredLanguage: 'en',
-        isProfileComplete: false,
-        isOnboarded: false,
-      }]);
-      // Ignore conflict if it already exists
-    }
-    
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Registration failed');
+
+    // Save JWT token
+    localStorage.setItem('token', data.token);
     return data.user;
   } catch (error) {
     throw new Error(getErrorMessage(error));
@@ -56,11 +45,17 @@ export const signUpWithEmail = async (email, password, displayName) => {
  */
 export const signInWithEmail = async (email, password) => {
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
     });
-    if (error) throw error;
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Login failed');
+
+    // Save JWT token
+    localStorage.setItem('token', data.token);
     return data.user;
   } catch (error) {
     throw new Error(getErrorMessage(error));
@@ -68,208 +63,73 @@ export const signInWithEmail = async (email, password) => {
 };
 
 /**
- * 3. Sign in with Google
- */
-export const signInWithGoogle = async () => {
-  try {
-    const isNative = Capacitor.isNativePlatform();
-    
-    if (isNative) {
-      // Use Native Google Sign-In on Android
-      const result = await GoogleSignIn.signIn();
-      const idToken = result.idToken;
-      
-      if (!idToken) throw new Error('Google Sign-In failed, no ID token received.');
-      
-      const { data, error } = await supabase.auth.signInWithIdToken({
-        provider: 'google',
-        token: idToken,
-      });
-      
-      if (error) throw error;
-      return data;
-      
-    } else {
-      // Use Web OAuth on browser
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          skipBrowserRedirect: false,
-          redirectTo: window.location.origin,
-        }
-      });
-      if (error) throw error;
-      return data;
-    }
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-};
-
-/**
- * 4. Sign in as Guest (Anonymous)
- */
-export const signInAsGuest = async () => {
-  try {
-    const { data, error } = await supabase.auth.signInAnonymously();
-    if (error) throw error;
-    
-    if (data.user) {
-      await supabase.from('users').upsert({
-        uid: data.user.id,
-        email: null,
-        displayName: 'Guest User',
-        photoURL: null,
-        gender: null,
-        dob: null,
-        authProvider: 'guest',
-        preferredLanguage: 'en',
-        isProfileComplete: false,
-        isOnboarded: false,
-      });
-    }
-    
-    return data.user;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-};
-
-/**
- * 5. Log out
+ * 3. Log out
  */
 export const logOut = async () => {
   try {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    localStorage.removeItem('token');
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
 };
 
 /**
- * 6. Reset Password
+ * 4. Get Current User (Used for restoring session on app load)
  */
-export const resetPassword = async (email) => {
+export const getCurrentUser = async () => {
   try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
-    if (error) throw error;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-};
+    const token = localStorage.getItem('token');
+    if (!token) return null;
 
-/**
- * 7. Update User Profile (Database + Auth)
- */
-export const updateUserProfile = async (userId, profileData) => {
-  try {
-    const { error: dbError } = await supabase
-      .from('users')
-      .update(profileData)
-      .eq('uid', userId);
-      
-    if (dbError) throw dbError;
-    
-    // Update auth metadata if display name or photoURL are changing
-    if (profileData.displayName || profileData.photoURL) {
-      const updateData = {};
-      if (profileData.displayName) updateData.displayName = profileData.displayName;
-      if (profileData.photoURL) updateData.photoURL = profileData.photoURL;
-      
-      const { error: authError } = await supabase.auth.updateUser({
-        data: updateData
-      });
-      if (authError) throw authError;
-    }
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-};
-
-/**
- * 8. Upload Profile Photo
- */
-export const uploadProfilePhoto = async (userId, file) => {
-  try {
-    const filePath = `users/${userId}/profile_${Date.now()}`;
-    const { data, error } = await supabase.storage
-      .from('avatars')
-      .upload(filePath, file);
-      
-    if (error) throw error;
-    
-    const { data: publicData } = supabase.storage
-      .from('avatars')
-      .getPublicUrl(filePath);
-      
-    return publicData.publicUrl;
-  } catch (error) {
-    throw new Error('Failed to upload profile photo. ' + error.message);
-  }
-};
-
-/**
- * 9. Get User Profile from Database
- */
-export const getUserProfile = async (userId) => {
-  try {
-    const { data, error } = await supabase
-      .from('users')
-      .select('*')
-      .eq('uid', userId)
-      .single();
-      
-    if (error && error.code !== 'PGRST116') throw error; // PGRST116 = 0 rows returned
-    
-    return data || null;
-  } catch (error) {
-    throw new Error('Failed to fetch user profile. ' + error.message);
-  }
-};
-
-/**
- * 10. Listen to auth state changes
- */
-export const onAuthChange = (callback) => {
-  const { data: { subscription } } = supabase.auth.onAuthStateChange(
-    async (event, session) => {
-      const user = session?.user || null;
-      if (user) {
-        // Map Supabase user properties to the format the app expects
-        user.displayName = user.user_metadata?.displayName || user.email?.split('@')[0] || 'User';
-        user.photoURL = user.user_metadata?.photoURL || null;
-        user.uid = user.id;
-      }
-      callback(user, event);
-    }
-  );
-  return () => {
-    subscription.unsubscribe();
-  };
-};
-
-/**
- * 11. Convert Guest to Email
- */
-export const convertGuestToEmail = async (email, password) => {
-  try {
-    const { data, error } = await supabase.auth.updateUser({
-      email,
-      password
+    const response = await fetch(`${API_URL}/auth/me`, {
+      method: 'GET',
+      headers: getHeaders(),
     });
-    if (error) throw error;
-    
-    const user = data.user;
-    if (user) {
-      await supabase.from('users').update({
-        email: email,
-        authProvider: 'email'
-      }).eq('uid', user.id);
+
+    if (!response.ok) {
+      // Token might be expired, clear it
+      localStorage.removeItem('token');
+      return null;
     }
-    
-    return user;
+
+    const data = await response.json();
+    return data.user;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    console.error('Failed to restore session:', error);
+    return null;
   }
+};
+
+/**
+ * Dummy implementations for unsupported/mocked features 
+ * to prevent breaking the existing UI
+ */
+export const signInWithGoogle = async () => {
+  throw new Error('Google Sign-In is disabled on the local backend.');
+};
+
+export const signInAsGuest = async () => {
+  // Guest login can just bypass auth or use a hardcoded mock user
+  return { id: 'guest', email: 'guest@compareit.com', displayName: 'Guest User' };
+};
+
+export const resetPassword = async (email) => {
+  throw new Error('Password reset is not implemented on the local backend.');
+};
+
+export const updateUserProfile = async (userId, profileData) => {
+  throw new Error('Profile updates not implemented yet.');
+};
+
+export const uploadProfilePhoto = async (userId, file) => {
+  throw new Error('Photo uploads not implemented yet.');
+};
+
+export const onAuthChange = (callback) => {
+  // We can just call it once initially for the current session.
+  // In a robust React app, you'd handle this via React Context, not a subscription.
+  getCurrentUser().then(user => {
+    callback(user, 'INITIAL_SESSION');
+  });
+  return () => {}; // Return dummy unsubscribe
 };

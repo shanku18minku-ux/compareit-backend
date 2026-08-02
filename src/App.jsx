@@ -3,8 +3,6 @@ import useAppStore from './store/appStore';
 import { onAuthChange, getUserProfile } from './services/authService';
 import { App as CapApp } from '@capacitor/app';
 import { Browser } from '@capacitor/browser';
-import { supabase } from './config/supabase';
-import { GoogleSignIn } from '@capawesome/capacitor-google-sign-in';
 import './i18n';
 import './App.css';
 import appLogo from './assets/logo.png';
@@ -114,34 +112,10 @@ const App = () => {
       setShowSplash(false);
     }, 2500);
 
-    // Initialize GoogleAuth plugin
-    GoogleSignIn.initialize({
-      clientId: '502172302950-nej2aod4j8ugr99ks29fen5btqsaa07a.apps.googleusercontent.com',
-      scopes: ['profile', 'email'],
-      grantOfflineAccess: true,
-    });
-
-    // Setup deep link listener for Capacitor OAuth
+    // Setup deep link listener for Capacitor (if needed in future)
     const setupDeepLink = async () => {
       await CapApp.addListener('appUrlOpen', async (event) => {
-        if (event.url.includes('login-callback')) {
-          await Browser.close();
-          const url = new URL(event.url);
-          const code = url.searchParams.get('code');
-          if (code) {
-            await supabase.auth.exchangeCodeForSession(code);
-          } else {
-            const hashParams = new URLSearchParams(url.hash.substring(1));
-            const accessToken = hashParams.get('access_token');
-            const refreshToken = hashParams.get('refresh_token');
-            if (accessToken && refreshToken) {
-              await supabase.auth.setSession({
-                access_token: accessToken,
-                refresh_token: refreshToken
-              });
-            }
-          }
-        }
+        // Handle custom URL schemes if needed
       });
     };
     setupDeepLink();
@@ -152,13 +126,11 @@ const App = () => {
     const unsubscribe = onAuthChange(async (authUser) => {
       if (authUser) {
         try {
-          const profile = await getUserProfile(authUser.uid);
-          // Merge auth user details with firestore/supabase profile
+          // Merge auth user details with profile
           const fullUser = { 
             ...authUser, 
-            ...profile,
-            isProfileComplete: profile?.isProfileComplete || false,
-            isOnboarded: profile?.isOnboarded || false
+            isProfileComplete: authUser.isProfileComplete || false,
+            isOnboarded: authUser.isOnboarded || false
           };
           
           setUser(fullUser);
