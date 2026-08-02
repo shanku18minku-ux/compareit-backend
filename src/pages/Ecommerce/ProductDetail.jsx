@@ -4,12 +4,14 @@ import { ArrowLeft, Share2, Heart, Star, ShieldCheck, Truck } from 'lucide-react
 import useAppStore from '../../store/appStore';
 import PlatformComparison from '../../components/Ecommerce/PlatformComparison';
 import PriceHistoryChart from '../../components/Ecommerce/PriceHistoryChart';
+import { buildRedirectPayloadFromPlatform } from '../../services/deepLinkService';
 import './ProductDetail.css';
 
 export default function ProductDetail() {
   const { t } = useTranslation();
   const { activeProduct, goToDashboard, goToPLP, searchQuery, setGlobalRedirectData } = useAppStore();
   const [activeImage, setActiveImage] = useState(0);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   if (!activeProduct) {
     return <div className="product-detail-empty">{t('auto_no_product_selected_663f', 'No product selected.')}</div>;
@@ -193,7 +195,20 @@ export default function ProductDetail() {
             <span className="sticky-label">Best Price on {bestPlatform.name}</span>
             <span className="sticky-price">₹{bestPlatform.price.toLocaleString()}</span>
           </div>
-          <button className="btn-buy-now" onClick={() => setGlobalRedirectData({ providerName: bestPlatform.name, targetUrl: bestPlatform.url || 'https://amazon.in' })}>{t('auto_buy_now_c1f5', 'Buy Now')}</button>
+          <button
+            className="btn-buy-now"
+            disabled={isRedirecting}
+            onClick={() => {
+              if (isRedirecting) return;
+              setIsRedirecting(true);
+              const payload = buildRedirectPayloadFromPlatform(bestPlatform, activeProduct);
+              setGlobalRedirectData(payload);
+              // Reset after redirect modal closes (1.5s modal + buffer)
+              setTimeout(() => setIsRedirecting(false), 3000);
+            }}
+          >
+            {isRedirecting ? '⏳ Opening...' : t('auto_buy_now_c1f5', 'Buy Now')}
+          </button>
         </div>
       )}
     </div>

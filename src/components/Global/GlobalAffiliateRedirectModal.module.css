@@ -102,3 +102,63 @@
   color: #065f46;
   line-height: 1.5;
 }
+
+/* ── Capability Badge ────────────────────────────────────────────────── */
+.capabilityBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.capabilityBadge[data-capability="checkout"],
+.capabilityBadge[data-capability="cart"] {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+.capabilityBadge[data-capability="search"] {
+  background: #fefce8;
+  color: #854d0e;
+  border-color: #fef08a;
+}
+
+/* ── Retry Button ────────────────────────────────────────────────────── */
+.retryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background 0.2s;
+}
+.retryBtn:hover { background: #1d4ed8; }
+
+/* ── Cancel Button ───────────────────────────────────────────────────── */
+.cancelBtn {
+  display: block;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 13px;
+  cursor: pointer;
+  margin: 0 auto 16px;
+  padding: 4px 8px;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.cancelBtn:hover { color: #475569; }
+

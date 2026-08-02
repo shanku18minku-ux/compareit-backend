@@ -8,6 +8,7 @@ import { aiOrchestrator } from '../../core/AIOrchestrator';
 import { Browser } from '@capacitor/browser';
 import { SlidersHorizontal, ArrowLeft, Star, Truck, Tag, ChevronDown, ChevronUp, Zap, ShieldCheck } from 'lucide-react';
 import GlobalDisclaimer from '../../components/Global/GlobalDisclaimer';
+import { buildRedirectPayload } from '../../services/deepLinkService';
 
 const ProductList = () => {
   const { t } = useTranslation();
@@ -166,31 +167,14 @@ const ProductList = () => {
   });
 
   const handleBuy = (url, fallbackName, productTitle) => {
-    let finalUrl = url;
-    
-    // Generate real app links for intent launching if url is missing/dummy
-    if (!url || url === '#') {
-      const q = encodeURIComponent(productTitle || fallbackName);
-      const name = fallbackName.toLowerCase();
-      
-      if (name.includes('amazon')) finalUrl = `https://www.amazon.in/s?k=${q}`;
-      else if (name.includes('flipkart')) finalUrl = `https://www.flipkart.com/search?q=${q}`;
-      else if (name.includes('croma')) finalUrl = `https://www.croma.com/search/?q=${q}`;
-      else if (name.includes('reliance')) finalUrl = `https://www.reliancedigital.in/search?q=${q}:relevance`;
-      else if (name.includes('cashify')) finalUrl = `https://www.cashify.in/buy-refurbished-mobile-phones/search?q=${q}`;
-      else if (name.includes('olx')) finalUrl = `https://www.olx.in/items/q-${q}`;
-      else if (name.includes('myntra')) finalUrl = `https://www.myntra.com/${q}`;
-      else if (name.includes('ajio')) finalUrl = `https://www.ajio.com/search/?text=${q}`;
-      else {
-        const domain = fallbackName.toLowerCase().replace(/[^a-z0-9]/g, '');
-        finalUrl = `https://www.${domain}.com`;
-      }
-    }
-      
-    setGlobalRedirectData({
-      providerName: fallbackName,
-      targetUrl: finalUrl
+    // Build a fully enriched redirect payload using deepLinkService
+    // This handles: smart URL construction, Android intent:// URI, analytics logging
+    const payload = buildRedirectPayload(fallbackName, {
+      title: productTitle || fallbackName,
+      url:   url || '#',
+      price: 0,
     });
+    setGlobalRedirectData(payload);
   };
 
   if (loading) {

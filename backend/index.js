@@ -12,6 +12,10 @@ const authRoutes = require('./routes/auth');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Trust the first proxy hop (required for correct IP detection on Render/Heroku/Nginx)
+// Without this, rate limiting uses the proxy IP and will block ALL traffic when limit is hit
+app.set('trust proxy', 1);
+
 // 1. Security Headers
 app.use(helmet());
 
