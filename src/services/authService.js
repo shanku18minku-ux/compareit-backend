@@ -133,3 +133,9 @@ export const onAuthChange = (callback) => {
   });
   return () => {}; // Return dummy unsubscribe
 };
+
+/**
+ * getUserProfile — alias for getCurrentUser.
+ * Exported for backward-compatibility with App.jsx imports.
+ */
+export const getUserProfile = getCurrentUser;
