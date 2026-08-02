@@ -8,6 +8,14 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true   # Render will auto-generate a secure secret
+      - key: CORS_ORIGINS
+        value: capacitor://localhost,http://localhost,https://compareit-app-frontend.onrender.com
+      - key: DATABASE_URL
+        value: file:./dev.db
 
   - type: web
     name: compareit-app-frontend
@@ -25,4 +33,3 @@ services:
         value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFvY21qbWtxaWZkcG9oZGZ6cnBzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MjE2MzQsImV4cCI6MjEwMDk5NzYzNH0.Fo-8IrCffyC3IsHmSfwF7h2nDKTA71gThlpYYud5Cr8
       - key: VITE_API_URL
         value: https://compareit-backend-jib3.onrender.com/api/v1
-
