@@ -3,7 +3,7 @@ import { GoogleSignIn } from '@capawesome/capacitor-google-sign-in';
 
 // Initialize GoogleSignIn plugin 
 GoogleSignIn.initialize({
-  clientId: 'YOUR_WEB_CLIENT_ID_HERE.apps.googleusercontent.com',
+  clientId: '502172302950-nej2aod4j8ugr99ks29fen5btqsaa07a.apps.googleusercontent.com',
 });
 
 /**
