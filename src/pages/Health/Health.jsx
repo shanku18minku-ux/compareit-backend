@@ -19,7 +19,7 @@ const Health = () => {
   const setSearchQuery = useAppStore(state => state.setHealthSearchQuery);
   
   const userLocationObj = useAppStore(state => state.userLocation);
-  const userLocation = typeof userLocationObj === 'string' ? userLocationObj : (userLocationObj?.city || userLocationObj?.address || 'New Delhi, Delhi');
+  const userLocation = typeof userLocationObj === 'string' ? userLocationObj : (userLocationObj?.address || userLocationObj?.city || 'Detecting...');
 
   return (
     <div className="health-page">

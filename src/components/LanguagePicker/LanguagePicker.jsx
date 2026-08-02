@@ -64,8 +64,8 @@ const LanguagePicker = ({ isOpen, onClose, onSelectLanguage }) => {
   };
 
   const filteredLanguages = LANGUAGES.filter(lang => 
-    lang.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    lang.native.toLowerCase().includes(searchQuery.toLowerCase())
+    lang.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) || 
+    lang.native.toLowerCase().includes(searchQuery.toLowerCase().trim())
   );
 
   if (!isOpen && !isVisible) return null;

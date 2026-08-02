@@ -220,8 +220,8 @@ const CollegesTab = ({ searchQuery }) => {
   const [isPredicting, setIsPredicting] = useState(false);
 
   const filtered = mockColleges.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          item.location.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) || 
+                          item.location.toLowerCase().includes(searchQuery.toLowerCase().trim());
     const matchesFilter = activeFilter === 'All' || item.stream === activeFilter;
     return matchesSearch && matchesFilter;
   });

@@ -141,7 +141,7 @@ const ProductList = () => {
 
   const products = deals.filter(deal => {
     if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase().trim();
+    const q = searchQuery.toLowerCase().trim().trim();
     if (q.includes('budget') || q.match(/15000|15k|under/)) return deal.dealScore > 85;
     
     // Split query into keywords for a looser match

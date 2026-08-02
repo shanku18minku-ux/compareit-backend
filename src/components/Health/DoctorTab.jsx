@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import useAppStore from '../../store/appStore';
+import { filterByLocation } from '../../utils/locationEngine.js';
 import { Star, Clock, Video, Phone, MessageCircle, Home, Building2, Zap, ArrowRight, ShieldCheck } from 'lucide-react';
 import './DoctorTab.css';
 
@@ -200,10 +201,11 @@ const DoctorCard = ({ doctor, handleBook }) => {
 const DoctorTab = ({ searchQuery }) => {
   const { t } = useTranslation();
   const [selectedSpecialty, setSelectedSpecialty] = useState(null);
+  const { setGlobalRedirectData, userLocation } = useAppStore();
 
-  let filteredDoctors = mockDoctors.filter(doc => {
-    const matchesSearch = doc.name.toLowerCase().includes(searchQuery?.toLowerCase() || '') || 
-                          doc.specialty.toLowerCase().includes(searchQuery?.toLowerCase() || '');
+  let filteredDoctors = filterByLocation(mockDoctors, userLocation?.city).filter(doc => {
+    const matchesSearch = doc.name.toLowerCase().includes(searchQuery?.toLowerCase().trim() || '') || 
+                          doc.specialty.toLowerCase().includes(searchQuery?.toLowerCase().trim() || '');
     const matchesSpecialty = selectedSpecialty ? doc.specialty === selectedSpecialty : true;
     return matchesSearch && matchesSpecialty;
   });
@@ -226,7 +228,7 @@ const DoctorTab = ({ searchQuery }) => {
     }];
   }
 
-  const { setGlobalRedirectData } = useAppStore();
+  // setGlobalRedirectData moved to top
 
   const handleBook = async (platformName) => {
     const domain = platformName.toLowerCase().replace(/[^a-z0-9]/g, '');

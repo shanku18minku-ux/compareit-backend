@@ -11,7 +11,7 @@ import './Travel.css';
 const Travel = () => {
   const { t } = useTranslation();
   const { userLocation: userLocationObj } = useAppStore();
-  const userLocation = typeof userLocationObj === 'string' ? userLocationObj : (userLocationObj?.city || userLocationObj?.address || t('detecting', 'Detecting...'));
+  const userLocation = typeof userLocationObj === 'string' ? userLocationObj : (userLocationObj?.address || userLocationObj?.city || t('detecting', 'Detecting...'));
   const activeTab = useAppStore(state => state.activeTravelTab);
   const setActiveTab = useAppStore(state => state.setActiveTravelTab);
   const searchQuery = useAppStore(state => state.travelSearchQuery);

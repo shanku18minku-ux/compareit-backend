@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import { ShoppingCart, Pill, Activity, Heart, ShieldAlert, Sparkles, TrendingDown } from 'lucide-react';
 import useAppStore from '../../store/appStore';
+import { filterByLocation, injectLocalPlatforms } from '../../utils/locationEngine.js';
 import CouponManager from '../CouponManager/CouponManager';
 import GenericAlternatives from './GenericAlternatives';
 import { getGenericAlternatives } from '../../services/medicineAiService';
@@ -53,11 +54,11 @@ const mockMedicines = [
 
 const MedicineTab = ({ searchQuery }) => {
   const { t } = useTranslation();
-  const { couponMode, appliedManualCoupons, setGlobalRedirectData } = useAppStore();
+  const { couponMode, appliedManualCoupons, setGlobalRedirectData, userLocation } = useAppStore();
 
-  const filteredMedicines = mockMedicines.filter(med => {
+  const filteredMedicines = filterByLocation(mockMedicines, userLocation?.city).filter(med => {
     if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase().trim();
     
     // Generic terms show all
     if (q.includes('medicine') || q.includes('health')) return true;
@@ -92,7 +93,10 @@ const MedicineTab = ({ searchQuery }) => {
     setGlobalRedirectData({ providerName: platformName, targetUrl: url });
   };
 
-  let displayMedicines = filteredMedicines;
+  let displayMedicines = filteredMedicines.map(med => ({
+    ...med,
+    platforms: injectLocalPlatforms(med.platforms, userLocation?.city, 'medicine', Math.round(Math.min(...med.platforms.map(p => p.originalPrice))))
+  }));
   
   // Dynamic mock generation if no results found
   if (displayMedicines.length === 0 && searchQuery) {

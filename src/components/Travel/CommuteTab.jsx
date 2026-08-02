@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { MapPin, Navigation, Sparkles, Clock, Zap, ChevronRight } from 'lucide-react';
 import useAppStore from '../../store/appStore';
+import { filterByLocation } from '../../utils/locationEngine';
 import './CommuteTab.css';
 
 const mockRides = [
@@ -52,7 +53,7 @@ const CommuteTab = () => {
   const [vehicle, setVehicle] = useState('cab');
   const [from, setFrom] = useState('Current Location');
   const [to, setTo] = useState('');
-  const { setGlobalRedirectData } = useAppStore();
+  const { setGlobalRedirectData, userLocation } = useAppStore();
 
   const vehicles = [
     { id: 'auto', icon: '🛺', label: 'Auto' },
@@ -60,9 +61,29 @@ const CommuteTab = () => {
     { id: 'bike', icon: '🏍️', label: 'Bike' },
   ];
 
-  const sortedRides = [...mockRides].sort((a, b) => a.price - b.price);
-  const cheapest = sortedRides[0];
-  const fastest = [...mockRides].sort((a, b) => parseInt(a.eta) - parseInt(b.eta))[0];
+  // If user typed a custom from location (not "Current Location"), use that. Otherwise use GPS city.
+  const searchCity = (from && from !== 'Current Location') ? from : userLocation?.city;
+  
+  // First filter by origin/location
+  let filteredRides = filterByLocation(mockRides, searchCity);
+  
+  // If user typed a destination, strictly match it too
+  if (to && to.trim() !== '') {
+      filteredRides = filteredRides.filter(r => 
+          (r.destination || '').toLowerCase().includes(to.toLowerCase()) ||
+          (r.to || '').toLowerCase().includes(to.toLowerCase()) ||
+          (r.location || '').toLowerCase().includes(to.toLowerCase())
+      );
+  }
+
+  // If no rides match the strict route, gracefully fallback to showing all rides in the origin city
+  if (filteredRides.length === 0 && to) {
+      filteredRides = filterByLocation(mockRides, searchCity);
+  }
+
+  const sortedRides = [...filteredRides].sort((a, b) => a.price - b.price);
+  const cheapest = sortedRides[0] || {};
+  const fastest = [...filteredRides].sort((a, b) => parseInt(a.eta) - parseInt(b.eta))[0] || {};
 
   return (
     <div className="commute-tab">
@@ -112,17 +133,19 @@ const CommuteTab = () => {
 
       {to && (
         <div className="rides-container">
-          <div className="ai-insight">
-            <Sparkles size={16} color="#2563EB" />
-            <span><strong>{cheapest.provider}</strong> is the cheapest, but <strong>{fastest.provider}</strong> is arriving fastest ({fastest.eta}).</span>
-          </div>
+          {filteredRides.length > 0 ? (
+            <>
+              <div className="ai-insight">
+                <Sparkles size={16} color="#2563EB" />
+                <span><strong>{cheapest.provider}</strong> is the cheapest, but <strong>{fastest.provider}</strong> is arriving fastest ({fastest.eta}).</span>
+              </div>
 
-          <div className="rides-list">
-            {sortedRides.map((ride, index) => {
-              const isCheapest = ride.provider === cheapest.provider;
-              const isFastest = ride.provider === fastest.provider;
+              <div className="rides-list">
+                {sortedRides.map((ride, index) => {
+                  const isCheapest = ride.provider === cheapest.provider;
+                  const isFastest = ride.provider === fastest.provider;
 
-              return (
+                  return (
                 <div key={ride.provider} className={`ride-card ${isCheapest ? 'best-price' : ''}`}>
                   <div className="ride-info">
                     <div className="provider-name">
@@ -150,6 +173,12 @@ const CommuteTab = () => {
               );
             })}
           </div>
+          </>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+              No rides found in your location.
+            </div>
+          )}
         </div>
       )}
     </div>

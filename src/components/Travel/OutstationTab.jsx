@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { Plane, Train, Bus, MapPin, ArrowRight, Clock, ChevronRight } from 'lucide-react';
 import useAppStore from '../../store/appStore';
+import { filterByLocation, injectLocalPlatforms } from '../../utils/locationEngine';
+
 
 const mockRoutes = {
   flights: [
@@ -77,7 +79,9 @@ const mockRoutes = {
 const OutstationTab = () => {
   const { t } = useTranslation();
   const [activeMode, setActiveMode] = useState('flights');
-  const { setGlobalRedirectData } = useAppStore();
+  const { setGlobalRedirectData, userLocation } = useAppStore();
+  const [fromCity, setFromCity] = useState(userLocation?.city || 'DEL');
+  const [toCity, setToCity] = useState('BOM');
   
   const modes = [
     { id: 'flights', label: 'Flights', icon: Plane },
@@ -86,7 +90,8 @@ const OutstationTab = () => {
   ];
 
   const renderRouteCard = (route) => {
-    const sortedPlatforms = [...route.platforms].sort((a, b) => a.price - b.price);
+    const injectedPlatforms = injectLocalPlatforms(route.platforms, userLocation?.city, 'travel', Math.round(Math.min(...route.platforms.map(p => p.price))));
+    const sortedPlatforms = [...injectedPlatforms].sort((a, b) => a.price - b.price);
     const bestPlatform = sortedPlatforms[0];
 
     return (
@@ -194,11 +199,11 @@ const OutstationTab = () => {
       <div className="search-inputs" style={{ display: 'flex', flexDirection: 'column', gap: '12px', background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
           <MapPin size={16} color="#2563EB" style={{ marginRight: '10px' }} />
-          <input type="text" placeholder={t('auto_from_e_g_del_ed7f', 'From (e.g. DEL)')} defaultValue="DEL" style={{ background: 'transparent', border: 'none', color: 'white', outline: 'none', width: '100%' }} />
+          <input type="text" value={fromCity} onChange={(e) => setFromCity(e.target.value)} placeholder={t('auto_from_e_g_del_ed7f', 'From (e.g. DEL)')} style={{ background: 'transparent', border: 'none', color: 'white', outline: 'none', width: '100%' }} />
         </div>
         <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
           <MapPin size={16} color="#EF4444" style={{ marginRight: '10px' }} />
-          <input type="text" placeholder={t('auto_to_e_g_bom_b26e', 'To (e.g. BOM)')} defaultValue="BOM" style={{ background: 'transparent', border: 'none', color: 'white', outline: 'none', width: '100%' }} />
+          <input type="text" value={toCity} onChange={(e) => setToCity(e.target.value)} placeholder={t('auto_to_e_g_bom_b26e', 'To (e.g. BOM)')} style={{ background: 'transparent', border: 'none', color: 'white', outline: 'none', width: '100%' }} />
         </div>
         <button style={{ background: '#2563EB', color: 'white', border: 'none', padding: '14px', borderRadius: '8px', fontWeight: 'bold', fontSize: '15px' }}>
           Search {modes.find(m => m.id === activeMode)?.label}
@@ -207,7 +212,24 @@ const OutstationTab = () => {
 
       <div className="results-list">
         <h3 style={{ fontSize: '16px', marginBottom: '16px' }}>{t('auto_top_options_a95f', 'Top Options')}</h3>
-        {mockRoutes[activeMode].map(route => renderRouteCard(route))}
+        {(() => {
+          let filtered = filterByLocation(mockRoutes[activeMode], fromCity);
+          if (toCity && toCity.trim() !== '') {
+            filtered = filtered.filter(r => 
+              (r.to || r.destination || '').toLowerCase().includes(toCity.toLowerCase())
+            );
+          }
+          if (filtered.length === 0 && toCity) {
+            filtered = filterByLocation(mockRoutes[activeMode], fromCity);
+          }
+          return filtered.length > 0 ? (
+            filtered.map(route => renderRouteCard(route))
+          ) : (
+            <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+              No options found in your location.
+            </div>
+          );
+        })()}
       </div>
     </div>
   );

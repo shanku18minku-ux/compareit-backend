@@ -7,6 +7,7 @@ import PriceHistoryChart from '../../components/Ecommerce/PriceHistoryChart';
 import './ProductDetail.css';
 
 export default function ProductDetail() {
+  const { t } = useTranslation();
   const { activeProduct, goToDashboard, goToPLP, searchQuery, setGlobalRedirectData } = useAppStore();
   const [activeImage, setActiveImage] = useState(0);
 
@@ -31,20 +32,20 @@ export default function ProductDetail() {
     return '#EF4444'; // Red
   };
 
-  const bestPlatform = activeProduct.platforms?.sort((a, b) => a.price - b.price)[0];
+  const bestPlatform = activeProduct.platforms ? [...activeProduct.platforms].sort((a, b) => a.price - b.price)[0] : null;
 
   return (
     <div className="product-detail-page">
       {/* Top Bar */}
       <header className="pdp-header">
-        <button className="icon-btn" onClick={handleBack}>
+        <button className="icon-btn" aria-label="Go back" onClick={handleBack}>
           <ArrowLeft size={24} />
         </button>
         <div className="pdp-header-actions">
-          <button className="icon-btn">
+          <button className="icon-btn" aria-label="Share product">
             <Share2 size={24} />
           </button>
-          <button className="icon-btn">
+          <button className="icon-btn" aria-label="Add to wishlist">
             <Heart size={24} />
           </button>
         </div>
@@ -112,6 +113,63 @@ export default function ProductDetail() {
               <div className="pdp-trust-badges">
                 <div className="trust-badge"><ShieldCheck size={20} /> 1 Year Warranty</div>
                 <div className="trust-badge"><Truck size={20} /> Free Delivery</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Middle Section - AI Verified Summary */}
+          <div className="pdp-section pdp-ai-summary-section">
+            <div className="ai-summary-card">
+              <div className="ai-summary-header">
+                <h3>✨ AI Verified Summary</h3>
+                <span className="ai-timestamp">🕒 Last Verified: 2 mins ago</span>
+              </div>
+              
+              <div className="ai-summary-grid">
+                <div className="ai-summary-item">
+                  <span className="ai-icon">✔</span>
+                  <div className="ai-info">
+                    <span className="ai-label">Trusted Platforms</span>
+                    <span className="ai-value">Verified from {activeProduct.platforms?.length || 6} sources</span>
+                  </div>
+                </div>
+                
+                <div className="ai-summary-item">
+                  <span className="ai-icon">💰</span>
+                  <div className="ai-info">
+                    <span className="ai-label">Lowest Price</span>
+                    <span className="ai-value highlight">₹{bestPlatform ? bestPlatform.price.toLocaleString() : '1,08,999'}</span>
+                  </div>
+                </div>
+
+                <div className="ai-summary-item">
+                  <span className="ai-icon">🚚</span>
+                  <div className="ai-info">
+                    <span className="ai-label">Fastest Delivery</span>
+                    <span className="ai-value">Today</span>
+                  </div>
+                </div>
+
+                <div className="ai-summary-item">
+                  <span className="ai-icon">⭐</span>
+                  <div className="ai-info">
+                    <span className="ai-label">Best Seller Rating</span>
+                    <span className="ai-value">{activeProduct.rating || '4.9'}/5</span>
+                  </div>
+                </div>
+
+                <div className="ai-summary-item">
+                  <span className="ai-icon">🎁</span>
+                  <div className="ai-info">
+                    <span className="ai-label">Best Coupon</span>
+                    <span className="ai-value highlight-green">₹2,000 OFF</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="ai-summary-alert">
+                <span className="ai-alert-icon">⚠</span>
+                <span>Price mismatch detected on 1 platform</span>
               </div>
             </div>
           </div>

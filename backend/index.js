@@ -7,7 +7,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const searchRoutes = require('./routes/search');
-
+const dbRoutes = require('./routes/database');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -62,6 +62,7 @@ app.use(express.json({ limit: '1mb' })); // Prevent huge JSON payload attacks
 
 // Routes
 app.use('/api/v1/search', searchRoutes);
+app.use('/api/v1/db', dbRoutes);
 
 // Enhanced Health Check Endpoint
 app.get('/health', (req, res) => {

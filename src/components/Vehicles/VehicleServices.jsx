@@ -4,42 +4,10 @@ import { Wrench, CheckCircle2, ChevronDown, ChevronUp, ExternalLink, Zap } from 
 import styles from './VehicleEcosystem.module.css';
 import { vehicleServices } from '../../services/vehicleEcosystemData';
 import AffiliateRedirectModal from './AffiliateRedirectModal';
+import { filterByLocation } from '../../utils/locationEngine';
+import useAppStore from '../../store/appStore';
 
-const VehicleServices = () => {
-  const { t } = useTranslation();
-  const [activeFilter, setActiveFilter] = useState('All');
-  
-  const categories = ['All', 'Car Service', 'Bike Service', 'Car Wash & Detailing'];
-  
-  const filteredServices = activeFilter === 'All' 
-    ? vehicleServices 
-    : vehicleServices.filter(s => s.category === activeFilter);
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.filtersSection}>
-        <div className={styles.filters}>
-          {categories.map(cat => (
-            <button
-              key={cat}
-              className={`${styles.filterChip} ${activeFilter === cat ? styles.active : ''}`}
-              onClick={() => setActiveFilter(cat)}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        {filteredServices.map((service) => (
-          <ServiceCard key={service.id} service={service} />
-        ))}
-      </div>
-    </div>
-  );
-};
-
+// ServiceCard defined BEFORE VehicleServices so it can be used inside
 const ServiceCard = ({ service }) => {
   const { t } = useTranslation();
   const [showPlatforms, setShowPlatforms] = useState(false);
@@ -152,6 +120,44 @@ const ServiceCard = ({ service }) => {
         targetUrl={redirectData?.targetUrl}
         onClose={() => setRedirectData(null)}
       />
+    </div>
+  );
+};
+
+const VehicleServices = () => {
+  const { t } = useTranslation();
+  const [activeFilter, setActiveFilter] = useState('All');
+  const { userLocation } = useAppStore();
+  
+  const categories = ['All', 'Car Service', 'Bike Service', 'Car Wash & Detailing'];
+  
+  const localizedServices = filterByLocation(vehicleServices, userLocation?.city);
+
+  const filteredServices = activeFilter === 'All' 
+    ? localizedServices 
+    : localizedServices.filter(s => s.category === activeFilter);
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.filtersSection}>
+        <div className={styles.filters}>
+          {categories.map(cat => (
+            <button
+              key={cat}
+              className={`${styles.filterChip} ${activeFilter === cat ? styles.active : ''}`}
+              onClick={() => setActiveFilter(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.grid}>
+        {filteredServices.map((service) => (
+          <ServiceCard key={service.id} service={service} />
+        ))}
+      </div>
     </div>
   );
 };

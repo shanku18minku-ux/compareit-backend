@@ -21,7 +21,7 @@ const Education = () => {
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    const lowerQuery = query.toLowerCase();
+    const lowerQuery = query.toLowerCase().trim();
     
     if (lowerQuery.includes('sarkari') || lowerQuery.includes('govt') || lowerQuery.includes('ssc') || lowerQuery.includes('upsc')) {
       setActiveTab('govtexams');

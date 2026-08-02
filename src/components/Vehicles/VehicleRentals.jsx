@@ -4,42 +4,10 @@ import { Calendar, CheckCircle2, ChevronDown, ChevronUp, ExternalLink, Zap } fro
 import styles from './VehicleEcosystem.module.css';
 import { vehicleRentals } from '../../services/vehicleEcosystemData';
 import AffiliateRedirectModal from './AffiliateRedirectModal';
+import { filterByLocation, injectLocalPlatforms } from '../../utils/locationEngine';
+import useAppStore from '../../store/appStore';
 
-const VehicleRentals = () => {
-  const { t } = useTranslation();
-  const [activeFilter, setActiveFilter] = useState('All');
-  
-  const categories = ['All', 'Self-Drive Cars', 'Bike Rentals'];
-  
-  const filteredRentals = activeFilter === 'All' 
-    ? vehicleRentals 
-    : vehicleRentals.filter(r => r.category === activeFilter);
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.filtersSection}>
-        <div className={styles.filters}>
-          {categories.map(cat => (
-            <button
-              key={cat}
-              className={`${styles.filterChip} ${activeFilter === cat ? styles.active : ''}`}
-              onClick={() => setActiveFilter(cat)}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        {filteredRentals.map((rental) => (
-          <RentalCard key={rental.id} rental={rental} />
-        ))}
-      </div>
-    </div>
-  );
-};
-
+// RentalCard defined BEFORE VehicleRentals so it can be used inside
 const RentalCard = ({ rental }) => {
   const { t } = useTranslation();
   const [showPlatforms, setShowPlatforms] = useState(false);
@@ -92,7 +60,7 @@ const RentalCard = ({ rental }) => {
             </div>
             <div className={styles.highlightText}>
               <strong>{bestPlatform.name}</strong> has the most economical rental.<br/>
-              Security Deposit: ₹{bestPlatform.deposit.toLocaleString()}
+              Security Deposit: ₹{(bestPlatform.deposit || 0).toLocaleString()}
             </div>
           </div>
         )}
@@ -127,7 +95,7 @@ const RentalCard = ({ rental }) => {
                         {plat.isCertified && <span className={styles.certTag}>✓ Verified</span>}
                       </div>
                       <div style={{ fontSize: '10px', color: '#6b7280', marginTop: '2px' }}>
-                        Deposit: ₹{plat.deposit}
+                        Deposit: ₹{(plat.deposit || 0).toLocaleString()}
                       </div>
                     </div>
                     <div className={styles.platRight}>
@@ -157,6 +125,47 @@ const RentalCard = ({ rental }) => {
         targetUrl={redirectData?.targetUrl}
         onClose={() => setRedirectData(null)}
       />
+    </div>
+  );
+};
+
+const VehicleRentals = () => {
+  const { t } = useTranslation();
+  const [activeFilter, setActiveFilter] = useState('All');
+  const { userLocation } = useAppStore();
+  
+  const categories = ['All', 'Self-Drive Cars', 'Bike Rentals'];
+  
+  const localizedRentals = filterByLocation(vehicleRentals, userLocation?.city);
+
+  const filteredRentals = (activeFilter === 'All' 
+    ? localizedRentals 
+    : localizedRentals.filter(r => r.category === activeFilter)).map(r => ({
+      ...r,
+      platforms: injectLocalPlatforms(r.platforms, userLocation?.city, 'vehicle', Math.round(Math.min(...r.platforms.map(p => p.price))))
+    }));
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.filtersSection}>
+        <div className={styles.filters}>
+          {categories.map(cat => (
+            <button
+              key={cat}
+              className={`${styles.filterChip} ${activeFilter === cat ? styles.active : ''}`}
+              onClick={() => setActiveFilter(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.grid}>
+        {filteredRentals.map((rental) => (
+          <RentalCard key={rental.id} rental={rental} />
+        ))}
+      </div>
     </div>
   );
 };

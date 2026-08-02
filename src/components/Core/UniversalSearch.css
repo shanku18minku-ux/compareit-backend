@@ -125,7 +125,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(15, 23, 42, 0.4);
+  background: rgba(15, 23, 42, 0.35);
   backdrop-filter: blur(2px);
-  z-index: 99;
+  z-index: 9990; /* below ssd-wrapper (99999) so dropdown is clickable */
 }

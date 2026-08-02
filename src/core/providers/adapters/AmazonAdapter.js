@@ -9,7 +9,7 @@ export class AmazonAdapter extends BaseAdapter {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 300));
 
-    const q = query.toLowerCase();
+    const q = query.toLowerCase().trim();
     let results = [];
 
     if (q.includes('iphone')) {

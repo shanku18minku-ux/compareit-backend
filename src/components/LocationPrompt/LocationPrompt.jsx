@@ -14,7 +14,7 @@ const LocationPrompt = () => {
     const checkLocation = async () => {
       // Check if user has already granted location or permanently dismissed it
       const hasDismissed = localStorage.getItem('compareit_location_dismissed');
-      if (hasDismissed === 'true' || userLocation) {
+      if (hasDismissed === 'true' || userLocation?.lat) {
         setIsVisible(false);
         return;
       }
@@ -41,11 +41,30 @@ const LocationPrompt = () => {
 
   const fetchLocation = async () => {
     try {
-      const position = await Geolocation.getCurrentPosition();
+      const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      
+      // Perform reverse geocoding
+      let city = 'Current Location';
+      let address = 'Detecting address...';
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+        const data = await res.json();
+        city = data.address?.city || data.address?.town || data.address?.village || data.address?.state_district || 'Unknown City';
+        
+        // Construct a clean, short address (e.g., Neighborhood, City)
+        const neighborhood = data.address?.suburb || data.address?.neighbourhood || data.address?.residential;
+        address = neighborhood ? `${neighborhood}, ${city}` : (data.display_name || city);
+      } catch (err) {
+        console.warn('Reverse geocoding failed', err);
+      }
+
       setUserLocation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        city: 'Current Location', // In a real app, use reverse geocoding here
+        lat,
+        lng,
+        city,
+        address
       });
       setIsVisible(false);
     } catch (e) {

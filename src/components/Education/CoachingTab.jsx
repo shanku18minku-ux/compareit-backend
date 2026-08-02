@@ -87,8 +87,8 @@ const CoachingTab = ({ searchQuery }) => {
   const { setGlobalRedirectData } = useAppStore();
 
   const filtered = mockCoaching.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          item.city.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) || 
+                          item.city.toLowerCase().includes(searchQuery.toLowerCase().trim());
     const matchesFilter = activeFilter === 'All' || item.exam === activeFilter;
     return matchesSearch && matchesFilter;
   });

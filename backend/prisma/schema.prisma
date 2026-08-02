@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model TrendingDeal {
+  id             String  @id
+  title          String
+  brand          String?
+  image          String?
+  category       String?
+  sub_category   String?
+  specs          String? // Storing JSON string
+  original_price Float?
+  best_price     Float?
+  best_platform  String?
+  discount       Int?
+  deal_score     Int?
+  rating         Float?
+  reviews_count  Int?
+  price_history  String? // Storing JSON string
+  platforms      String? // Storing JSON string
+}
+
+model UpcomingSale {
+  id           String  @id
+  name         String
+  platform     String
+  start_date   String
+  end_date     String
+  banner_color String?
+  description  String?
+}
+
+model DeliveryDish {
+  id            String  @id
+  name          String
+  location      String?
+  restaurant    String?
+  cuisine       String?
+  image         String?
+  rating        Float?
+  is_veg        Boolean?
+  delivery_time String?
+  platforms     String? // JSON string
+}
+
+model Vehicle {
+  id       String  @id
+  title    String
+  type     String?
+  brand    String?
+  price    Float?
+  image    String?
+  rating   Float?
+  specs    String? // JSON string
+  platforms String? // JSON string
+  is_ev    Boolean?
+  ai_score Int?
+}

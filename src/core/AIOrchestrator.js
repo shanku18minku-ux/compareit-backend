@@ -10,7 +10,7 @@ class AIOrchestrator {
 
   // 1. Intent Routing Engine
   analyzeIntent(query) {
-    const q = query.toLowerCase();
+    const q = query.toLowerCase().trim();
     
     // Health Intent
     if (q.match(/(fever|doctor|medicine|hospital|clinic|cough|cold|pain|surgery|consult|protein|whey|vitamin|fish oil|supplement|calcium|creatine|device|monitor|machine|meter|glucometer|wheelchair|nurse|physio|home care|attendant|elder care|panadol|crocin|dolo|augmentin|shelcal|paracetamol|mg|ml|tablet|capsule|syrup)/)) {

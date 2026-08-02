@@ -2,28 +2,15 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { MapPin, Navigation, ChevronDown, Search } from 'lucide-react';
 import useAppStore from '../../store/appStore';
+import { Geolocation } from '@capacitor/geolocation';
 import './LocationPicker.css';
-
 const LocationPicker = () => {
   const { t } = useTranslation();
   const { userLocation, locationStatus, setUserLocation } = useAppStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Simulate location detection on mount if not already set
-  useEffect(() => {
-    if (locationStatus === 'detecting' && !userLocation.lat) {
-      const detectLocation = async () => {
-        // Simulate network delay for finding location
-        await new Promise(res => setTimeout(res, 1500));
-        setUserLocation(
-          { address: 'Koramangala, Bengaluru, Karnataka', lat: 12.9352, lng: 77.6245 },
-          'detected'
-        );
-      };
-      detectLocation();
-    }
-  }, [locationStatus, setUserLocation, userLocation.lat]);
+  // Real location detection is handled by LocationPrompt or the button below.
 
   const handleSelectMockLocation = (address, lat, lng) => {
     setUserLocation({ address, lat, lng }, 'selected');
@@ -74,9 +61,31 @@ const LocationPicker = () => {
 
             <div 
               className="current-location-btn"
-              onClick={() => {
+              onClick={async () => {
                 setUserLocation({ address: 'Detecting location...', lat: null, lng: null }, 'detecting');
                 setIsModalOpen(false);
+                try {
+                  let permissions = await Geolocation.checkPermissions();
+                  if (permissions.location !== 'granted') {
+                    permissions = await Geolocation.requestPermissions();
+                  }
+                  if (permissions.location !== 'granted') throw new Error('Permission denied');
+                  const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+                  const lat = position.coords.latitude;
+                  const lng = position.coords.longitude;
+                  let city = 'Current Location';
+                  let address = 'Detecting address...';
+                  try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+                    const data = await res.json();
+                    city = data.address?.city || data.address?.town || data.address?.village || data.address?.state_district || 'Unknown City';
+                    const neighborhood = data.address?.suburb || data.address?.neighbourhood || data.address?.residential;
+                    address = neighborhood ? `${neighborhood}, ${city}` : (data.display_name || city);
+                  } catch (err) {}
+                  setUserLocation({ lat, lng, city, address }, 'detected');
+                } catch (e) {
+                  setUserLocation({ address: 'Location failed', lat: null, lng: null }, 'failed');
+                }
               }}
             >
               <Navigation size={18} className="nav-icon" />
@@ -85,7 +94,7 @@ const LocationPicker = () => {
 
             <div className="saved-locations">
               <h4>{t('auto_suggested_locations_f7d4', 'Suggested Locations')}</h4>
-              {mockLocations.filter(loc => loc.address.toLowerCase().includes(searchQuery.toLowerCase())).map((loc, idx) => (
+              {mockLocations.filter(loc => loc.address.toLowerCase().includes(searchQuery.toLowerCase().trim())).map((loc, idx) => (
                 <div 
                   key={idx} 
                   className="saved-location-item"

@@ -1,7 +1,7 @@
 export const parseAIIntent = (query) => {
   if (!query || typeof query !== 'string') return null;
   
-  const lowerQuery = query.toLowerCase();
+  const lowerQuery = query.toLowerCase().trim();
   
   // Logistics Intent
   if (lowerQuery.includes('parcel') || lowerQuery.includes('courier') || lowerQuery.includes('delivery') || (lowerQuery.includes('se') && lowerQuery.includes('tak'))) {

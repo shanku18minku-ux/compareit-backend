@@ -16,11 +16,11 @@ const Food = () => {
   const setSearchQuery = useAppStore(state => state.setFoodSearchQuery);
   
   // Try to use appStore if available, otherwise fallback
-  let userLocation = 'Mumbai, India';
+  let userLocation = 'Detecting...';
   try {
     const store = useAppStore();
     if (store.userLocation) {
-      userLocation = store.userLocation.address || store.userLocation.city || 'Mumbai, India';
+      userLocation = store.userLocation.address || store.userLocation.city || 'Detecting...';
     }
   } catch (e) {
     // Ignore store errors

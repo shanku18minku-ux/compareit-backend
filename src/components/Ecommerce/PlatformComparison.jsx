@@ -4,10 +4,12 @@ import { ExternalLink, Tag } from 'lucide-react';
 import { Browser } from '@capacitor/browser';
 import useAppStore from '../../store/appStore';
 import CouponManager from '../CouponManager/CouponManager';
+import { injectLocalPlatforms } from '../../utils/locationEngine';
 import './PlatformComparison.css';
 
 export default function PlatformComparison({ product }) {
-  const { couponMode, appliedManualCoupons, setGlobalRedirectData } = useAppStore();
+  const { t } = useTranslation();
+  const { couponMode, appliedManualCoupons, setGlobalRedirectData, userLocation } = useAppStore();
   
   if (!product || !product.platforms || product.platforms.length === 0) {
     return null;
@@ -31,8 +33,12 @@ export default function PlatformComparison({ product }) {
     return platform.price;
   };
 
+  // Inject local platform dynamically
+  const basePrice = product.price || product.platforms[0]?.price || 100;
+  const enrichedPlatforms = injectLocalPlatforms(product.platforms, userLocation?.city, 'ecommerce', basePrice);
+
   // Sort platforms by adjusted price
-  const platformsWithPrices = product.platforms.map(p => ({ ...p, finalPrice: getFinalPrice(p) }));
+  const platformsWithPrices = enrichedPlatforms.map(p => ({ ...p, finalPrice: getFinalPrice(p) }));
   const sortedPlatforms = platformsWithPrices.sort((a, b) => a.finalPrice - b.finalPrice);
 
   return (

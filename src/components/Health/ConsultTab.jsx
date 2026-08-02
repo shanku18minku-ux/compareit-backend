@@ -21,7 +21,7 @@ export default function ConsultTab() {
   }, []);
 
   const filteredDoctors = data?.filter(doctor => {
-    const query = healthSearchQuery?.toLowerCase() || '';
+    const query = healthSearchQuery?.toLowerCase().trim() || '';
     return doctor.name.toLowerCase().includes(query) || 
            doctor.specialty.toLowerCase().includes(query);
   }) || [];

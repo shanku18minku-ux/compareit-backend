@@ -1,4 +1,4 @@
-import { deliveryDishes } from './mockData';
+import { deliveryDishes } from './mockData.js';
 
 // Mock location based distance calculation
 const getLocationDistance = (location) => {
@@ -11,13 +11,11 @@ const getLocationDistance = (location) => {
 const coupons = {
     'Zomato': { code: 'ZOMATO50', type: 'PERCENT', value: 0.50, maxCap: 100 },
     'Swiggy': { code: 'SWIGGYIT', type: 'FLAT', value: 50 },
-    'EatSure': { code: 'EATSURE20', type: 'PERCENT', value: 0.20, maxCap: 80 },
-    'ONDC': { code: 'ONDCFREE', type: 'FREE_DELIVERY', value: 0 }
+    'EatSure': { code: 'EATSURE20', type: 'PERCENT', value: 0.20, maxCap: 80 }
 };
 
 const getDeliveryFee = (appName, distance) => {
     let base = 20;
-    if (appName === 'ONDC') base = 10;
     return base + (distance * 5); // ₹5 per km
 };
 
@@ -26,7 +24,6 @@ const getPlatformFee = (appName) => {
         case 'Zomato': return 5;
         case 'Swiggy': return 5;
         case 'EatSure': return 0;
-        case 'ONDC': return 0;
         default: return 3;
     }
 };

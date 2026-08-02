@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import SwipeDeck from '../SwipeDeck/SwipeDeck';
 import UniversalCard from '../UniversalCard/UniversalCard';
+import { filterByLocation } from '../../utils/locationEngine';
+import useAppStore from '../../store/appStore';
 
 const dummyPrep = [
   {
@@ -40,10 +42,16 @@ const dummyPrep = [
 ];
 
 const JobPrepTab = () => {
+  const userLocation = useAppStore(state => state.userLocation);
+  
+  const filteredPrep = useMemo(() => {
+    return filterByLocation(dummyPrep, userLocation?.city);
+  }, [userLocation]);
+
   return (
     <div className="tab-container" style={{ width: '100%', height: '100%', position: 'relative' }}>
       <SwipeDeck 
-        items={dummyPrep}
+        items={filteredPrep}
         renderCard={(item) => (
           <UniversalCard 
             coverImage={item.coverImage}

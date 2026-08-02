@@ -79,8 +79,8 @@ const CoursesTab = ({ searchQuery }) => {
   const { setGlobalRedirectData } = useAppStore();
 
   const filteredCourses = mockCourses.filter(course => {
-    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          course.category.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase().trim()) || 
+                          course.category.toLowerCase().includes(searchQuery.toLowerCase().trim());
     const matchesFilter = activeFilter === 'All' || course.category === activeFilter;
     return matchesSearch && matchesFilter;
   });

@@ -268,6 +268,7 @@ export const foodDeals = [
   {
     id: 'f1',
     name: 'Chicken Biryani',
+    location: 'Mumbai, Maharashtra',
     restaurant: 'Behrouz Biryani',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Biryani',
     platforms: [
@@ -279,6 +280,7 @@ export const foodDeals = [
   {
     id: 'f2',
     name: 'Margherita Pizza (Large)',
+    location: 'Delhi',
     restaurant: 'Oven Story',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Pizza',
     platforms: [
@@ -290,6 +292,7 @@ export const foodDeals = [
   {
     id: 'f3',
     name: 'Masala Dosa Combo',
+    location: 'Bangalore, Karnataka',
     restaurant: 'A2B',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Dosa',
     platforms: [
@@ -300,6 +303,7 @@ export const foodDeals = [
   {
     id: 'f4',
     name: 'Chocolate Truffle Cake (1kg)',
+    location: 'Mumbai, Maharashtra',
     restaurant: 'Theobroma',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Cake',
     platforms: [
@@ -310,6 +314,7 @@ export const foodDeals = [
   {
     id: 'f5',
     name: 'Paneer Butter Masala',
+    location: 'Delhi',
     restaurant: 'Punjab Grill',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Paneer',
     platforms: [
@@ -320,6 +325,7 @@ export const foodDeals = [
   {
     id: 'f6',
     name: 'Sushi Platter',
+    location: 'Bangalore, Karnataka',
     restaurant: 'Mamagoto',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Sushi',
     platforms: [
@@ -456,6 +462,7 @@ export const deliveryDishes = [
   {
     id: 'dd1',
     name: 'Chicken Dum Biryani',
+    location: 'Mumbai, Maharashtra',
     restaurant: 'Behrouz Biryani',
     cuisine: 'North Indian',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Biryani',
@@ -471,6 +478,7 @@ export const deliveryDishes = [
   {
     id: 'dd2',
     name: 'Margherita Pizza',
+    location: 'Delhi',
     restaurant: 'Oven Story',
     cuisine: 'Italian',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Pizza',
@@ -486,6 +494,7 @@ export const deliveryDishes = [
   {
     id: 'dd3',
     name: 'Masala Dosa',
+    location: 'Bangalore, Karnataka',
     restaurant: 'A2B',
     cuisine: 'South Indian',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Dosa',
@@ -500,6 +509,7 @@ export const deliveryDishes = [
   {
     id: 'dd4',
     name: 'Chocolate Truffle Pastry',
+    location: 'Mumbai, Maharashtra',
     restaurant: 'Theobroma',
     cuisine: 'Desserts',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Pastry',
@@ -514,6 +524,7 @@ export const deliveryDishes = [
   {
     id: 'dd5',
     name: 'Butter Chicken',
+    location: 'Delhi',
     restaurant: 'Punjab Grill',
     cuisine: 'North Indian',
     image: 'https://placehold.co/300x200/EEE/31343C?text=Butter+Chicken',

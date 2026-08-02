@@ -4,19 +4,24 @@ import VehicleCard from './VehicleCard';
 import styles from './VehicleMarketplace.module.css';
 
 import { marketplaceVehicles } from '../../services/vehicleMockData';
+import { filterByLocation } from '../../utils/locationEngine';
+import useAppStore from '../../store/appStore';
 
 const VehicleMarketplace = ({ searchQuery }) => {
   const [activeFilter, setActiveFilter] = useState('All');
+  const { userLocation } = useAppStore();
   
   const categories = ['All', 'Cars', 'Bikes', 'Commercial', 'Tractors'];
   
-  const filteredVehicles = marketplaceVehicles.filter(v => {
+  const localizedVehicles = filterByLocation(marketplaceVehicles, userLocation?.city);
+
+  const filteredVehicles = localizedVehicles.filter(v => {
     // Check category filter
     if (activeFilter !== 'All' && v.category !== activeFilter) return false;
     
     // Check search query
     if (searchQuery) {
-      const q = searchQuery.toLowerCase();
+      const q = searchQuery.toLowerCase().trim();
       // Allow generic keywords
       if (q.includes('car') && v.category === 'Cars') return true;
       if (q.includes('bike') && v.category === 'Bikes') return true;

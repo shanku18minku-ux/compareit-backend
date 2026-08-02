@@ -143,8 +143,8 @@ const JobsTab = ({ searchQuery }) => {
 
   const filtered = mockJobs.filter(item => {
     // Top bar global search
-    const matchesGlobalSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                item.company.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesGlobalSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase().trim()) || 
+                                item.company.toLowerCase().includes(searchQuery.toLowerCase().trim());
     
     // Profile form search
     const matchesProfileRole = !hasSearched || !profile.role || item.title.toLowerCase().includes(profile.role.toLowerCase());

@@ -8,7 +8,7 @@ export class FlipkartAdapter extends BaseAdapter {
   async _fetchData(query) {
     await new Promise(resolve => setTimeout(resolve, 250));
 
-    const q = query.toLowerCase();
+    const q = query.toLowerCase().trim();
     let results = [];
 
     if (q.includes('iphone')) {

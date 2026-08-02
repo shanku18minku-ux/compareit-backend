@@ -27,8 +27,8 @@ const GovtExamsTab = ({ searchQuery }) => {
   };
 
   const filteredExams = exams.filter(exam => {
-    const matchesSearch = exam.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          exam.department.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = exam.title.toLowerCase().includes(searchQuery.toLowerCase().trim()) || 
+                          exam.department.toLowerCase().includes(searchQuery.toLowerCase().trim());
     const matchesType = examType === 'All' ? true : exam.type === examType;
     const matchesQual = userQualification === 'All' ? true : exam.qualification === userQualification;
     const matchesSector = filterSector === 'All' ? true : exam.sector === filterSector;

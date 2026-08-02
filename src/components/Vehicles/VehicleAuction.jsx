@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { Clock, ExternalLink, ShieldCheck } from 'lucide-react';
 import { auctionVehicles } from '../../services/vehicleMockData';
+import { filterByLocation } from '../../utils/locationEngine';
 import useAppStore from '../../store/appStore';
 import './VehicleAuction.css';
 
@@ -98,8 +99,9 @@ const VehicleAuctionCard = ({ vehicle }) => {
 
 const VehicleAuction = () => {
   const { t } = useTranslation();
+  const { userLocation } = useAppStore();
   // Fallback data in case auctionVehicles is not populated in mock data yet
-  const vehicles = auctionVehicles && auctionVehicles.length > 0 ? auctionVehicles : [
+  const allVehicles = auctionVehicles && auctionVehicles.length > 0 ? auctionVehicles : [
     {
       id: 1,
       name: '2022 Hyundai i20 Asta',
@@ -137,6 +139,8 @@ const VehicleAuction = () => {
       url: 'https://example.com/bid/3'
     }
   ];
+
+  const vehicles = filterByLocation(allVehicles, userLocation?.city);
 
   return (
     <div className="vehicle-auction-container">

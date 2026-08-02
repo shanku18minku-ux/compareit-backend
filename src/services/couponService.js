@@ -4309,7 +4309,7 @@ export const searchCoupons = (query, category = 'all') => {
     filtered = filtered.filter((c) => c.platformCategory === category);
   }
   if (query) {
-    const q = query.toLowerCase();
+    const q = query.toLowerCase().trim();
     filtered = filtered.filter(
       (c) =>
         c.platform.toLowerCase().includes(q) ||

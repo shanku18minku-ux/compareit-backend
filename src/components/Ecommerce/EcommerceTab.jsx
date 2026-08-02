@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import SwipeDeck from '../SwipeDeck/SwipeDeck';
 import UniversalCard from '../UniversalCard/UniversalCard';
+import { filterByLocation } from '../../utils/locationEngine';
+import useAppStore from '../../store/appStore';
 
 const dummyProducts = [
   {
@@ -42,10 +44,16 @@ const dummyProducts = [
 ];
 
 const EcommerceTab = () => {
+  const userLocation = useAppStore(state => state.userLocation);
+  
+  const filteredProducts = useMemo(() => {
+    return filterByLocation(dummyProducts, userLocation?.city);
+  }, [userLocation]);
+
   return (
     <div className="tab-container" style={{ width: '100%', height: '100%', position: 'relative' }}>
       <SwipeDeck 
-        items={dummyProducts}
+        items={filteredProducts}
         renderCard={(item) => (
           <UniversalCard 
             coverImage={item.coverImage}

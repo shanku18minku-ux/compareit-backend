@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Star, MapPin, Check, ExternalLink, Percent } from 'lucide-react';
 import useAppStore from '../../store/appStore';
 import EmptyState from '../Global/EmptyState';
+import { filterByLocation } from '../../utils/locationEngine.js';
 import './DineInTab.css';
 
 const MOCK_RESTAURANTS = [
@@ -92,18 +93,19 @@ const MOCK_RESTAURANTS = [
 const DineInTab = ({ globalSearchQuery = '' }) => {
   const { t } = useTranslation();
   const [restaurants, setRestaurants] = useState(MOCK_RESTAURANTS);
-  const { setGlobalRedirectData } = useAppStore();
+  const { setGlobalRedirectData, userLocation } = useAppStore();
 
   useEffect(() => {
+    let baseData = filterByLocation(MOCK_RESTAURANTS, userLocation?.city);
     if (globalSearchQuery) {
-      const q = globalSearchQuery.toLowerCase();
-      setRestaurants(MOCK_RESTAURANTS.filter(r => 
+      const q = globalSearchQuery.toLowerCase().trim();
+      setRestaurants(baseData.filter(r => 
         r.name.toLowerCase().includes(q) || r.cuisine.toLowerCase().includes(q)
       ));
     } else {
-      setRestaurants(MOCK_RESTAURANTS);
+      setRestaurants(baseData);
     }
-  }, [globalSearchQuery]);
+  }, [globalSearchQuery, userLocation?.city]);
 
   const handleBook = (link, providerName) => {
     setGlobalRedirectData({ providerName: providerName || 'Partner', targetUrl: link });

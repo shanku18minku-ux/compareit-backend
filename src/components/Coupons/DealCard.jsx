@@ -93,12 +93,6 @@ const DealCard = ({ coupon, onCalculate, isHighlighted }) => {
         )}
       </div>
 
-      <div className={styles.cardFooter}>
-        <button className={styles.calculateBtn} onClick={onCalculate}>
-          <Calculator size={16} />
-          <span>{t('auto_calculate_savings_f5b9', 'Calculate Savings')}</span>
-        </button>
-      </div>
     </div>
   );
 };

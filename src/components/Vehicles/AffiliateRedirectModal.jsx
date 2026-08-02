@@ -2,17 +2,24 @@ import React, { useEffect } from 'react';
 import { ExternalLink, ShieldCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import styles from './AffiliateRedirectModal.module.css';
+import useAppStore from '../../store/appStore';
 
 const AffiliateRedirectModal = ({ isOpen, providerName, targetUrl, onClose }) => {
+  const { couponMode } = useAppStore();
   const { i18n } = useTranslation();
 
-  if (!isOpen) return null;
-
+  // ✅ useEffect MUST come before any early return to follow Rules of Hooks
   useEffect(() => {
     if (isOpen && targetUrl) {
-      // Simulate API/Affiliate connection delay
       const timer = setTimeout(() => {
         let finalUrl = targetUrl;
+        
+        // Auto-Apply Coupon & Redirect to Checkout logic
+        if (couponMode === 'auto') {
+          const separator = finalUrl.includes('?') ? '&' : '?';
+          finalUrl = `${finalUrl}${separator}checkout=true&auto_apply=1&promo=BESTDEAL`;
+        }
+
         const currentLang = i18n.language || 'en';
 
         if (currentLang !== 'en' && (finalUrl.startsWith('http://') || finalUrl.startsWith('https://'))) {
@@ -29,7 +36,10 @@ const AffiliateRedirectModal = ({ isOpen, providerName, targetUrl, onClose }) =>
       }, 2500);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, targetUrl, onClose]);
+  }, [isOpen, targetUrl, onClose, i18n.language, couponMode]);
+
+  // ✅ Early return AFTER all hooks
+  if (!isOpen) return null;
 
   return (
     <div className={styles.overlay}>
@@ -42,7 +52,9 @@ const AffiliateRedirectModal = ({ isOpen, providerName, targetUrl, onClose }) =>
         <h3 className={styles.title}>Connecting to {providerName}</h3>
         
         <p className={styles.subtitle}>
-          Securely redirecting you to the official partner platform to complete your transaction.
+          {couponMode === 'auto' 
+            ? 'Auto-applying best coupon and redirecting to secure checkout...'
+            : 'Securely redirecting you to the official partner platform to complete your transaction.'}
         </p>
 
         <div className={styles.disclaimerBox}>

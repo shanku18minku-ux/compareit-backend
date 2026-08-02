@@ -18,11 +18,17 @@ const usePersonalizationStore = create(
       }),
 
       addRecentSearch: (query) => set((state) => {
-        const filtered = state.recentSearches.filter(q => q.toLowerCase() !== query.toLowerCase());
+        const filtered = state.recentSearches.filter(q => q.toLowerCase() !== query.toLowerCase().trim());
         return {
           recentSearches: [query, ...filtered].slice(0, 10) // Keep top 10
         };
       }),
+
+      removeRecentSearch: (query) => set((state) => ({
+        recentSearches: state.recentSearches.filter(q => q.toLowerCase() !== query.toLowerCase())
+      })),
+
+      clearRecentSearches: () => set({ recentSearches: [] }),
 
       // Returns modules ordered by frequency of visits
       getTopModules: () => {

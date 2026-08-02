@@ -84,7 +84,7 @@ const Home = () => {
           <div className="logo-wrap" style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
             <div className="location-badge" onClick={() => {}} style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
               <MapPin size={18} color="#ef4444" />
-              <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '1.05rem', letterSpacing: '-0.3px' }}>{userLocation?.city || 'Delhi'}</span>
+              <span className="truncate" style={{ fontWeight: '800', color: '#0f172a', fontSize: '1.05rem', letterSpacing: '-0.3px', maxWidth: '220px', display: 'inline-block' }}>{userLocation?.address || userLocation?.city || 'Detecting...'}</span>
               <ChevronRight size={16} color="#64748b" />
             </div>
             <span style={{ color: '#64748b', fontSize: '0.75rem', marginLeft: '22px' }}>{t('deliver_to_location', 'Deliver to your location')}</span>

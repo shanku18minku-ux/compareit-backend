@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Star, Clock, MapPin, Tag, ChevronRight, Filter } from 'lucide-react';
 import useAppStore from '../../store/appStore';
 import CouponManager from '../CouponManager/CouponManager';
+import { filterByLocation, injectLocalPlatforms } from '../../utils/locationEngine.js';
 import './DeliveryTab.css';
 
 // Mock Data
@@ -147,13 +148,13 @@ const DeliveryTab = ({ globalSearchQuery = '' }) => {
   const [filterRating, setFilterRating] = useState(false);
   const [sortBy, setSortBy] = useState('price');
   
-  const { couponMode, appliedManualCoupons, setGlobalRedirectData } = useAppStore();
+  const { couponMode, appliedManualCoupons, setGlobalRedirectData, userLocation } = useAppStore();
 
   useEffect(() => {
-    let filtered = [...MOCK_DISHES];
+    let filtered = filterByLocation([...MOCK_DISHES], userLocation?.city);
 
     if (globalSearchQuery) {
-      const q = globalSearchQuery.toLowerCase();
+      const q = globalSearchQuery.toLowerCase().trim();
       filtered = filtered.filter(d => d.name.toLowerCase().includes(q));
     }
 
@@ -165,7 +166,10 @@ const DeliveryTab = ({ globalSearchQuery = '' }) => {
 
     // Deep clone to sort restaurants per dish
     const processed = filtered.map(dish => {
-      let rests = [...dish.restaurants];
+      let rests = dish.restaurants.map(r => ({
+        ...r,
+        platforms: injectLocalPlatforms(r.platforms, userLocation?.city, 'food', Math.round(Math.min(...r.platforms.map(p => p.price))))
+      }));
       
       if (filterRating) {
         rests = rests.filter(r => r.rating >= 4.0);
@@ -185,7 +189,7 @@ const DeliveryTab = ({ globalSearchQuery = '' }) => {
     }).filter(d => d.restaurants.length > 0);
 
     setDishes(processed);
-  }, [globalSearchQuery, filterVeg, filterNonVeg, filterRating, sortBy]);
+  }, [globalSearchQuery, filterVeg, filterNonVeg, filterRating, sortBy, userLocation?.city]);
 
   // Handle Filters
   const applyFilters = (filtered) => {

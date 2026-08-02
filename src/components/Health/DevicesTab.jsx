@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import useAppStore from '../../store/appStore';
+import { filterByLocation } from '../../utils/locationEngine.js';
 import './MedicineTab.css';
 
 const mockDevices = [
@@ -44,12 +45,12 @@ const mockDevices = [
 
 const DevicesTab = ({ searchQuery }) => {
   const { t } = useTranslation();
-  const { setGlobalRedirectData } = useAppStore();
+  const { setGlobalRedirectData, userLocation } = useAppStore();
   const [expandedItems, setExpandedItems] = useState({});
 
-  let filtered = mockDevices.filter(s => {
+  let filtered = filterByLocation(mockDevices, userLocation?.city).filter(s => {
     if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase().trim();
     if (q.includes('device') || q.includes('health') || q.includes('equipment')) return true;
     return s.name.toLowerCase().includes(q) || s.brand.toLowerCase().includes(q);
   });

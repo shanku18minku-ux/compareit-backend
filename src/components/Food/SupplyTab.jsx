@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ExternalLink, Briefcase, ShoppingCart, Users, Truck } from 'lucide-react';
 import useAppStore from '../../store/appStore';
 import EmptyState from '../Global/EmptyState';
+import { filterByLocation } from '../../utils/locationEngine.js';
 import './SupplyTab.css';
 
 const CATEGORIES = [
@@ -30,13 +31,13 @@ const MOCK_PLATFORMS = [
 const SupplyTab = ({ globalSearchQuery = '' }) => {
   const [activeCategory, setActiveCategory] = useState('grocery');
   const [filteredPlatforms, setFilteredPlatforms] = useState([]);
-  const { setGlobalRedirectData } = useAppStore();
+  const { setGlobalRedirectData, userLocation } = useAppStore();
 
   useEffect(() => {
-    let results = MOCK_PLATFORMS;
+    let results = filterByLocation(MOCK_PLATFORMS, userLocation?.city);
     
     if (globalSearchQuery) {
-      const q = globalSearchQuery.toLowerCase();
+      const q = globalSearchQuery.toLowerCase().trim();
       results = results.filter(p => 
         p.name.toLowerCase().includes(q) || p.bestFor.toLowerCase().includes(q)
       );
@@ -46,7 +47,7 @@ const SupplyTab = ({ globalSearchQuery = '' }) => {
     }
     
     setFilteredPlatforms(results);
-  }, [activeCategory, globalSearchQuery]);
+  }, [activeCategory, globalSearchQuery, userLocation?.city]);
 
   const handleVisit = (link, providerName) => {
     setGlobalRedirectData({ providerName: providerName || 'Partner', targetUrl: link });

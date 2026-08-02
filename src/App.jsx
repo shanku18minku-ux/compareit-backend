@@ -24,7 +24,6 @@ import ProfileSetup from './pages/Profile/ProfileSetup';
 import Settings from './pages/Settings/Settings';
 
 import BottomNav from './components/BottomNav/BottomNav';
-import AICopilot from './components/AICopilot/AICopilot';
 import FloatingWidget from './components/FloatingWidget/FloatingWidget';
 import CustomerSupportModal from './pages/Settings/CustomerSupportModal';
 import LanguagePicker from './components/LanguagePicker/LanguagePicker';

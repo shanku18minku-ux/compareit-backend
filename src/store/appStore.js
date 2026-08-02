@@ -49,7 +49,7 @@ const useAppStore = create(
       })),
 
       // === LOCATION STATE ===
-      userLocation: { address: 'Detecting location...', city: 'Delhi', lat: null, lng: null },
+      userLocation: { address: '', city: 'Detecting...', lat: null, lng: null },
       locationStatus: 'detecting',
       couponMode: 'auto', // 'auto' | 'manual'
       setCouponMode: (mode) => set({ couponMode: mode }),

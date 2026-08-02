@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 import useAppStore from '../../store/appStore';
+import { filterByLocation } from '../../utils/locationEngine.js';
 import { Microscope, Shield, Dumbbell, Brain, Baby, UserPlus, Ambulance, Star, ExternalLink } from 'lucide-react';
 import './ServicesTab.css';
 
@@ -60,7 +61,7 @@ const serviceCategories = [
 const ServicesTab = ({ searchQuery }) => {
   const { t } = useTranslation();
   
-  const { setGlobalRedirectData } = useAppStore();
+  const { setGlobalRedirectData, userLocation } = useAppStore();
 
   const handleVisit = async (platformName) => {
     const domain = platformName.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -70,10 +71,10 @@ const ServicesTab = ({ searchQuery }) => {
 
   const filteredCategories = serviceCategories.map(cat => ({
     ...cat,
-    services: cat.services.filter(s => 
-      s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      s.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      cat.title.toLowerCase().includes(searchQuery.toLowerCase())
+    services: filterByLocation(cat.services, userLocation?.city).filter(s => 
+      s.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) || 
+      s.desc.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+      cat.title.toLowerCase().includes(searchQuery.toLowerCase().trim())
     )
   })).filter(cat => cat.services.length > 0);
 

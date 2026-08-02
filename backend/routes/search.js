@@ -1,16 +1,36 @@
 const express = require('express');
 const router = express.Router();
+const { body, validationResult } = require('express-validator');
 const { rankAndScoreItems } = require('../services/aiEngine');
 const amazonProvider = require('../providers/amazon');
 const flipkartProvider = require('../providers/flipkart');
 
-router.post('/', async (req, res) => {
+// Apply strict input validation and sanitization
+router.post(
+  '/', 
+  [
+    body('query')
+      .isString()
+      .withMessage('Query must be a string')
+      .trim()
+      .isLength({ min: 1, max: 100 })
+      .withMessage('Query must be between 1 and 100 characters')
+      .escape(), // Prevents XSS via API reflection
+    body('category')
+      .optional()
+      .isString()
+      .trim()
+      .escape()
+  ],
+  async (req, res) => {
   try {
-    const { query, category } = req.body;
-
-    if (!query) {
-      return res.status(400).json({ error: 'Query is required' });
+    // Validate inputs
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ success: false, errors: errors.array() });
     }
+
+    const { query, category } = req.body;
 
     // 1. Fetch raw data from providers concurrently
     const [amazonResults, flipkartResults] = await Promise.all([

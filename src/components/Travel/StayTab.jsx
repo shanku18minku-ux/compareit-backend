@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { Search, Calendar, Users, Star, MapPin, Check, ChevronDown, ChevronUp, Sparkles, Wifi, Coffee, Car, Wind } from 'lucide-react';
 import useAppStore from '../../store/appStore';
+import { filterByLocation } from '../../utils/locationEngine';
 import './StayTab.css';
 
 const mockHotels = [
@@ -85,14 +86,22 @@ const StayTab = () => {
   const [guests, setGuests] = useState('2 Guests, 1 Room');
   const [expandedHotels, setExpandedHotels] = useState({});
   const [filterCategory, setFilterCategory] = useState('All');
-  const { setGlobalRedirectData } = useAppStore();
+  const { setGlobalRedirectData, userLocation } = useAppStore();
 
   const toggleHotel = (id) =>
     setExpandedHotels(prev => ({ ...prev, [id]: !prev[id] }));
 
+  const searchLocation = location.trim() ? location : userLocation?.city;
+  let locationHotels = filterByLocation(mockHotels, searchLocation);
+  
+  // If manual search yields no results, fallback to GPS city just to show something
+  if (locationHotels.length === 0 && location.trim()) {
+      locationHotels = filterByLocation(mockHotels, userLocation?.city);
+  }
+
   const filtered = filterCategory === 'All'
-    ? mockHotels
-    : mockHotels.filter(h => h.category === filterCategory);
+    ? locationHotels
+    : locationHotels.filter(h => h.category === filterCategory);
 
   return (
     <div className="stay-tab">

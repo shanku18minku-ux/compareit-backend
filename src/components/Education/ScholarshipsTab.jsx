@@ -35,8 +35,8 @@ const ScholarshipsTab = () => {
   };
 
   const filteredScholarships = data?.filter(s => 
-    s.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    s.provider.toLowerCase().includes(searchTerm.toLowerCase())
+    s.name.toLowerCase().includes(searchTerm.toLowerCase().trim()) || 
+    s.provider.toLowerCase().includes(searchTerm.toLowerCase().trim())
   ) || [];
 
   if (loading) {
