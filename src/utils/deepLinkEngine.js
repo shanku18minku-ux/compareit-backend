@@ -7,9 +7,47 @@
  *  - Android intent:// URIs (opens native app if installed, falls back to web)
  *  - Smart URL construction: Checkout > Cart > Product > Search (best available)
  *  - Platform capability detection (what level of navigation is supported)
+ *
+ * Security: All input URLs are validated against an https/http allowlist.
+ *  Any other scheme (javascript:, data:, etc.) is rejected before use.
  */
 
+// ─── URL Sanitizer ────────────────────────────────────────────────────────────
+/**
+ * Validates that a URL uses an allowed protocol (http or https).
+ * Rejects javascript:, data:, blob:, and other dangerous schemes.
+ * @param {String} url
+ * @returns {String|null} The url if valid, null if rejected
+ */
+const sanitizeUrl = (url) => {
+  if (!url || typeof url !== 'string') return null;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+      console.warn('[DeepLink] Rejected unsafe URL protocol:', parsed.protocol, url);
+      return null;
+    }
+    return url;
+  } catch {
+    return null; // Malformed URL
+  }
+};
+
+/**
+ * Safely encodes a title string for use in URL query parameters.
+ * Guards against URIError from malformed UTF-16 surrogate pairs.
+ */
+const safeEncodeTitle = (title) => {
+  try {
+    return encodeURIComponent(String(title || ''));
+  } catch {
+    // Replace malformed characters and retry
+    return encodeURIComponent(String(title || '').replace(/[\uD800-\uDFFF]/g, ''));
+  }
+};
+
 // ─── Android Package IDs ─────────────────────────────────────────────────────
+
 const PLATFORM_SCHEMES = {
   'amazon':    { package: 'in.amazon.mShop.android.shopping',  capability: 'product' },
   'flipkart':  { package: 'com.flipkart.android',              capability: 'product' },
@@ -148,11 +186,14 @@ export const detectPlatformCapability = (providerName) => {
 export const buildSmartCheckoutUrl = (providerName, productTitle, productUrl) => {
   const key = normalizePlatformName(providerName);
   const templates = PLATFORM_URL_TEMPLATES[key];
-  const q = encodeURIComponent(productTitle || providerName);
+  const q = safeEncodeTitle(productTitle || providerName);
 
-  // If we have a real product URL (not '#' or empty), use it directly
-  if (productUrl && productUrl !== '#' && productUrl.startsWith('http')) {
-    return productUrl;
+  // Validate the product URL before using it (security: reject javascript: etc.)
+  const validProductUrl = sanitizeUrl(productUrl);
+
+  // If we have a safe real product URL (not '#' or empty), use it directly
+  if (validProductUrl && validProductUrl !== '#') {
+    return validProductUrl;
   }
 
   // Build a search URL using platform templates
@@ -162,13 +203,15 @@ export const buildSmartCheckoutUrl = (providerName, productTitle, productUrl) =>
 
   // Generic fallback: search on the platform domain
   const domain = key || 'google';
-  return `https://www.${domain}.com/search?q=${q}`;
+  return `https://www.${domain}.in/search?q=${q}`;
 };
 
 /**
  * Builds an Android intent:// URI.
  * If the user has the native app installed, Android opens it directly.
  * If not, Android falls back to the web URL in the browser.
+ *
+ * Security: Only accepts https/http URLs. Any other scheme is rejected.
  *
  * @param {String} providerName - e.g. 'Amazon', 'Zomato'
  * @param {String} webUrl       - The HTTPS web URL to wrap
@@ -177,15 +220,22 @@ export const buildSmartCheckoutUrl = (providerName, productTitle, productUrl) =>
 export const buildDeepLink = (providerName, webUrl) => {
   if (!webUrl) return '';
 
+  // Security: validate URL protocol before embedding in intent://
+  const safeUrl = sanitizeUrl(webUrl);
+  if (!safeUrl) {
+    console.warn('[DeepLink] buildDeepLink rejected unsafe URL:', webUrl);
+    return '';
+  }
+
   const key = normalizePlatformName(providerName);
   const platform = PLATFORM_SCHEMES[key];
 
   if (!platform) {
-    return webUrl;
+    return safeUrl;
   }
 
   // Strip protocol for intent path
-  const path = webUrl.replace(/^https?:\/\//, '');
-  const fallback = encodeURIComponent(webUrl);
+  const path = safeUrl.replace(/^https?:\/\//, '');
+  const fallback = encodeURIComponent(safeUrl);
   return `intent://${path}#Intent;scheme=https;package=${platform.package};S.browser_fallback_url=${fallback};end`;
 };
